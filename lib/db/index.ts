@@ -197,23 +197,51 @@ export async function createOrder(payload: CreateOrderPayload): Promise<Order> {
 
   const supabase = getSupabaseAdmin();
   if (supabase) {
-    const { error } = await supabase.from('orders').insert({
-      id: newOrder.id,
-      order_code: newOrder.order_code,
-      bundle_id: newOrder.bundle_id,
-      buyer_name: newOrder.buyer_name,
-      buyer_email: newOrder.buyer_email,
-      buyer_phone: newOrder.buyer_phone,
-      base_price: newOrder.base_price,
-      unique_code: newOrder.unique_code,
-      total_amount: newOrder.total_amount,
-      status: newOrder.status,
-      created_at: newOrder.created_at,
-      expires_at: newOrder.expires_at,
-    });
+    try {
+      // Pastikan bundle terdaftar di database Supabase untuk menghindari foreign key constraint error
+      const { data: existingBundle } = await supabase
+        .from('bundles')
+        .select('id')
+        .eq('id', bundle.id)
+        .maybeSingle();
 
-    if (error) {
-      console.error('Supabase insert order error:', error);
+      if (!existingBundle) {
+        await supabase.from('bundles').upsert({
+          id: bundle.id,
+          name: bundle.name,
+          slug: bundle.slug,
+          description: bundle.description,
+          price: bundle.price,
+          preview_images: bundle.preview_images,
+          file_url: bundle.file_url,
+          is_active: bundle.is_active,
+          features: bundle.features,
+        }, { onConflict: 'id' });
+      }
+
+      const { error } = await supabase.from('orders').insert({
+        id: newOrder.id,
+        order_code: newOrder.order_code,
+        bundle_id: newOrder.bundle_id,
+        buyer_name: newOrder.buyer_name,
+        buyer_email: newOrder.buyer_email,
+        buyer_phone: newOrder.buyer_phone,
+        base_price: newOrder.base_price,
+        unique_code: newOrder.unique_code,
+        total_amount: newOrder.total_amount,
+        status: newOrder.status,
+        created_at: newOrder.created_at,
+        expires_at: newOrder.expires_at,
+      });
+
+      if (error) {
+        console.error('Supabase insert order error:', error);
+        saveLocalOrder(newOrder);
+      } else {
+        saveLocalOrder(newOrder);
+      }
+    } catch (dbErr) {
+      console.error('Unexpected Supabase error in createOrder:', dbErr);
       saveLocalOrder(newOrder);
     }
   } else {
@@ -236,9 +264,10 @@ export async function getOrderById(id: string): Promise<Order | null> {
       .single();
 
     if (!error && data) {
+      const bundleData = Array.isArray(data.bundles) ? data.bundles[0] : data.bundles;
       const order: Order = {
         ...data,
-        bundle: data.bundles || (await getBundleById(data.bundle_id)),
+        bundle: bundleData || (await getBundleById(data.bundle_id)),
       };
       return order;
     }
@@ -269,9 +298,10 @@ export async function getOrderByCode(code: string): Promise<Order | null> {
       .single();
 
     if (!error && data) {
+      const bundleData = Array.isArray(data.bundles) ? data.bundles[0] : data.bundles;
       return {
         ...data,
-        bundle: data.bundles || (await getBundleById(data.bundle_id)),
+        bundle: bundleData || (await getBundleById(data.bundle_id)),
       };
     }
   }
@@ -399,9 +429,10 @@ export async function getOrderByDownloadToken(token: string): Promise<Order | nu
       .single();
 
     if (!error && data) {
+      const bundleData = Array.isArray(data.bundles) ? data.bundles[0] : data.bundles;
       return {
         ...data,
-        bundle: data.bundles || (await getBundleById(data.bundle_id)),
+        bundle: bundleData || (await getBundleById(data.bundle_id)),
       };
     }
   }
