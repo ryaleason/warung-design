@@ -1,0 +1,61 @@
+import Link from 'next/link';
+import { Sparkles } from 'lucide-react';
+
+export default function Footer() {
+  return (
+    <footer className="border-t border-black/[0.08] bg-[#f6f5f4] mt-20">
+      <div className="mx-auto max-w-[1440px] px-4 py-12 sm:px-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
+          <div className="md:col-span-2">
+            <div className="flex items-center gap-2">
+              <div className="flex h-7 w-7 items-center justify-center rounded-[6px] bg-[#0075de] text-white">
+                <Sparkles className="h-3.5 w-3.5" />
+              </div>
+              <span className="text-[16px] font-semibold text-[#111111]">Warung Desain</span>
+            </div>
+            <p className="mt-3 max-w-sm text-[13px] text-[#615d59] leading-relaxed">
+              Solusi konten promosi &amp; visual siap pakai untuk admin media sosial UMKM Indonesia.
+              Tanpa repot belajar prompt generatif, tinggal edit teks di Canva dan langsung posting!
+            </p>
+          </div>
+
+          <div>
+            <h4 className="text-[12px] font-semibold uppercase tracking-wider text-[#000000]">
+              Navigasi Cepat
+            </h4>
+            <ul className="mt-3 space-y-2 text-[13px] text-[#757575]">
+              <li>
+                <Link href="/#katalog" className="hover:text-[#000000] transition-colors">
+                  Katalog Bundle
+                </Link>
+              </li>
+              <li>
+                <Link href="/#cara-pakai" className="hover:text-[#000000] transition-colors">
+                  Cara Kerja &amp; Tutorial
+                </Link>
+              </li>
+              <li>
+                <Link href="/#faq" className="hover:text-[#000000] transition-colors">
+                  Tanya Jawab (FAQ)
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-[12px] font-semibold uppercase tracking-wider text-[#000000]">
+              Metode Pembayaran
+            </h4>
+            <p className="mt-3 text-[13px] text-[#615d59] leading-relaxed">
+              Mendukung semua e-wallet &amp; mobile banking melalui <strong>QRIS GoPay Merchant</strong> (BCA, Mandiri, BRI, DANA, OVO, ShopeePay).
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-10 border-t border-black/[0.06] pt-6 text-center text-[12px] text-[#757575]">
+          <p>© {new Date().getFullYear()} Warung Desain. Dibuat dengan format desain Notion Style untuk kemajuan UMKM Lokal Indonesia.</p>
+        </div>
+      </div>
+    </footer>
+  );
+}

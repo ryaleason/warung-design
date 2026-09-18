@@ -1,69 +1,261 @@
-import Image from "next/image";
+import { getBundles } from '@/lib/db';
+import BundleCard from '@/components/BundleCard';
+import {
+  Sparkles,
+  Zap,
+  ShieldCheck,
+  Smartphone,
+  HelpCircle,
+  Clock,
+  Palette,
+  ShoppingBag,
+  ChevronRight,
+} from 'lucide-react';
 
-export default function Home() {
+export const revalidate = 60; // ISR 60 seconds
+
+export default async function HomePage() {
+  const bundles = await getBundles();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <div className="space-y-20 pb-20 max-w-[1440px] mx-auto">
+      {/* 1. Hero Section */}
+      <section className="pt-16 pb-12 sm:pt-24 sm:pb-16 text-center px-4 sm:px-8">
+        <div className="mx-auto max-w-4xl">
+          {/* Avatar / Character marks row or Pill Tag */}
+          <div className="inline-flex items-center gap-2 rounded-full bg-[#e6f3fe] px-3.5 py-1 text-[13px] font-medium text-[#0075de] mb-6">
+            <Sparkles className="h-3.5 w-3.5" />
+            <span>Koleksi Desain Instan Khusus Admin UMKM Indonesia</span>
+          </div>
+
+          {/* Headline with embedded Hero Highlight Pill */}
+          <h1 className="text-4xl sm:text-6xl lg:text-[64px] font-semibold tracking-[-0.035em] text-[#000000] leading-[1.15]">
+            Posting promo jualan menarik{' '}
+            <span className="inline-block rounded-full bg-[#f6d5b8] text-[#000000] px-4 sm:px-5 py-0.5 mx-1 font-semibold">
+              tanpa desainer
+            </span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+
+          {/* Subhead with warm graphite cast */}
+          <p className="mx-auto mt-6 max-w-2xl text-[16px] sm:text-[18px] text-[#615d59] leading-relaxed">
+            Paket desain musiman siap pakai (feed &amp; story) hasil kurasi AI generatif terbaik. Dapatkan gambar resolusi tinggi langsung pakai plus bonus prompt untuk variasi mandiri.
           </p>
+
+          {/* Two-button CTA row: Primary + Ghost CTA */}
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a
+              href="#katalog"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#0075de] px-5 py-2.5 text-[15px] font-medium text-white hover:bg-[#0060b8] transition-colors"
+            >
+              <ShoppingBag className="h-4 w-4" />
+              Lihat Katalog Paket
+            </a>
+            <a
+              href="#cara-pakai"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-[8px] bg-[#e6f3fe] px-5 py-2.5 text-[15px] font-medium text-[#0075de] hover:bg-[#d5ebfc] transition-colors"
+            >
+              Cara Penggunaan
+              <ChevronRight className="h-4 w-4" />
+            </a>
+          </div>
+
+          {/* 4 Feature Accent Cards on Canvas (hairline border, no shadow) */}
+          <div className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-3 text-left">
+            <div className="p-4 rounded-[12px] bg-[#ffffff] border border-black/[0.08]">
+              <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-[#e6f3fe] text-[#0075de] mb-3">
+                <Zap className="h-4 w-4" />
+              </div>
+              <p className="text-[14px] font-semibold text-[#000000]">Bukan Teks Mentah</p>
+              <p className="text-[12px] text-[#757575] mt-0.5">Hasil gambar jadi &amp; kurasi</p>
+            </div>
+
+            <div className="p-4 rounded-[12px] bg-[#ffffff] border border-black/[0.08]">
+              <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-[#f6d5b8] text-[#000000] mb-3">
+                <Smartphone className="h-4 w-4" />
+              </div>
+              <p className="text-[14px] font-semibold text-[#000000]">Edit Cukup di HP</p>
+              <p className="text-[12px] text-[#757575] mt-0.5">Tinggal tempel logo &amp; teks</p>
+            </div>
+
+            <div className="p-4 rounded-[12px] bg-[#ffffff] border border-black/[0.08]">
+              <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-[#ffb110]/20 text-[#000000] mb-3">
+                <Clock className="h-4 w-4" />
+              </div>
+              <p className="text-[14px] font-semibold text-[#000000]">Kirim &lt; 15 Menit</p>
+              <p className="text-[12px] text-[#757575] mt-0.5">Link unduh otomatis di web</p>
+            </div>
+
+            <div className="p-4 rounded-[12px] bg-[#ffffff] border border-black/[0.08]">
+              <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-emerald-50 text-emerald-700 mb-3">
+                <ShieldCheck className="h-4 w-4" />
+              </div>
+              <p className="text-[14px] font-semibold text-[#000000]">Bebas Royalti</p>
+              <p className="text-[12px] text-[#757575] mt-0.5">Lisensi komersial seumur hidup</p>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* 2. Bundle Catalog Section */}
+      <section id="katalog" className="px-4 sm:px-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+          <div>
+            <div className="flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-wider text-[#757575]">
+              <Palette className="h-3.5 w-3.5 text-[#0075de]" />
+              Pilihan Tema Bundle
+            </div>
+            <h2 className="mt-1 text-2xl sm:text-3xl font-bold tracking-[-0.025em] text-[#000000]">
+              Katalog Bundle Desain Siap Pakai
+            </h2>
+            <p className="mt-1 text-[14px] text-[#615d59]">
+              Pilih paket sesuai momen promosi toko atau kategori bisnis Anda.
+            </p>
+          </div>
         </div>
-      </main>
+
+        {/* Grid Bundles */}
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {bundles.map((bundle) => (
+            <BundleCard key={bundle.id} bundle={bundle} />
+          ))}
+        </div>
+      </section>
+
+      {/* 3. Cara Pakai / Alur Penggunaan */}
+      <section id="cara-pakai" className="px-4 sm:px-8">
+        <div className="border-t border-black/[0.08] pt-16">
+          <div className="max-w-2xl mb-10">
+            <span className="text-[12px] font-semibold uppercase tracking-wider text-[#757575]">
+              Alur Penggunaan
+            </span>
+            <h2 className="mt-1 text-2xl sm:text-3xl font-bold tracking-[-0.025em] text-[#000000]">
+              4 Langkah Cepat Menggunakan Warung Desain
+            </h2>
+            <p className="mt-2 text-[14px] text-[#615d59]">
+              Tanpa perlu akun atau langganan bulanan. Beli putus paket yang dibutuhkan.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5">
+              <div className="flex h-7 w-7 items-center justify-center rounded-[6px] bg-[#f6f5f4] text-[#111111] font-bold text-[13px] mb-3 border border-black/[0.06]">
+                1
+              </div>
+              <h3 className="font-semibold text-[15px] text-[#000000] mb-1.5">Pilih Paket</h3>
+              <p className="text-[13px] text-[#615d59] leading-normal">
+                Lihat preview desain dan pilih bundle yang cocok dengan tema promosi bisnis Anda.
+              </p>
+            </div>
+
+            <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5">
+              <div className="flex h-7 w-7 items-center justify-center rounded-[6px] bg-[#f6f5f4] text-[#111111] font-bold text-[13px] mb-3 border border-black/[0.06]">
+                2
+              </div>
+              <h3 className="font-semibold text-[15px] text-[#000000] mb-1.5">Bayar via QRIS</h3>
+              <p className="text-[13px] text-[#615d59] leading-normal">
+                Scan QRIS GoPay Merchant dengan nominal unik otomatis sampai 3 digit terakhir.
+              </p>
+            </div>
+
+            <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5">
+              <div className="flex h-7 w-7 items-center justify-center rounded-[6px] bg-[#f6f5f4] text-[#111111] font-bold text-[13px] mb-3 border border-black/[0.06]">
+                3
+              </div>
+              <h3 className="font-semibold text-[15px] text-[#000000] mb-1.5">Konfirmasi Transfer</h3>
+              <p className="text-[13px] text-[#615d59] leading-normal">
+                Masukkan nama pengirim dan klik &quot;Cek Pembayaran&quot;. Owner menerima notifikasi via bot Telegram.
+              </p>
+            </div>
+
+            <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5">
+              <div className="flex h-7 w-7 items-center justify-center rounded-[6px] bg-[#e6f3fe] text-[#0075de] font-bold text-[13px] mb-3 border border-[#0075de]/20">
+                4
+              </div>
+              <h3 className="font-semibold text-[15px] text-[#000000] mb-1.5">Unduh &amp; Posting</h3>
+              <p className="text-[13px] text-[#615d59] leading-normal">
+                Halaman otomatis menampilkan tombol download &amp; file terkirim ke email. Siap edit di Canva.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. FAQ Section */}
+      <section id="faq" className="px-4 sm:px-8">
+        <div className="border-t border-black/[0.08] pt-16">
+          <div className="max-w-2xl mb-8">
+            <span className="text-[12px] font-semibold uppercase tracking-wider text-[#757575]">
+              Tanya Jawab
+            </span>
+            <h2 className="mt-1 text-2xl sm:text-3xl font-bold tracking-[-0.025em] text-[#000000]">
+              Pertanyaan yang Sering Diajukan
+            </h2>
+          </div>
+
+          <div className="space-y-3 max-w-4xl">
+            <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5">
+              <h3 className="font-semibold text-[15px] text-[#000000] flex items-center gap-2">
+                <HelpCircle className="h-4 w-4 text-[#0075de] shrink-0" />
+                Apakah saya harus mahir tools AI seperti Midjourney atau DALL-E?
+              </h3>
+              <p className="mt-2 text-[14px] text-[#615d59] leading-relaxed pl-6">
+                <strong>Tidak sama sekali.</strong> Yang Anda beli adalah gambar hasil jadi (PNG transparan &amp; JPG resolusi tinggi). Teks prompt hanya bonus pelengkap bagi Anda yang ingin membuat variasi tambahan.
+              </p>
+            </div>
+
+            <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5">
+              <h3 className="font-semibold text-[15px] text-[#000000] flex items-center gap-2">
+                <HelpCircle className="h-4 w-4 text-[#0075de] shrink-0" />
+                Bagaimana cara menambahkan logo dan teks diskon toko saya?
+              </h3>
+              <p className="mt-2 text-[14px] text-[#615d59] leading-relaxed pl-6">
+                Buka aplikasi <strong>Canva</strong> di HP atau laptop, unggah gambar dari paket Warung Desain sebagai background, lalu tempel logo toko dan ketik teks promo toko Anda. Hanya butuh waktu 2 menit.
+              </p>
+            </div>
+
+            <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5">
+              <h3 className="font-semibold text-[15px] text-[#000000] flex items-center gap-2">
+                <HelpCircle className="h-4 w-4 text-[#0075de] shrink-0" />
+                Berapa lama waktu verifikasi pembayaran setelah transfer?
+              </h3>
+              <p className="mt-2 text-[14px] text-[#615d59] leading-relaxed pl-6">
+                Setelah klik <em>&quot;Cek Pembayaran&quot;</em>, notifikasi langsung terkirim ke Telegram owner. Verifikasi mutasi umumnya memakan waktu <strong>5 hingga 15 menit</strong> pada jam operasional (08.00 – 21.00 WIB).
+              </p>
+            </div>
+
+            <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5">
+              <h3 className="font-semibold text-[15px] text-[#000000] flex items-center gap-2">
+                <HelpCircle className="h-4 w-4 text-[#0075de] shrink-0" />
+                Apakah gambar desain ini bebas dipakai untuk kebutuhan komersial toko?
+              </h3>
+              <p className="mt-2 text-[14px] text-[#615d59] leading-relaxed pl-6">
+                <strong>Ya, 100% bebas royalti komersial.</strong> Anda bebas menggunakannya untuk feed Instagram, WhatsApp Story, etalase Shopee/Tokopedia, dan banner promosi bisnis Anda selamanya.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Dark Feature Card (Midnight Ink #02093a) */}
+      <section className="px-4 sm:px-8">
+        <div className="rounded-[12px] bg-[#02093a] p-8 sm:p-12 text-white text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
+            Mulai Tingkatkan Kualitas Visual Media Sosial Toko Anda
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-[14px] sm:text-[15px] text-white/80 leading-relaxed">
+            Dapatkan puluhan template desain promosi berenergi tinggi dengan modal terjangkau mulai Rp 40 ribuan.
+          </p>
+          <div className="mt-6">
+            <a
+              href="#katalog"
+              className="inline-flex items-center gap-2 rounded-[8px] bg-[#0075de] px-5 py-2.5 text-[14px] font-medium text-white hover:bg-[#0060b8] transition-colors"
+            >
+              <ShoppingBag className="h-4 w-4" />
+              Pilih Paket Desain Sekarang
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 520" width="400" height="520">
+  <defs>
+    <linearGradient id="gopayGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00aed6" />
+      <stop offset="100%" stop-color="#0081a7" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Card Background -->
+  <rect width="400" height="520" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+  
+  <!-- Header Bar -->
+  <rect width="400" height="70" rx="16" fill="url(#gopayGrad)" />
+  <rect y="54" width="400" height="16" fill="url(#gopayGrad)" />
+  
+  <!-- Header Text -->
+  <text x="200" y="42" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">QRIS - GoPay Merchant</text>
+  
+  <!-- Merchant Info -->
+  <text x="200" y="102" fill="#0f172a" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="700" text-anchor="middle">WARUNG DESAIN OFFICIAL</text>
+  <text x="200" y="122" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" text-anchor="middle">NMID: ID1020268841009</text>
+  
+  <!-- QR Code Container Box -->
+  <rect x="55" y="140" width="290" height="290" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+  
+  <!-- QR Code Mock Pattern -->
+  <!-- Top Left Finder Pattern -->
+  <rect x="75" y="160" width="60" height="60" rx="6" fill="#0f172a" />
+  <rect x="85" y="170" width="40" height="40" rx="3" fill="#ffffff" />
+  <rect x="95" y="180" width="20" height="20" rx="2" fill="#0f172a" />
+  
+  <!-- Top Right Finder Pattern -->
+  <rect x="265" y="160" width="60" height="60" rx="6" fill="#0f172a" />
+  <rect x="275" y="170" width="40" height="40" rx="3" fill="#ffffff" />
+  <rect x="285" y="180" width="20" height="20" rx="2" fill="#0f172a" />
+  
+  <!-- Bottom Left Finder Pattern -->
+  <rect x="75" y="350" width="60" height="60" rx="6" fill="#0f172a" />
+  <rect x="85" y="360" width="40" height="40" rx="3" fill="#ffffff" />
+  <rect x="95" y="370" width="20" height="20" rx="2" fill="#0f172a" />
+  
+  <!-- Data Matrix Dots Pattern -->
+  <!-- Row 1 -->
+  <rect x="150" y="160" width="12" height="12" fill="#0f172a" />
+  <rect x="170" y="160" width="12" height="12" fill="#0f172a" />
+  <rect x="200" y="160" width="12" height="12" fill="#0f172a" />
+  <rect x="230" y="160" width="12" height="12" fill="#0f172a" />
+  
+  <!-- Row 2 -->
+  <rect x="150" y="180" width="24" height="12" fill="#0f172a" />
+  <rect x="190" y="180" width="12" height="12" fill="#0f172a" />
+  <rect x="220" y="180" width="24" height="12" fill="#0f172a" />
+  
+  <!-- Center Logo Badge -->
+  <rect x="160" y="245" width="80" height="80" rx="10" fill="#ffffff" stroke="#00aed6" stroke-width="3" />
+  <circle cx="200" cy="285" r="22" fill="#00aed6" />
+  <text x="200" y="291" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="900" text-anchor="middle">WD</text>
+  
+  <!-- Random Matrix clusters -->
+  <rect x="75" y="235" width="15" height="15" fill="#0f172a" />
+  <rect x="100" y="235" width="30" height="15" fill="#0f172a" />
+  <rect x="75" y="260" width="40" height="15" fill="#0f172a" />
+  <rect x="125" y="260" width="15" height="15" fill="#0f172a" />
+  <rect x="85" y="290" width="20" height="15" fill="#0f172a" />
+  <rect x="115" y="290" width="25" height="15" fill="#0f172a" />
+  <rect x="75" y="315" width="15" height="25" fill="#0f172a" />
+  <rect x="105" y="315" width="35" height="15" fill="#0f172a" />
+
+  <rect x="260" y="235" width="20" height="15" fill="#0f172a" />
+  <rect x="290" y="235" width="35" height="15" fill="#0f172a" />
+  <rect x="260" y="260" width="45" height="15" fill="#0f172a" />
+  <rect x="315" y="260" width="15" height="15" fill="#0f172a" />
+  <rect x="270" y="290" width="20" height="15" fill="#0f172a" />
+  <rect x="300" y="290" width="25" height="15" fill="#0f172a" />
+  <rect x="260" y="315" width="35" height="15" fill="#0f172a" />
+  <rect x="305" y="315" width="20" height="25" fill="#0f172a" />
+
+  <!-- Bottom clusters -->
+  <rect x="150" y="345" width="20" height="15" fill="#0f172a" />
+  <rect x="180" y="345" width="40" height="15" fill="#0f172a" />
+  <rect x="230" y="345" width="15" height="15" fill="#0f172a" />
+  <rect x="260" y="355" width="60" height="15" fill="#0f172a" />
+  <rect x="150" y="375" width="35" height="15" fill="#0f172a" />
+  <rect x="200" y="375" width="15" height="15" fill="#0f172a" />
+  <rect x="225" y="375" width="30" height="15" fill="#0f172a" />
+  <rect x="270" y="380" width="25" height="15" fill="#0f172a" />
+  <rect x="305" y="380" width="20" height="15" fill="#0f172a" />
+
+  <rect x="160" y="400" width="20" height="15" fill="#0f172a" />
+  <rect x="190" y="400" width="45" height="15" fill="#0f172a" />
+  <rect x="245" y="400" width="25" height="15" fill="#0f172a" />
+  <rect x="280" y="405" width="45" height="15" fill="#0f172a" />
+
+  <!-- Footer support text -->
+  <text x="200" y="455" fill="#475569" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" text-anchor="middle">Mendukung GoPay, OVO, DANA, BCA, BRI, Mandiri dll.</text>
+  <text x="200" y="475" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" text-anchor="middle">Dicetak otomatis oleh Warung Desain Gateway</text>
+  
+  <line x1="40" y1="492" x2="360" y2="492" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4 4" />
+  <text x="200" y="508" fill="#0081a7" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600" text-anchor="middle">Scan QR di atas menggunakan aplikasi e-wallet Anda</text>
+</svg>

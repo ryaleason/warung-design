@@ -1,26 +1,74 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Colors from DESIGN.md */
+  --color-notion-blue: #0075de;
+  --color-paper-warmth: #f6f5f4;
+  --color-pure-white: #ffffff;
+  --color-ink-black: #000000;
+  --color-charcoal: #111111;
+  --color-stone: #757575;
+  --color-graphite: #615d59;
+  --color-slate: #696969;
+  --color-sky-tint: #e6f3fe;
+  --color-marigold: #ffb110;
+  --color-coral: #f64932;
+  --color-saffron: #e89d01;
+  --color-vermillion: #e32d14;
+  --color-mocha: #b18164;
+  --color-signal-blue: #097fe8;
+  --color-sky-wash: #62aef0;
+  --color-midnight-ink: #02093a;
+  --color-peach: #f6d5b8;
+
+  --background: var(--color-paper-warmth);
+  --foreground: var(--color-ink-black);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-notion-blue: var(--color-notion-blue);
+  --color-paper-warmth: var(--color-paper-warmth);
+  --color-pure-white: var(--color-pure-white);
+  --color-ink-black: var(--color-ink-black);
+  --color-charcoal: var(--color-charcoal);
+  --color-stone: var(--color-stone);
+  --color-graphite: var(--color-graphite);
+  --color-slate: var(--color-slate);
+  --color-sky-tint: var(--color-sky-tint);
+  --color-marigold: var(--color-marigold);
+  --color-coral: var(--color-coral);
+  --color-saffron: var(--color-saffron);
+  --color-vermillion: var(--color-vermillion);
+  --color-mocha: var(--color-mocha);
+  --color-signal-blue: var(--color-signal-blue);
+  --color-sky-wash: var(--color-sky-wash);
+  --color-midnight-ink: var(--color-midnight-ink);
+  --color-peach: var(--color-peach);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body {
+  background-color: #f6f5f4;
+  color: #000000;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Notion hair-line card utility */
+.notion-card {
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+}
+
+/* Notion sticky nav shadow */
+.notion-nav-shadow {
+  box-shadow: 0px 0.7px 1.462px 0px rgba(0, 0, 0, 0.015), 0px 3px 9px 0px rgba(0, 0, 0, 0.03);
+}
+
+/* Notion Product UI mockup shadow */
+.notion-mockup-shadow {
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
