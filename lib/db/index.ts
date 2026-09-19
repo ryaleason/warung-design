@@ -261,7 +261,7 @@ export async function getOrderById(id: string): Promise<Order | null> {
       .from('orders')
       .select('*, bundles(*)')
       .eq('id', id)
-      .single();
+      .maybeSingle();
 
     if (!error && data) {
       const bundleData = Array.isArray(data.bundles) ? data.bundles[0] : data.bundles;
@@ -270,6 +270,21 @@ export async function getOrderById(id: string): Promise<Order | null> {
         bundle: bundleData || (await getBundleById(data.bundle_id)),
       };
       return order;
+    }
+
+    // Fallback: Query orders directly if join failed
+    const { data: directOrder } = await supabase
+      .from('orders')
+      .select('*')
+      .eq('id', id)
+      .maybeSingle();
+
+    if (directOrder) {
+      const bundle = await getBundleById(directOrder.bundle_id);
+      return {
+        ...directOrder,
+        bundle: bundle || undefined,
+      };
     }
   }
 
@@ -295,13 +310,28 @@ export async function getOrderByCode(code: string): Promise<Order | null> {
       .from('orders')
       .select('*, bundles(*)')
       .eq('order_code', code)
-      .single();
+      .maybeSingle();
 
     if (!error && data) {
       const bundleData = Array.isArray(data.bundles) ? data.bundles[0] : data.bundles;
       return {
         ...data,
         bundle: bundleData || (await getBundleById(data.bundle_id)),
+      };
+    }
+
+    // Fallback: Query orders directly if join failed
+    const { data: directOrder } = await supabase
+      .from('orders')
+      .select('*')
+      .eq('order_code', code)
+      .maybeSingle();
+
+    if (directOrder) {
+      const bundle = await getBundleById(directOrder.bundle_id);
+      return {
+        ...directOrder,
+        bundle: bundle || undefined,
       };
     }
   }

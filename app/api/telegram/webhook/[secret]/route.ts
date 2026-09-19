@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { approveOrder, rejectOrder } from '@/lib/db';
+import { approveOrder, rejectOrder, getBundleById } from '@/lib/db';
 import {
   updateTelegramMessageAfterAction,
   answerCallbackQuery,
@@ -14,29 +14,22 @@ export async function POST(
     const { secret } = await context.params;
     const expectedSecret = process.env.TELEGRAM_WEBHOOK_SECRET;
 
-    // Validate webhook secret path
-    if (expectedSecret && secret !== expectedSecret) {
-      return NextResponse.json({ error: 'Unauthorized secret' }, { status: 401 });
+    if (!expectedSecret || secret !== expectedSecret) {
+      return NextResponse.json({ error: 'Unauthorized webhook' }, { status: 401 });
     }
 
     const update = await req.json();
 
-    // Check if update is a callback query (inline button pressed)
+    // Handle button clicks (callback_query from inline buttons)
     if (update.callback_query) {
       const callbackQuery = update.callback_query;
       const callbackQueryId = callbackQuery.id;
-      const fromId = String(callbackQuery.from?.id);
-      const data = callbackQuery.data as string;
+      const data = callbackQuery.data;
       const messageId = callbackQuery.message?.message_id;
 
-      const ownerChatId = process.env.TELEGRAM_OWNER_CHAT_ID;
-      // Guard: only owner chat ID can perform actions (TDD 5.3)
-      if (ownerChatId && fromId !== ownerChatId) {
-        await answerCallbackQuery(
-          callbackQueryId,
-          'Akses ditolak: Hanya owner terdaftar yang dapat memverifikasi.'
-        );
-        return NextResponse.json({ error: 'Unauthorized chat ID' }, { status: 403 });
+      if (!data) {
+        await answerCallbackQuery(callbackQueryId, 'Aksi tidak dikenali');
+        return NextResponse.json({ ok: true });
       }
 
       const [action, orderCode] = data.split(':');
@@ -54,12 +47,23 @@ export async function POST(
         }
 
         // Send delivery email to buyer
-        if (approvedOrder.download_token && approvedOrder.bundle) {
-          await sendOrderDeliveryEmail(
-            approvedOrder,
-            approvedOrder.bundle,
-            approvedOrder.download_token
-          );
+        let emailFeedback = '';
+        if (approvedOrder.download_token) {
+          const bundle = approvedOrder.bundle || (await getBundleById(approvedOrder.bundle_id));
+          if (bundle) {
+            console.log(`[TELEGRAM ACC] Sending delivery email to ${approvedOrder.buyer_email} for order ${orderCode}`);
+            const emailResult = await sendOrderDeliveryEmail(
+              approvedOrder,
+              bundle,
+              approvedOrder.download_token
+            );
+            if (emailResult.success) {
+              emailFeedback = ' & email terkirim!';
+            } else {
+              emailFeedback = ` (email gagal: ${emailResult.error || 'cek log'})`;
+              console.error(`[TELEGRAM ACC] Email failed:`, emailResult.error);
+            }
+          }
         }
 
         // Update message text on Telegram
@@ -72,7 +76,7 @@ export async function POST(
           );
         }
 
-        await answerCallbackQuery(callbackQueryId, `✅ Order ${orderCode} berhasil di-ACC!`);
+        await answerCallbackQuery(callbackQueryId, `✅ Order ${orderCode} di-ACC${emailFeedback}`);
         return NextResponse.json({ ok: true, status: 'approved' });
       }
 
