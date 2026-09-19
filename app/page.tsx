@@ -40,7 +40,7 @@ export default async function HomePage() {
           <p
             data-aos="fade-up"
             data-aos-delay="200"
-            className="mx-auto mt-6 max-w-2xl text-[18px] sm:text-[20px] text-[#615d59] leading-relaxed"
+            className="mx-auto mt-6 max-w-2xl text-[15px] sm:text-[17px] text-[#615d59] leading-relaxed"
           >
             Paket desain musiman siap pakai (feed &amp; story) hasil kurasi AI generatif terbaik. Dapatkan gambar resolusi tinggi langsung pakai plus bonus prompt untuk variasi mandiri.
           </p>
