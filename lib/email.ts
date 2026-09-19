@@ -27,13 +27,39 @@ export async function sendOrderDeliveryEmail(
   const baseUrl = getBaseUrl();
   const downloadUrl = `${baseUrl}/api/download/${downloadToken}`;
   const orderUrl = `${baseUrl}/checkout/${order.id}`;
+  const emailSubject = `Pesanan #${order.order_code}: Akses File Desain Anda - Warung Design`;
+
+  const plainTextContent = `Halo, ${order.buyer_name}!
+
+Pembayaran kamu untuk pesanan ${order.order_code} telah berhasil diverifikasi oleh tim Warung Design. File bundle desain kamu sudah siap diunduh!
+
+Detail Pesanan:
+- Produk: ${bundle.name}
+- Total: Rp ${order.total_amount.toLocaleString('id-ID')}
+
+Tautan Unduh File Desain:
+${downloadUrl}
+
+Halaman Status Pesanan:
+${orderUrl}
+
+Catatan:
+- Tautan aktif selama 48 jam. Silakan simpan file di HP atau komputer Anda.
+- Isi paket mencakup: folder gambar format PNG & JPG resolusi tinggi, template prompt AI, dan panduan edit Canva.
+
+Ada kendala? Hubungi admin via WhatsApp di:
+https://wa.me/6285182510575 (085182510575)
+
+Terima kasih,
+Warung Design
+`.trim();
 
   const htmlContent = `
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Akses Desain Bundle Kamu - Warung Design</title>
+  <title>Akses Desain - Warung Design</title>
 </head>
 <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f6f5f4; margin: 0; padding: 24px; color: #111111;">
   <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
@@ -43,9 +69,9 @@ export async function sendOrderDeliveryEmail(
     </div>
 
     <div style="padding: 32px;">
-      <h2 style="margin-top: 0; color: #111111; font-size: 20px;">Halo, ${order.buyer_name}! 👋</h2>
+      <h2 style="margin-top: 0; color: #111111; font-size: 20px;">Halo, ${order.buyer_name}!</h2>
       <p style="color: #615d59; font-size: 15px; line-height: 1.6;">
-        Pembayaran kamu untuk pesanan <strong>${order.order_code}</strong> telah berhasil diverifikasi oleh tim kami. File bundle desain kamu sudah siap diunduh!
+        Pembayaran kamu untuk pesanan <strong>${order.order_code}</strong> telah berhasil diverifikasi. File paket desain kamu sudah siap diunduh.
       </p>
 
       <div style="background-color: #f6f5f4; border-radius: 8px; padding: 20px; margin: 24px 0; border: 1px solid rgba(0, 0, 0, 0.06);">
@@ -57,37 +83,42 @@ export async function sendOrderDeliveryEmail(
       <!-- Tombol Download Langsung -->
       <div style="text-align: center; margin: 28px 0 16px 0;">
         <a href="${downloadUrl}" style="background-color: #0075de; color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 16px; display: inline-block;">
-          📥 Download File Bundle (.ZIP)
+          Buka &amp; Unduh File Desain
         </a>
       </div>
 
       <!-- Link Halaman Order -->
       <div style="text-align: center; margin-bottom: 28px;">
         <p style="margin: 0; font-size: 13px; color: #757575;">
-          Atau buka halaman pesanan Anda:
+          Atau buka melalui halaman status pesanan:
         </p>
-        <p style="margin: 4px 0 0 0;">
+        <p style="margin: 6px 0 0 0;">
           <a href="${orderUrl}" style="color: #0075de; font-size: 14px; font-weight: 600; text-decoration: underline;">
-            👉 Buka Halaman Pesanan ${order.order_code}
+            Lihat Pesanan ${order.order_code}
           </a>
         </p>
         <p style="margin-top: 12px; font-size: 12px; color: #757575;">
-          * Link download aktif selama 48 jam. Simpan file di HP atau komputer Anda.
+          * Tautan unduh aktif selama 48 jam. Simpan file di HP atau komputer Anda.
         </p>
       </div>
 
       <div style="border-top: 1px solid rgba(0, 0, 0, 0.08); padding-top: 20px; font-size: 14px; color: #615d59;">
-        <p style="margin: 0 0 8px; font-weight: 600; color: #111111;">Isi di dalam paket ZIP:</p>
+        <p style="margin: 0 0 8px; font-weight: 600; color: #111111;">Isi di dalam paket desain:</p>
         <ul style="margin: 0; padding-left: 20px; line-height: 1.6;">
           <li>Folder gambar desain format PNG transparan &amp; JPG resolusi tinggi.</li>
-          <li>File teks (.txt) berisi panduan &amp; template prompt AI (Midjourney &amp; DALL-E).</li>
-          <li>Panduan ringkas cara edit logo / teks pakai Canva di HP/laptop.</li>
+          <li>Panduan ringkas &amp; template prompt AI siap pakai.</li>
+          <li>Panduan cara kustomisasi desain menggunakan Canva.</li>
         </ul>
       </div>
     </div>
 
     <div style="background-color: #f6f5f4; border-top: 1px solid rgba(0, 0, 0, 0.08); padding: 20px 32px; text-align: center; font-size: 13px; color: #757575;">
-      Ada kendala? Hubungi admin via WhatsApp di <a href="https://wa.me/6285182510575" style="color: #0075de; font-weight: 600; text-decoration: none;">085182510575</a>
+      <p style="margin: 0 0 6px 0;">
+        Ada kendala? Hubungi admin via WhatsApp di <a href="https://wa.me/6285182510575" style="color: #0075de; font-weight: 600; text-decoration: none;">085182510575</a>
+      </p>
+      <p style="margin: 8px 0 0 0; font-size: 11px; color: #999999;">
+        Email ini dikirim otomatis sebagai konfirmasi transaksi resmi dari Warung Design (${order.order_code}).
+      </p>
     </div>
   </div>
 </body>
@@ -106,10 +137,15 @@ export async function sendOrderDeliveryEmail(
       });
 
       await transporter.sendMail({
-        from: `Warung Design <${GMAIL_USER}>`,
+        from: `"Warung Design" <${GMAIL_USER}>`,
         to: order.buyer_email,
-        subject: `[Akses Desain] ${bundle.name} - Warung Design`,
+        replyTo: GMAIL_USER,
+        subject: emailSubject,
+        text: plainTextContent,
         html: htmlContent,
+        headers: {
+          'X-Entity-Ref-ID': order.order_code,
+        },
       });
 
       console.log(`[EMAIL GMAIL] Delivery email successfully sent to ${order.buyer_email} via ${GMAIL_USER}`);
@@ -133,7 +169,9 @@ export async function sendOrderDeliveryEmail(
         body: JSON.stringify({
           from: EMAIL_FROM,
           to: order.buyer_email,
-          subject: `[Akses Desain] ${bundle.name} - Warung Design`,
+          reply_to: GMAIL_USER,
+          subject: emailSubject,
+          text: plainTextContent,
           html: htmlContent,
         }),
       });
