@@ -1,5 +1,6 @@
 import { getBundles } from '@/lib/db';
 import BundleCard from '@/components/BundleCard';
+import FAQAccordion from '@/components/FAQAccordion';
 import {
   Sparkles,
   Zap,
@@ -239,63 +240,7 @@ export default async function HomePage() {
             </h2>
           </div>
 
-          <div className="space-y-3 max-w-4xl">
-            <div
-              data-aos="fade-up"
-              data-aos-delay="100"
-              className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5"
-            >
-              <h3 className="font-semibold text-[15px] text-[#000000] flex items-center gap-2">
-                <HelpCircle className="h-4 w-4 text-[#0075de] shrink-0" />
-                Apakah saya harus mahir tools AI seperti Midjourney atau DALL-E?
-              </h3>
-              <p className="mt-2 text-[14px] text-[#615d59] leading-relaxed pl-6">
-                <strong>Tidak sama sekali.</strong> Yang Anda beli adalah gambar hasil jadi (PNG transparan &amp; JPG resolusi tinggi). Teks prompt hanya bonus pelengkap bagi Anda yang ingin membuat variasi tambahan.
-              </p>
-            </div>
-
-            <div
-              data-aos="fade-up"
-              data-aos-delay="200"
-              className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5"
-            >
-              <h3 className="font-semibold text-[15px] text-[#000000] flex items-center gap-2">
-                <HelpCircle className="h-4 w-4 text-[#0075de] shrink-0" />
-                Bagaimana cara menambahkan logo dan teks diskon toko saya?
-              </h3>
-              <p className="mt-2 text-[14px] text-[#615d59] leading-relaxed pl-6">
-                Buka aplikasi <strong>Canva</strong> di HP atau laptop, unggah gambar dari paket Warung Desain sebagai background, lalu tempel logo toko dan ketik teks promo toko Anda. Hanya butuh waktu 2 menit.
-              </p>
-            </div>
-
-            <div
-              data-aos="fade-up"
-              data-aos-delay="300"
-              className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5"
-            >
-              <h3 className="font-semibold text-[15px] text-[#000000] flex items-center gap-2">
-                <HelpCircle className="h-4 w-4 text-[#0075de] shrink-0" />
-                Berapa lama waktu verifikasi pembayaran setelah transfer?
-              </h3>
-              <p className="mt-2 text-[14px] text-[#615d59] leading-relaxed pl-6">
-                Setelah klik <em>&quot;Cek Pembayaran&quot;</em>, notifikasi langsung terkirim ke Telegram owner. Verifikasi mutasi umumnya memakan waktu <strong>5 hingga 15 menit</strong> pada jam operasional (08.00 – 21.00 WIB).
-              </p>
-            </div>
-
-            <div
-              data-aos="fade-up"
-              data-aos-delay="400"
-              className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5"
-            >
-              <h3 className="font-semibold text-[15px] text-[#000000] flex items-center gap-2">
-                <HelpCircle className="h-4 w-4 text-[#0075de] shrink-0" />
-                Apakah gambar desain ini bebas dipakai untuk kebutuhan komersial toko?
-              </h3>
-              <p className="mt-2 text-[14px] text-[#615d59] leading-relaxed pl-6">
-                <strong>Ya, 100% bebas royalti komersial.</strong> Anda bebas menggunakannya untuk feed Instagram, WhatsApp Story, etalase Shopee/Tokopedia, dan banner promosi bisnis Anda selamanya.
-              </p>
-            </div>
-          </div>
+          <FAQAccordion />
         </div>
       </section>
 
