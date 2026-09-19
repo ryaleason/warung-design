@@ -1,8 +1,15 @@
 import { Order, Bundle } from '@/types';
 
+function escapeHtml(str: string): string {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 export function getTelegramConfig() {
-  const token = process.env.TELEGRAM_BOT_TOKEN || '';
-  const ownerChatId = process.env.TELEGRAM_OWNER_CHAT_ID || '';
+  const token = (process.env.TELEGRAM_BOT_TOKEN || '').trim().replace(/^['"]|['"]$/g, '');
+  const ownerChatId = (process.env.TELEGRAM_OWNER_CHAT_ID || '').trim().replace(/^['"]|['"]$/g, '');
   const isConfigured = Boolean(
     token &&
     ownerChatId &&
@@ -34,20 +41,24 @@ export async function sendOrderVerificationNotification(
   const { token, ownerChatId, isConfigured } = getTelegramConfig();
 
   if (!isConfigured) {
-    console.log('[TELEGRAM MOCK] Bot token or owner chat ID not configured. Simulated notification:');
+    console.warn('[TELEGRAM MOCK] Bot token or owner chat ID not configured. Simulated notification:');
     console.log(`Order: ${order.order_code}, Sender: ${order.sender_name}, Total: ${formatRupiah(order.total_amount)}`);
-    return { success: true, messageId: `mock_${Date.now()}` };
+    return { 
+      success: false, 
+      messageId: `mock_${Date.now()}`,
+      error: 'TELEGRAM_BOT_TOKEN atau TELEGRAM_OWNER_CHAT_ID belum aktif di serverless environment' 
+    };
   }
 
   const messageText = 
-`🔔 *Order Baru Menunggu Verifikasi*
+`🔔 <b>Order Baru Menunggu Verifikasi</b>
 
-📦 *Order:* \`${order.order_code}\`
-🎨 *Bundle:* ${bundle.name}
-👤 *Nama Pengirim:* ${order.sender_name || '-'}
-📧 *Email Pembeli:* ${order.buyer_email}
-💰 *Nominal Mutasi:* *${formatRupiah(order.total_amount)}*
-*(Pastikan nominal transfer sama persis termasuk 3 digit kode unik)*
+📦 <b>Order:</b> <code>${escapeHtml(order.order_code)}</code>
+🎨 <b>Bundle:</b> ${escapeHtml(bundle.name)}
+👤 <b>Nama Pengirim:</b> ${escapeHtml(order.sender_name || '-')}
+📧 <b>Email Pembeli:</b> ${escapeHtml(order.buyer_email)}
+💰 <b>Nominal Mutasi:</b> <b>${formatRupiah(order.total_amount)}</b>
+<i>(Pastikan nominal transfer sama persis termasuk 3 digit kode unik)</i>
 
 Silakan cek aplikasi GoPay Merchant lalu pilih keputusan di bawah:`;
 
@@ -73,7 +84,7 @@ Silakan cek aplikasi GoPay Merchant lalu pilih keputusan di bawah:`;
       body: JSON.stringify({
         chat_id: ownerChatId,
         text: messageText,
-        parse_mode: 'Markdown',
+        parse_mode: 'HTML',
         reply_markup: inlineKeyboard,
       }),
     });
@@ -108,12 +119,12 @@ export async function updateTelegramMessageAfterAction(
     return true;
   }
 
-  const statusBadge = action === 'acc' ? '✅ SUDAH DI-ACC' : '❌ ORDER DITOLAK';
+  const statusBadge = action === 'acc' ? '✅ <b>SUDAH DI-ACC</b>' : '❌ <b>ORDER DITOLAK</b>';
   const nowStr = new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' });
   const text = 
 `${statusBadge}
-Order Code: \`${orderCode}\`
-Diverifikasi oleh: ${actorName}
+Order Code: <code>${escapeHtml(orderCode)}</code>
+Diverifikasi oleh: ${escapeHtml(actorName)}
 Waktu: ${nowStr} WIB`;
 
   try {
@@ -124,7 +135,7 @@ Waktu: ${nowStr} WIB`;
         chat_id: ownerChatId,
         message_id: messageId,
         text: text,
-        parse_mode: 'Markdown',
+        parse_mode: 'HTML',
       }),
     });
 
