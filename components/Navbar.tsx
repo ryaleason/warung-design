@@ -13,9 +13,6 @@ export default function Navbar() {
             <span className="text-[17px] font-semibold tracking-[-0.015em] text-[#111111]">
               Warung Desain
             </span>
-            <span className="hidden sm:inline-block rounded-full bg-[#f6d5b8] px-2.5 py-0.5 text-[11px] font-medium text-[#111111]">
-              UMKM Desain AI
-            </span>
           </div>
         </Link>
 
