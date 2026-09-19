@@ -69,8 +69,6 @@ export default function FAQAccordion() {
         return (
           <div
             key={item.id}
-            data-aos="fade-up"
-            data-aos-delay={(idx + 1) * 100}
             className={`rounded-[12px] border transition-colors bg-[#ffffff] overflow-hidden ${
               isOpen ? 'border-[#0075de]/30 shadow-xs' : 'border-black/[0.08] hover:border-black/[0.16]'
             }`}

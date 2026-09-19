@@ -240,7 +240,9 @@ export default async function HomePage() {
             </h2>
           </div>
 
-          <FAQAccordion />
+          <div data-aos="fade-up" data-aos-delay="100">
+            <FAQAccordion />
+          </div>
         </div>
       </section>
 

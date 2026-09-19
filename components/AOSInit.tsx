@@ -10,16 +10,26 @@ export default function AOSInit() {
 
   useEffect(() => {
     AOS.init({
-      duration: 750,
+      duration: 650,
       easing: 'ease-out-cubic',
-      once: false,
-      offset: 50,
-      delay: 50,
+      once: true, // Sekali animasi selesai, konten tetap terlihat permanen dan tidak akan hilang
+      offset: 40,
+      disableMutationObserver: false,
     });
+
+    // Refresh setelah client hydration selesai
+    const timer = setTimeout(() => {
+      AOS.refreshHard();
+    }, 120);
+
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    AOS.refresh();
+    const timer = setTimeout(() => {
+      AOS.refresh();
+    }, 50);
+    return () => clearTimeout(timer);
   }, [pathname]);
 
   return null;
