@@ -22,15 +22,6 @@ export default async function HomePage() {
       {/* 1. Hero Section */}
       <section className="pt-16 pb-12 sm:pt-24 sm:pb-16 text-center px-4 sm:px-8">
         <div className="mx-auto max-w-4xl">
-          {/* Avatar / Character marks row or Pill Tag */}
-          <div
-            data-aos="fade-down"
-            data-aos-duration="600"
-            className="inline-flex items-center gap-2 rounded-full bg-[#e6f3fe] px-3.5 py-1 text-[13px] font-medium text-[#0075de] mb-6"
-          >
-            <Sparkles className="h-3.5 w-3.5" />
-            <span>Koleksi Desain Instan Khusus Admin UMKM Indonesia</span>
-          </div>
 
           {/* Headline with embedded Hero Highlight Pill */}
           <h1
@@ -136,7 +127,6 @@ export default async function HomePage() {
         >
           <div>
             <div className="flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-wider text-[#757575]">
-              <Palette className="h-3.5 w-3.5 text-[#0075de]" />
               Pilihan Tema Bundle
             </div>
             <h2 className="mt-1 text-2xl sm:text-3xl font-bold tracking-[-0.025em] text-[#000000]">
