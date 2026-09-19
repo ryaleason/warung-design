@@ -403,7 +403,6 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
           {/* Download Action Box */}
           <div className="mx-auto mt-8 max-w-md rounded-[12px] bg-[#f6f5f4] border border-black/[0.08] p-6 text-center">
             <span className="inline-flex items-center gap-1 rounded-full bg-[#e6f3fe] px-2.5 py-0.5 text-[11px] font-semibold text-[#0075de] mb-3">
-              <Sparkles className="h-3 w-3" />
               Akses Unduh Langsung
             </span>
             
