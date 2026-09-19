@@ -12,11 +12,12 @@ export default function Footer() {
               <Image
                 src="/logo.svg"
                 alt="Warung Design"
-                width={42}
-                height={38}
-                className="h-20sem w-auto object-contain"
+                width={32}
+                height={28}
+                className="h-7 w-auto object-contain"
                 unoptimized
               />
+              <span className="text-[16px] font-semibold text-[#111111]">Warung Design</span>
             </div>
             <p className="mt-3 max-w-sm text-[14.5px] text-[#615d59] leading-relaxed">
               Solusi konten promosi &amp; visual siap pakai untuk admin media sosial UMKM Indonesia.
