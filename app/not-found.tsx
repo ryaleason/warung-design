@@ -16,7 +16,7 @@ export default function NotFound() {
         Halaman Tidak Ditemukan
       </h1>
 
-      <p className="mx-auto mt-3 max-w-md text-[15px] text-[#615d59] leading-relaxed">
+      <p className="mx-auto mt-3 max-w-md text-[16.5px] text-[#615d59] leading-relaxed">
         Halaman atau pesanan yang Anda cari tidak ditemukan. Jika Anda baru saja membuat pesanan, pastikan server sedang berjalan atau buat pesanan baru dari katalog.
       </p>
 

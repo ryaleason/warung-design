@@ -40,7 +40,7 @@ export default async function HomePage() {
           <p
             data-aos="fade-up"
             data-aos-delay="200"
-            className="mx-auto mt-6 max-w-2xl text-[16px] sm:text-[18px] text-[#615d59] leading-relaxed"
+            className="mx-auto mt-6 max-w-2xl text-[18px] sm:text-[20px] text-[#615d59] leading-relaxed"
           >
             Paket desain musiman siap pakai (feed &amp; story) hasil kurasi AI generatif terbaik. Dapatkan gambar resolusi tinggi langsung pakai plus bonus prompt untuk variasi mandiri.
           </p>
@@ -77,8 +77,8 @@ export default async function HomePage() {
               <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-[#e6f3fe] text-[#0075de] mb-3">
                 <Zap className="h-4 w-4" />
               </div>
-              <p className="text-[14px] font-semibold text-[#000000]">Bukan Teks Mentah</p>
-              <p className="text-[12px] text-[#757575] mt-0.5">Hasil gambar jadi &amp; kurasi</p>
+              <p className="text-[15px] font-semibold text-[#000000]">Bukan Teks Mentah</p>
+              <p className="text-[13.5px] text-[#757575] mt-0.5">Hasil gambar jadi &amp; kurasi</p>
             </div>
 
             <div
@@ -89,8 +89,8 @@ export default async function HomePage() {
               <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-[#f6d5b8] text-[#000000] mb-3">
                 <Smartphone className="h-4 w-4" />
               </div>
-              <p className="text-[14px] font-semibold text-[#000000]">Edit Cukup di HP</p>
-              <p className="text-[12px] text-[#757575] mt-0.5">Tinggal tempel logo &amp; teks</p>
+              <p className="text-[15px] font-semibold text-[#000000]">Edit Cukup di HP</p>
+              <p className="text-[13.5px] text-[#757575] mt-0.5">Tinggal tempel logo &amp; teks</p>
             </div>
 
             <div
@@ -101,8 +101,8 @@ export default async function HomePage() {
               <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-[#ffb110]/20 text-[#000000] mb-3">
                 <Clock className="h-4 w-4" />
               </div>
-              <p className="text-[14px] font-semibold text-[#000000]">Kirim &lt; 15 Menit</p>
-              <p className="text-[12px] text-[#757575] mt-0.5">Link unduh otomatis di web</p>
+              <p className="text-[15px] font-semibold text-[#000000]">Kirim &lt; 15 Menit</p>
+              <p className="text-[13.5px] text-[#757575] mt-0.5">Link unduh otomatis di web</p>
             </div>
 
             <div
@@ -113,8 +113,8 @@ export default async function HomePage() {
               <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-emerald-50 text-emerald-700 mb-3">
                 <ShieldCheck className="h-4 w-4" />
               </div>
-              <p className="text-[14px] font-semibold text-[#000000]">Bebas Royalti</p>
-              <p className="text-[12px] text-[#757575] mt-0.5">Lisensi komersial seumur hidup</p>
+              <p className="text-[15px] font-semibold text-[#000000]">Bebas Royalti</p>
+              <p className="text-[13.5px] text-[#757575] mt-0.5">Lisensi komersial seumur hidup</p>
             </div>
           </div>
         </div>
@@ -133,7 +133,7 @@ export default async function HomePage() {
             <h2 className="mt-1 text-2xl sm:text-3xl font-bold tracking-[-0.025em] text-[#000000]">
               Katalog Bundle Desain Siap Pakai
             </h2>
-            <p className="mt-1 text-[14px] text-[#615d59]">
+            <p className="mt-1 text-[15px] sm:text-[16px] text-[#615d59]">
               Pilih paket sesuai momen promosi toko atau kategori bisnis Anda.
             </p>
           </div>
@@ -163,7 +163,7 @@ export default async function HomePage() {
             <h2 className="mt-1 text-2xl sm:text-3xl font-bold tracking-[-0.025em] text-[#000000]">
               4 Langkah Cepat Menggunakan Warung Desain
             </h2>
-            <p className="mt-2 text-[14px] text-[#615d59]">
+            <p className="mt-2 text-[15px] sm:text-[16px] text-[#615d59]">
               Tanpa perlu akun atau langganan bulanan. Beli putus paket yang dibutuhkan.
             </p>
           </div>
@@ -178,7 +178,7 @@ export default async function HomePage() {
                 1
               </div>
               <h3 className="font-semibold text-[15px] text-[#000000] mb-1.5">Pilih Paket</h3>
-              <p className="text-[13px] text-[#615d59] leading-normal">
+              <p className="text-[14.5px] text-[#615d59] leading-relaxed">
                 Lihat preview desain dan pilih bundle yang cocok dengan tema promosi bisnis Anda.
               </p>
             </div>
@@ -192,7 +192,7 @@ export default async function HomePage() {
                 2
               </div>
               <h3 className="font-semibold text-[15px] text-[#000000] mb-1.5">Bayar via QRIS</h3>
-              <p className="text-[13px] text-[#615d59] leading-normal">
+              <p className="text-[14.5px] text-[#615d59] leading-relaxed">
                 Scan QRIS GoPay Merchant dengan nominal unik otomatis sampai 3 digit terakhir.
               </p>
             </div>
@@ -206,7 +206,7 @@ export default async function HomePage() {
                 3
               </div>
               <h3 className="font-semibold text-[15px] text-[#000000] mb-1.5">Konfirmasi Transfer</h3>
-              <p className="text-[13px] text-[#615d59] leading-normal">
+              <p className="text-[14.5px] text-[#615d59] leading-relaxed">
                 Masukkan nama pengirim dan klik &quot;Cek Pembayaran&quot;. Owner menerima notifikasi via bot Telegram.
               </p>
             </div>
@@ -220,7 +220,7 @@ export default async function HomePage() {
                 4
               </div>
               <h3 className="font-semibold text-[15px] text-[#000000] mb-1.5">Unduh &amp; Posting</h3>
-              <p className="text-[13px] text-[#615d59] leading-normal">
+              <p className="text-[14.5px] text-[#615d59] leading-relaxed">
                 Halaman otomatis menampilkan tombol download &amp; file terkirim ke email. Siap edit di Canva.
               </p>
             </div>
@@ -256,7 +256,7 @@ export default async function HomePage() {
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
             Mulai Tingkatkan Kualitas Visual Media Sosial Toko Anda
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-[14px] sm:text-[15px] text-white/80 leading-relaxed">
+          <p className="mx-auto mt-3 max-w-xl text-[16px] sm:text-[17px] text-white/80 leading-relaxed">
             Dapatkan puluhan template desain promosi berenergi tinggi dengan modal terjangkau mulai Rp 40 ribuan.
           </p>
           <div className="mt-6">

@@ -184,7 +184,7 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
             <h1 className="mt-1 text-xl sm:text-2xl font-bold tracking-[-0.02em] text-[#000000]">
               {order.bundle?.name || 'Paket Bundle Desain'}
             </h1>
-            <p className="mt-1 text-[13px] text-[#615d59]">
+            <p className="mt-1 text-[14.5px] text-[#615d59]">
               Atas nama: <strong className="text-[#000000]">{order.buyer_name}</strong> • Email: <strong className="text-[#000000]">{order.buyer_email}</strong>
             </p>
           </div>
@@ -231,7 +231,7 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
           {/* Left Column: QRIS Graphic */}
           <div className="md:col-span-5 flex flex-col items-center justify-center rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-6 text-center">
             <h3 className="font-semibold text-[15px] text-[#000000] mb-1">Scan QRIS GoPay Merchant</h3>
-            <p className="text-[12px] text-[#757575] mb-4">
+            <p className="text-[13.5px] text-[#757575] mb-4">
               Bisa di-scan menggunakan GoPay, BCA Mobile, OVO, DANA, ShopeePay, dll.
             </p>
             <div className="relative w-full max-w-[280px] aspect-[4/5] rounded-[8px] overflow-hidden border border-black/[0.08] bg-[#f6f5f4]">
@@ -243,8 +243,8 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
                 className="object-contain p-2"
               />
             </div>
-            <p className="mt-3 text-[11px] text-[#757575]">
-              Warung Desain Official • QRIS GoPay Merchant
+            <p className="mt-3 text-[12.5px] text-[#757575]">
+              Warung Design Official • QRIS GoPay Merchant
             </p>
           </div>
 
@@ -310,7 +310,7 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
                     placeholder="Contoh: Rani Maulida / GoPay Rani"
                     className="w-full rounded-[8px] border border-black/[0.12] bg-[#ffffff] px-3.5 py-2 text-[14px] text-[#000000] placeholder:text-[#757575]/60 focus:border-[#0075de] focus:outline-none focus:ring-1 focus:ring-[#0075de]"
                   />
-                  <p className="mt-1 text-[11px] text-[#757575]">
+                  <p className="mt-1 text-[12.5px] text-[#757575]">
                     Diperlukan untuk mencocokkan mutasi masuk di rekening owner.
                   </p>
                 </div>
@@ -360,9 +360,9 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
           </div>
 
           <h2 className="mt-5 text-xl font-bold tracking-tight text-[#000000]">
-            Sedang Diverifikasi oleh Owner Warung Desain
+            Sedang Diverifikasi oleh Owner Warung Design
           </h2>
-          <p className="mx-auto mt-2 max-w-lg text-[14px] text-[#615d59] leading-relaxed">
+          <p className="mx-auto mt-2 max-w-lg text-[15.5px] text-[#615d59] leading-relaxed">
             Notifikasi pembayaran sebesar <strong>{formatRupiah(order.total_amount)}</strong> dari atas nama <strong>{senderName || order.sender_name}</strong> telah dikirim ke Telegram owner.
           </p>
 
@@ -370,17 +370,17 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
             <div className="flex items-start gap-3">
               <Clock className="h-4 w-4 text-[#0075de] shrink-0 mt-0.5" />
               <div>
-                <p className="text-[13px] font-semibold text-[#000000]">
+                <p className="text-[14.5px] font-semibold text-[#000000]">
                   Halaman ini otomatis berganti ke halaman unduh
                 </p>
-                <p className="text-[12px] text-[#615d59] mt-1">
+                <p className="text-[13.5px] text-[#615d59] mt-1">
                   Anda tidak perlu me-refresh halaman. Estimasi pengecekan mutasi: <strong>5 - 15 menit</strong>.
                 </p>
               </div>
             </div>
           </div>
 
-          <p className="mt-6 text-[12px] text-[#757575]">
+          <p className="mt-6 text-[13.5px] text-[#757575]">
             Sedang memantau status secara realtime... (polling otomatis aktif)
           </p>
         </div>
@@ -396,7 +396,7 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
           <h2 className="mt-5 text-2xl font-bold tracking-tight text-[#000000]">
             Pembayaran Berhasil Diverifikasi!
           </h2>
-          <p className="mx-auto mt-2 max-w-lg text-[14px] text-[#615d59] leading-relaxed">
+          <p className="mx-auto mt-2 max-w-lg text-[15.5px] text-[#615d59] leading-relaxed">
             Terima kasih, <strong>{order.buyer_name}</strong>! File paket desain Anda sudah siap dan link unduh juga telah dikirim ke email <strong>{order.buyer_email}</strong>.
           </p>
 
@@ -407,10 +407,10 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
               Akses Unduh Langsung
             </span>
             
-            <p className="font-bold text-[#000000] text-[17px] mb-1">
+            <p className="font-bold text-[#000000] text-[18.5px] mb-1">
               {order.bundle?.name}
             </p>
-            <p className="text-[12px] text-[#615d59] mb-6">
+            <p className="text-[13.5px] text-[#615d59] mb-6">
               Berisi gambar feed/story resolusi tinggi + prompt AI text format ZIP/manifest.
             </p>
 
@@ -432,7 +432,7 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
               </a>
             )}
 
-            <p className="mt-3 text-[11px] text-[#757575]">
+            <p className="mt-3 text-[12.5px] text-[#757575]">
               Masa berlaku link unduh aktif selama 48 jam. Simpan file di HP atau laptop Anda.
             </p>
           </div>
@@ -458,15 +458,15 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
           <h2 className="mt-5 text-xl font-bold tracking-tight text-[#000000]">
             Pembayaran Belum Dapat Dikonfirmasi
           </h2>
-          <p className="mx-auto mt-2 max-w-lg text-[14px] text-[#615d59] leading-relaxed">
+          <p className="mx-auto mt-2 max-w-lg text-[15.5px] text-[#615d59] leading-relaxed">
             Owner tidak menemukan mutasi masuk yang sesuai dengan nominal <strong>{formatRupiah(order.total_amount)}</strong> atau nama pengirim yang Anda masukkan.
           </p>
 
           <div className="mx-auto mt-6 max-w-md rounded-[8px] bg-[#ffb110]/10 p-4 text-left border border-[#ffb110]/30">
-            <p className="text-[12px] text-[#000000] font-semibold mb-1">
+            <p className="text-[13.5px] text-[#000000] font-semibold mb-1">
               Sudah merasa transfer tapi ditolak?
             </p>
-            <p className="text-[12px] text-[#615d59] leading-relaxed">
+            <p className="text-[13.5px] text-[#615d59] leading-relaxed">
               Jangan khawatir. Hubungi langsung admin kami via WhatsApp dengan melampirkan bukti transfer dan Order ID <strong>{order.order_code}</strong>.
             </p>
           </div>
@@ -474,7 +474,7 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
           <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
               href={`https://wa.me/6285182510575?text=${encodeURIComponent(
-                `Halo Admin Warung Desain, saya ingin konfirmasi pembayaran untuk pesanan ${order.order_code} sebesar ${formatRupiah(order.total_amount)}.`
+                `Halo Admin Warung Design, saya ingin konfirmasi pembayaran untuk pesanan ${order.order_code} sebesar ${formatRupiah(order.total_amount)}.`
               )}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -503,7 +503,7 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
           <h2 className="mt-5 text-xl font-bold tracking-tight text-[#000000]">
             Pesanan Telah Kedaluwarsa
           </h2>
-          <p className="mx-auto mt-2 max-w-lg text-[14px] text-[#615d59] leading-relaxed">
+          <p className="mx-auto mt-2 max-w-lg text-[15.5px] text-[#615d59] leading-relaxed">
             Pesanan ini telah melewati batas waktu pembayaran (24 jam) dan kode unik nominal telah dibebaskan untuk pesanan lain.
           </p>
 

@@ -26,7 +26,7 @@ export default async function CheckoutPage({ params }: PageProps) {
           Data Pesanan Tidak Ditemukan
         </h1>
 
-        <p className="mx-auto mt-2 max-w-md text-[14px] text-[#615d59] leading-relaxed">
+        <p className="mx-auto mt-2 max-w-md text-[15.5px] text-[#615d59] leading-relaxed">
           ID pesanan <code className="rounded bg-black/[0.05] px-1.5 py-0.5 text-[12px] font-mono">{orderId}</code> tidak ditemukan di database. Jika Anda baru saja me-restart server atau mencoba link lama, silakan buat pesanan baru langsung dari katalog.
         </p>
 

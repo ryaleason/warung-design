@@ -112,7 +112,7 @@ export default function FAQAccordion() {
               }`}
             >
               <div className="overflow-hidden">
-                <div className="px-5 pb-5 pt-1 text-[14px] text-[#615d59] leading-relaxed border-t border-black/[0.04]">
+                <div className="px-5 pb-5 pt-1 text-[15.5px] text-[#615d59] leading-relaxed border-t border-black/[0.04]">
                   <div className="pl-10">{item.answer}</div>
                 </div>
               </div>

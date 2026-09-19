@@ -61,7 +61,7 @@ export default async function BundleDetailPage({ params }: PageProps) {
             <h1 className="text-2xl sm:text-3xl font-bold tracking-[-0.025em] text-[#000000] leading-tight">
               {bundle.name}
             </h1>
-            <p className="mt-3 text-[15px] text-[#615d59] leading-relaxed">
+            <p className="mt-3 text-[16.5px] text-[#615d59] leading-relaxed">
               {bundle.description}
             </p>
           </div>

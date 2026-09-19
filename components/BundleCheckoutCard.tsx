@@ -70,7 +70,7 @@ export default function BundleCheckoutCard({ bundle }: BundleCheckoutCardProps) 
             Beli Putus (Sekali Bayar)
           </span>
         </div>
-        <p className="mt-1 text-[13px] text-[#615d59]">
+        <p className="mt-1 text-[14.5px] text-[#615d59]">
           Akses unduh langsung tanpa biaya langganan bulanan.
         </p>
       </div>
@@ -102,7 +102,7 @@ export default function BundleCheckoutCard({ bundle }: BundleCheckoutCardProps) 
             placeholder="Contoh: rani.olshop@gmail.com"
             className="w-full rounded-[8px] border border-black/[0.12] bg-[#ffffff] px-3.5 py-2 text-[14px] text-[#000000] placeholder:text-[#757575]/60 focus:border-[#0075de] focus:outline-none focus:ring-1 focus:ring-[#0075de]"
           />
-          <p className="mt-1 text-[11px] text-[#757575]">
+          <p className="mt-1 text-[12.5px] text-[#757575]">
             Pastikan email aktif, file download juga akan dikirim ke sini.
           </p>
         </div>

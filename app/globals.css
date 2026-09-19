@@ -60,6 +60,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+p {
+  line-height: 1.6;
+}
+
 /* Notion hair-line card utility */
 .notion-card {
   background-color: #ffffff;

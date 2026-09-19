@@ -12,14 +12,13 @@ export default function Footer() {
               <Image
                 src="/logo.svg"
                 alt="Warung Design"
-                width={32}
-                height={28}
-                className="h-7 w-auto object-contain"
+                width={42}
+                height={38}
+                className="h-20sem w-auto object-contain"
                 unoptimized
               />
-              <span className="text-[16px] font-semibold text-[#111111]">Warung Design</span>
             </div>
-            <p className="mt-3 max-w-sm text-[13px] text-[#615d59] leading-relaxed">
+            <p className="mt-3 max-w-sm text-[14.5px] text-[#615d59] leading-relaxed">
               Solusi konten promosi &amp; visual siap pakai untuk admin media sosial UMKM Indonesia.
               Tanpa repot belajar prompt generatif, tinggal edit teks di Canva dan langsung posting!
             </p>
@@ -52,7 +51,7 @@ export default function Footer() {
             <h4 className="text-[12px] font-semibold uppercase tracking-wider text-[#000000]">
               Jika Ada Kendala
             </h4>
-            <p className="mt-3 text-[13px] text-[#615d59] leading-relaxed">
+            <p className="mt-3 text-[14.5px] text-[#615d59] leading-relaxed">
               Ada pertanyaan atau kendala terkait pesanan? Silakan hubungi kami via WhatsApp:
             </p>
             <div className="mt-3">
@@ -69,8 +68,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-black/[0.06] pt-6 text-center text-[12px] text-[#757575]">
-          <p>© {new Date().getFullYear()} Warung Design</p>
+        <div className="mt-10 border-t border-black/[0.06] pt-6 text-center text-[#757575]">
+          <p className="text-[13.5px]">© {new Date().getFullYear()} Warung Design</p>
         </div>
       </div>
     </footer>

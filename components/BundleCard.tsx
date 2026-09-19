@@ -50,7 +50,7 @@ export default function BundleCard({ bundle }: BundleCardProps) {
           {bundle.name}
         </h3>
         
-        <p className="mt-2 text-[14px] text-[#615d59] line-clamp-2 leading-normal">
+        <p className="mt-2 text-[15px] text-[#615d59] line-clamp-2 leading-relaxed">
           {bundle.description}
         </p>
 
