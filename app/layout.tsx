@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Warung Desain — Bundle Prompt AI & Desain Instan untuk UMKM',
+  title: 'Warung Design — Bundle Prompt AI & Desain Instan untuk UMKM',
   description:
     'Platform bundle desain promosi siap pakai (feed & story) untuk admin UMKM Indonesia. Tanpa perlu mahir tools AI generatif, tinggal edit di Canva dan langsung posting.',
   keywords: [
@@ -24,10 +24,15 @@ export const metadata: Metadata = {
     'bundle prompt ai',
     'template feed instagram',
     'poster diskon',
-    'warung desain',
+    'warung design',
     'desain promosi toko',
   ],
-  authors: [{ name: 'Warung Desain Team' }],
+  authors: [{ name: 'Warung Design Team' }],
+  icons: {
+    icon: '/logo.svg',
+    shortcut: '/logo.svg',
+    apple: '/logo.svg',
+  },
 };
 
 export default function RootLayout({

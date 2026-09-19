@@ -1,19 +1,24 @@
 import Link from 'next/link';
-import { Sparkles, ShoppingBag } from 'lucide-react';
+import Image from 'next/image';
+import { ShoppingBag } from 'lucide-react';
 
 export default function Navbar() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-black/[0.08] bg-[#f6f5f4]/90 backdrop-blur-md notion-nav-shadow">
       <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-4 sm:px-8">
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-[#0075de] text-white transition-transform group-hover:scale-105">
-            <Sparkles className="h-4 w-4" />
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-[17px] font-semibold tracking-[-0.015em] text-[#111111]">
-              Warung Desain
-            </span>
-          </div>
+          <Image
+            src="/logo.svg"
+            alt="Warung Design"
+            width={36}
+            height={31}
+            className="h-8 w-auto object-contain transition-transform group-hover:scale-105"
+            priority
+            unoptimized
+          />
+          <span className="text-[17px] font-semibold tracking-[-0.015em] text-[#111111]">
+            Warung Design
+          </span>
         </Link>
 
         <nav className="flex items-center gap-1 sm:gap-2">

@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Sparkles, MessageCircle } from 'lucide-react';
+import Image from 'next/image';
+import { MessageCircle } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -7,11 +8,16 @@ export default function Footer() {
       <div className="mx-auto max-w-[1440px] px-4 py-12 sm:px-8">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2">
-              <div className="flex h-7 w-7 items-center justify-center rounded-[6px] bg-[#0075de] text-white">
-                <Sparkles className="h-3.5 w-3.5" />
-              </div>
-              <span className="text-[16px] font-semibold text-[#111111]">Warung Desain</span>
+            <div className="flex items-center gap-2.5">
+              <Image
+                src="/logo.svg"
+                alt="Warung Design"
+                width={32}
+                height={28}
+                className="h-7 w-auto object-contain"
+                unoptimized
+              />
+              <span className="text-[16px] font-semibold text-[#111111]">Warung Design</span>
             </div>
             <p className="mt-3 max-w-sm text-[13px] text-[#615d59] leading-relaxed">
               Solusi konten promosi &amp; visual siap pakai untuk admin media sosial UMKM Indonesia.
@@ -64,7 +70,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 border-t border-black/[0.06] pt-6 text-center text-[12px] text-[#757575]">
-          <p>© {new Date().getFullYear()} Warung Desain</p>
+          <p>© {new Date().getFullYear()} Warung Design</p>
         </div>
       </div>
     </footer>
