@@ -1,7 +1,10 @@
+import nodemailer from 'nodemailer';
 import { Order, Bundle } from '@/types';
 
+const GMAIL_USER = process.env.GMAIL_USER || 'rylaeasoncore@gmail.com';
+const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD || '';
 const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
-const EMAIL_FROM = process.env.EMAIL_FROM || 'Warung Design <onboarding@resend.dev>';
+const EMAIL_FROM = process.env.EMAIL_FROM || `Warung Design <${GMAIL_USER}>`;
 
 function getBaseUrl(): string {
   if (process.env.NEXT_PUBLIC_APP_URL && !process.env.NEXT_PUBLIC_APP_URL.includes('localhost')) {
@@ -91,37 +94,68 @@ export async function sendOrderDeliveryEmail(
 </html>
 `;
 
-  if (!RESEND_API_KEY || RESEND_API_KEY.includes('re_your_api_key')) {
-    console.log(`[EMAIL MOCK] Download email prepared for ${order.buyer_email}`);
-    console.log(`[EMAIL MOCK] Download URL: ${downloadUrl}`);
-    return { success: true };
-  }
+  // 1. Kirim via Gmail SMTP jika kredensial Gmail terisi
+  if (GMAIL_APP_PASSWORD) {
+    try {
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: GMAIL_USER,
+          pass: GMAIL_APP_PASSWORD.replace(/\s+/g, ''),
+        },
+      });
 
-  try {
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: EMAIL_FROM,
+      await transporter.sendMail({
+        from: `Warung Design <${GMAIL_USER}>`,
         to: order.buyer_email,
-        subject: `[Akses Desain] ${bundle.name} - Warung Desain`,
+        subject: `[Akses Desain] ${bundle.name} - Warung Design`,
         html: htmlContent,
-      }),
-    });
+      });
 
-    const data = await res.json();
-    if (!res.ok) {
-      console.error('Resend error:', data);
-      return { success: false, error: data.message || 'Resend error' };
+      console.log(`[EMAIL GMAIL] Delivery email successfully sent to ${order.buyer_email} via ${GMAIL_USER}`);
+      return { success: true };
+    } catch (gmailErr: unknown) {
+      const err = gmailErr as Error;
+      console.error('Failed to send email via Gmail SMTP:', err);
+      // Fallback ke provider berikutnya jika ada
     }
-
-    return { success: true };
-  } catch (err: unknown) {
-    const error = err as Error;
-    console.error('Failed to send delivery email:', error);
-    return { success: false, error: error.message };
   }
+
+  // 2. Fallback ke Resend jika RESEND_API_KEY terisi
+  if (RESEND_API_KEY && !RESEND_API_KEY.includes('re_your_api_key')) {
+    try {
+      const res = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from: EMAIL_FROM,
+          to: order.buyer_email,
+          subject: `[Akses Desain] ${bundle.name} - Warung Design`,
+          html: htmlContent,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        console.error('Resend error:', data);
+        return { success: false, error: data.message || 'Resend error' };
+      }
+
+      console.log(`[EMAIL RESEND] Delivery email sent to ${order.buyer_email}`);
+      return { success: true };
+    } catch (err: unknown) {
+      const error = err as Error;
+      console.error('Failed to send delivery email via Resend:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  // 3. Mode Simulasi / Mock
+  console.log(`[EMAIL MOCK] Download email prepared for ${order.buyer_email}`);
+  console.log(`[EMAIL MOCK] Download URL: ${downloadUrl}`);
+  console.log(`[EMAIL MOCK] Order URL: ${orderUrl}`);
+  return { success: true };
 }
