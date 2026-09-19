@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, MessageCircle } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -44,16 +44,27 @@ export default function Footer() {
 
           <div>
             <h4 className="text-[12px] font-semibold uppercase tracking-wider text-[#000000]">
-              Metode Pembayaran
+              Jika Ada Kendala
             </h4>
             <p className="mt-3 text-[13px] text-[#615d59] leading-relaxed">
-              Mendukung semua e-wallet &amp; mobile banking melalui <strong>QRIS GoPay Merchant</strong> (BCA, Mandiri, BRI, DANA, OVO, ShopeePay).
+              Ada pertanyaan atau kendala terkait pesanan? Silakan hubungi kami via WhatsApp:
             </p>
+            <div className="mt-3">
+              <a
+                href="https://wa.me/6285182510575?text=Halo%20Admin%20Warung%20Desain%2C%20saya%20butuh%20bantuan"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-[8px] bg-emerald-600 px-3.5 py-2 text-[13px] font-medium text-white hover:bg-emerald-700 transition-colors"
+              >
+                <MessageCircle className="h-4 w-4" />
+                <span>WA 085182510575</span>
+              </a>
+            </div>
           </div>
         </div>
 
         <div className="mt-10 border-t border-black/[0.06] pt-6 text-center text-[12px] text-[#757575]">
-          <p>© {new Date().getFullYear()} Warung Desain. Dibuat dengan format desain Notion Style untuk kemajuan UMKM Lokal Indonesia.</p>
+          <p>© {new Date().getFullYear()} Warung Desain</p>
         </div>
       </div>
     </footer>

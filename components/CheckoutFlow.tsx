@@ -473,7 +473,7 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
 
           <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
-              href={`https://wa.me/6281234567890?text=${encodeURIComponent(
+              href={`https://wa.me/6285182510575?text=${encodeURIComponent(
                 `Halo Admin Warung Desain, saya ingin konfirmasi pembayaran untuk pesanan ${order.order_code} sebesar ${formatRupiah(order.total_amount)}.`
               )}`}
               target="_blank"
