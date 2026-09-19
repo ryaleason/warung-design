@@ -21,6 +21,7 @@ import {
   ShieldCheck,
   RefreshCw,
   Mail,
+  ChevronDown,
 } from 'lucide-react';
 
 interface CheckoutFlowProps {
@@ -36,6 +37,7 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
   const [copiedAmount, setCopiedAmount] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isEmailInfoOpen, setIsEmailInfoOpen] = useState(false);
 
   // Trigger celebration confetti when status becomes 'sukses'
   const confettiFiredRef = useRef(false);
@@ -401,60 +403,17 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
             Terima kasih, <strong>{order.buyer_name}</strong>! Pembayaran Anda telah kami terima dan transaksi dinyatakan selesai.
           </p>
 
-          {/* Email Delivery & Spam Notice Card */}
-          <div className="mx-auto mt-6 max-w-xl rounded-[12px] bg-[#fffbf0] border-2 border-[#ffb110]/50 p-5 text-left">
-            <div className="flex items-start gap-3.5">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#ffb110]/20 text-[#000000] shrink-0 mt-0.5">
-                <Mail className="h-5 w-5 text-[#b37400]" />
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <h3 className="text-[16px] font-bold text-[#000000]">
-                    File ZIP &amp; Link Akses Telah Dikirim ke Email
-                  </h3>
-                  <span className="rounded-full bg-[#ffb110] px-2.5 py-0.5 text-[11px] font-bold text-[#000000] uppercase tracking-wide">
-                    Penting
-                  </span>
-                </div>
-
-                <p className="mt-2 text-[14px] text-[#423f3d] leading-relaxed">
-                  Kami telah mengirimkan tautan unduh file bundle desain (.ZIP) langsung ke alamat email Anda:
-                </p>
-
-                <div className="mt-2 inline-flex items-center gap-2 rounded-[6px] bg-[#ffffff] px-3.5 py-1.5 text-[14px] font-semibold text-[#0075de] border border-black/[0.1]">
-                  <Mail className="h-4 w-4 text-[#0075de]" />
-                  <span>{order.buyer_email}</span>
-                </div>
-
-                {/* Important Spam Warning Notice */}
-                <div className="mt-3.5 rounded-[8px] bg-[#ffffff] p-3.5 border border-[#ffb110]/60">
-                  <div className="flex items-start gap-2.5">
-                    <AlertTriangle className="h-4 w-4 text-[#d97706] shrink-0 mt-0.5" />
-                    <div>
-                      <p className="text-[13px] font-bold text-[#b45309]">
-                        Wajib Buka &amp; Periksa Folder SPAM / JUNK di Email Anda
-                      </p>
-                      <p className="mt-1 text-[12.5px] text-[#615d59] leading-relaxed">
-                        Jika email belum terlihat di <strong>Kotak Masuk (Inbox)</strong>, silakan langsung <strong>buka folder SPAM atau Junk</strong> pada email Anda. Klik tombol <strong>&ldquo;Bukan Spam&rdquo; (Report not spam)</strong> agar link unduhan file ZIP dapat dibuka dengan aman.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Direct Download Action Box */}
-          <div className="mx-auto mt-6 max-w-xl rounded-[12px] bg-[#f6f5f4] border border-black/[0.08] p-6 text-center">
+          <div className="mx-auto mt-6 max-w-md rounded-[12px] bg-[#f6f5f4] border border-black/[0.08] p-6 text-center">
             <span className="inline-flex items-center gap-1 rounded-full bg-[#e6f3fe] px-2.5 py-0.5 text-[11px] font-semibold text-[#0075de] mb-3">
-              Atau Unduh Langsung di Halaman Ini
+              Akses Unduh Langsung
             </span>
             
-            <p className="font-bold text-[#000000] text-[18.5px] mb-1">
+            <p className="font-bold text-[#000000] text-[18px] mb-1">
               {order.bundle?.name}
             </p>
-            <p className="text-[13.5px] text-[#615d59] mb-5">
-              Selain lewat email, Anda juga bisa langsung mengunduh file bundle (.ZIP) saat ini juga melalui tombol di bawah:
+            <p className="text-[13px] text-[#615d59] mb-5">
+              Klik tombol di bawah untuk langsung mengunduh file paket bundle (.ZIP):
             </p>
 
             {downloadToken ? (
@@ -475,9 +434,49 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
               </a>
             )}
 
-            <p className="mt-3 text-[12.5px] text-[#757575]">
+            <p className="mt-3 text-[12px] text-[#757575]">
               Masa berlaku link unduh aktif selama 48 jam. Simpan file di HP atau laptop Anda.
             </p>
+          </div>
+
+          {/* Clean & Compact Collapsible: Email & Spam Notice */}
+          <div className="mx-auto mt-4 max-w-md rounded-[8px] border border-black/[0.08] bg-[#ffffff] text-left text-[13px] overflow-hidden">
+            <button
+              type="button"
+              onClick={() => setIsEmailInfoOpen(!isEmailInfoOpen)}
+              className="w-full flex items-center justify-between px-3.5 py-2.5 text-[#615d59] hover:bg-black/[0.02] transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <Mail className="h-3.5 w-3.5 text-[#0075de] shrink-0" />
+                <span className="text-[12.5px] text-[#423f3d]">
+                  File ZIP juga dikirim ke email ({order.buyer_email})
+                </span>
+              </div>
+              <div className="flex items-center gap-1 text-[11.5px] text-[#757575] shrink-0 ml-2">
+                <span>{isEmailInfoOpen ? 'Tutup' : 'Cek info spam'}</span>
+                <ChevronDown
+                  className={`h-3.5 w-3.5 transition-transform duration-200 ${
+                    isEmailInfoOpen ? 'rotate-180' : ''
+                  }`}
+                />
+              </div>
+            </button>
+
+            {isEmailInfoOpen && (
+              <div className="px-3.5 pb-3 pt-2 text-[12px] text-[#615d59] border-t border-black/[0.06] bg-[#fdfdfd] space-y-2 leading-relaxed">
+                <p>
+                  Link unduhan file ZIP sudah dikirimkan ke <strong>{order.buyer_email}</strong>.
+                </p>
+                <div className="rounded-[6px] bg-[#f6f5f4] border border-black/[0.06] p-2.5 text-[#423f3d]">
+                  <p className="font-semibold text-[#111111] text-[12px]">
+                    ⚠️ Jika tidak ada di Kotak Masuk (Inbox):
+                  </p>
+                  <p className="mt-1 text-[11.5px] text-[#615d59]">
+                    Silakan <strong>buka folder SPAM atau Junk</strong> pada email Anda, lalu klik tombol <strong>&ldquo;Bukan Spam&rdquo; (Report not spam)</strong> agar file &amp; link dapat dibuka dengan normal.
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="mt-8">
