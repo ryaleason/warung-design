@@ -7,6 +7,13 @@ export async function POST(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
+    if (process.env.NODE_ENV === 'production') {
+      return NextResponse.json(
+        { error: 'Endpoint simulator dinonaktifkan di production' },
+        { status: 403 }
+      );
+    }
+
     const { id } = await context.params;
     const body = await req.json();
     const action = body.action as 'acc' | 'tolak';

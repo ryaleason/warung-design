@@ -35,7 +35,6 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
   const [copiedAmount, setCopiedAmount] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [isSimulating, setIsSimulating] = useState(false);
 
   // Trigger celebration confetti when status becomes 'sukses'
   const confettiFiredRef = useRef(false);
@@ -161,28 +160,6 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
     }
   };
 
-  // Local testing simulator
-  const handleSimulateAction = async (action: 'acc' | 'tolak') => {
-    setIsSimulating(true);
-    try {
-      const res = await fetch(`/api/orders/${order.id}/simulate-action`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action }),
-      });
-      const data = await res.json();
-      if (res.ok && data.order) {
-        setStatus(data.order.status);
-        if (data.order.download_token) {
-          setDownloadToken(data.order.download_token);
-        }
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsSimulating(false);
-    }
-  };
 
   const qrisImageSrc = process.env.NEXT_PUBLIC_QRIS_IMAGE_URL || '/qris-placeholder.svg';
 
@@ -542,38 +519,6 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
         </div>
       )}
 
-      {/* Developer Testing / Simulation Bar */}
-      <div className="mt-8 rounded-[12px] border border-dashed border-black/[0.15] bg-[#ffffff] p-4">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <div>
-            <span className="inline-flex items-center gap-1 rounded-full bg-[#f6f5f4] px-2.5 py-0.5 text-[11px] font-medium text-[#000000] border border-black/[0.08]">
-              🧪 Testing Mode / Developer Sandbox
-            </span>
-            <p className="text-[12px] text-[#757575] mt-1">
-              Simulasi Telegram tanpa perlu bot fisik:
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              disabled={isSimulating || status === 'sukses'}
-              onClick={() => handleSimulateAction('acc')}
-              className="rounded-[6px] bg-emerald-600 px-3 py-1.5 text-[12px] font-medium text-white hover:bg-emerald-700 disabled:opacity-40 transition-colors"
-            >
-              Simulasikan ACC (Approve)
-            </button>
-            <button
-              type="button"
-              disabled={isSimulating || status === 'ditolak'}
-              onClick={() => handleSimulateAction('tolak')}
-              className="rounded-[6px] bg-[#f64932] px-3 py-1.5 text-[12px] font-medium text-white hover:bg-[#df3822] disabled:opacity-40 transition-colors"
-            >
-              Simulasikan Tolak
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
