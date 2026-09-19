@@ -55,7 +55,9 @@ export default async function CheckoutPage({ params }: PageProps) {
         </Link>
       </div>
 
-      <CheckoutFlow initialOrder={order} />
+      <div data-aos="fade-up">
+        <CheckoutFlow initialOrder={order} />
+      </div>
     </div>
   );
 }

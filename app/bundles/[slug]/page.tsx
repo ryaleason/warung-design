@@ -42,7 +42,7 @@ export default async function BundleDetailPage({ params }: PageProps) {
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
         {/* Left Column: Image Gallery & Content (7 cols) */}
-        <div className="lg:col-span-7 space-y-6">
+        <div data-aos="fade-right" className="lg:col-span-7 space-y-6">
           {/* Gallery */}
           <BundleImageGallery images={bundle.preview_images} bundleName={bundle.name} />
 
@@ -106,7 +106,7 @@ export default async function BundleDetailPage({ params }: PageProps) {
         </div>
 
         {/* Right Column: Sticky Checkout Form Card (5 cols) */}
-        <div className="lg:col-span-5">
+        <div data-aos="fade-left" className="lg:col-span-5">
           <div className="sticky top-20">
             <BundleCheckoutCard bundle={bundle} />
           </div>

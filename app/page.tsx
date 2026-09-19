@@ -23,13 +23,21 @@ export default async function HomePage() {
       <section className="pt-16 pb-12 sm:pt-24 sm:pb-16 text-center px-4 sm:px-8">
         <div className="mx-auto max-w-4xl">
           {/* Avatar / Character marks row or Pill Tag */}
-          <div className="inline-flex items-center gap-2 rounded-full bg-[#e6f3fe] px-3.5 py-1 text-[13px] font-medium text-[#0075de] mb-6">
+          <div
+            data-aos="fade-down"
+            data-aos-duration="600"
+            className="inline-flex items-center gap-2 rounded-full bg-[#e6f3fe] px-3.5 py-1 text-[13px] font-medium text-[#0075de] mb-6"
+          >
             <Sparkles className="h-3.5 w-3.5" />
             <span>Koleksi Desain Instan Khusus Admin UMKM Indonesia</span>
           </div>
 
           {/* Headline with embedded Hero Highlight Pill */}
-          <h1 className="text-4xl sm:text-6xl lg:text-[64px] font-semibold tracking-[-0.035em] text-[#000000] leading-[1.15]">
+          <h1
+            data-aos="fade-up"
+            data-aos-delay="100"
+            className="text-4xl sm:text-6xl lg:text-[64px] font-semibold tracking-[-0.035em] text-[#000000] leading-[1.15]"
+          >
             Posting promo jualan menarik{' '}
             <span className="inline-block rounded-full bg-[#f6d5b8] text-[#000000] px-4 sm:px-5 py-0.5 mx-1 font-semibold">
               tanpa desainer
@@ -37,12 +45,20 @@ export default async function HomePage() {
           </h1>
 
           {/* Subhead with warm graphite cast */}
-          <p className="mx-auto mt-6 max-w-2xl text-[16px] sm:text-[18px] text-[#615d59] leading-relaxed">
+          <p
+            data-aos="fade-up"
+            data-aos-delay="200"
+            className="mx-auto mt-6 max-w-2xl text-[16px] sm:text-[18px] text-[#615d59] leading-relaxed"
+          >
             Paket desain musiman siap pakai (feed &amp; story) hasil kurasi AI generatif terbaik. Dapatkan gambar resolusi tinggi langsung pakai plus bonus prompt untuk variasi mandiri.
           </p>
 
           {/* Two-button CTA row: Primary + Ghost CTA */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div
+            data-aos="fade-up"
+            data-aos-delay="300"
+            className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3"
+          >
             <a
               href="#katalog"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#0075de] px-5 py-2.5 text-[15px] font-medium text-white hover:bg-[#0060b8] transition-colors"
@@ -61,7 +77,11 @@ export default async function HomePage() {
 
           {/* 4 Feature Accent Cards on Canvas (hairline border, no shadow) */}
           <div className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-3 text-left">
-            <div className="p-4 rounded-[12px] bg-[#ffffff] border border-black/[0.08]">
+            <div
+              data-aos="fade-up"
+              data-aos-delay="350"
+              className="p-4 rounded-[12px] bg-[#ffffff] border border-black/[0.08]"
+            >
               <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-[#e6f3fe] text-[#0075de] mb-3">
                 <Zap className="h-4 w-4" />
               </div>
@@ -69,7 +89,11 @@ export default async function HomePage() {
               <p className="text-[12px] text-[#757575] mt-0.5">Hasil gambar jadi &amp; kurasi</p>
             </div>
 
-            <div className="p-4 rounded-[12px] bg-[#ffffff] border border-black/[0.08]">
+            <div
+              data-aos="fade-up"
+              data-aos-delay="450"
+              className="p-4 rounded-[12px] bg-[#ffffff] border border-black/[0.08]"
+            >
               <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-[#f6d5b8] text-[#000000] mb-3">
                 <Smartphone className="h-4 w-4" />
               </div>
@@ -77,7 +101,11 @@ export default async function HomePage() {
               <p className="text-[12px] text-[#757575] mt-0.5">Tinggal tempel logo &amp; teks</p>
             </div>
 
-            <div className="p-4 rounded-[12px] bg-[#ffffff] border border-black/[0.08]">
+            <div
+              data-aos="fade-up"
+              data-aos-delay="550"
+              className="p-4 rounded-[12px] bg-[#ffffff] border border-black/[0.08]"
+            >
               <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-[#ffb110]/20 text-[#000000] mb-3">
                 <Clock className="h-4 w-4" />
               </div>
@@ -85,7 +113,11 @@ export default async function HomePage() {
               <p className="text-[12px] text-[#757575] mt-0.5">Link unduh otomatis di web</p>
             </div>
 
-            <div className="p-4 rounded-[12px] bg-[#ffffff] border border-black/[0.08]">
+            <div
+              data-aos="fade-up"
+              data-aos-delay="650"
+              className="p-4 rounded-[12px] bg-[#ffffff] border border-black/[0.08]"
+            >
               <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-emerald-50 text-emerald-700 mb-3">
                 <ShieldCheck className="h-4 w-4" />
               </div>
@@ -98,7 +130,10 @@ export default async function HomePage() {
 
       {/* 2. Bundle Catalog Section */}
       <section id="katalog" className="px-4 sm:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+        <div
+          data-aos="fade-up"
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8"
+        >
           <div>
             <div className="flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-wider text-[#757575]">
               <Palette className="h-3.5 w-3.5 text-[#0075de]" />
@@ -115,8 +150,14 @@ export default async function HomePage() {
 
         {/* Grid Bundles */}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {bundles.map((bundle) => (
-            <BundleCard key={bundle.id} bundle={bundle} />
+          {bundles.map((bundle, idx) => (
+            <div
+              key={bundle.id}
+              data-aos="fade-up"
+              data-aos-delay={idx * 100}
+            >
+              <BundleCard bundle={bundle} />
+            </div>
           ))}
         </div>
       </section>
@@ -124,7 +165,7 @@ export default async function HomePage() {
       {/* 3. Cara Pakai / Alur Penggunaan */}
       <section id="cara-pakai" className="px-4 sm:px-8">
         <div className="border-t border-black/[0.08] pt-16">
-          <div className="max-w-2xl mb-10">
+          <div data-aos="fade-up" className="max-w-2xl mb-10">
             <span className="text-[12px] font-semibold uppercase tracking-wider text-[#757575]">
               Alur Penggunaan
             </span>
@@ -137,7 +178,11 @@ export default async function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5">
+            <div
+              data-aos="fade-up"
+              data-aos-delay="100"
+              className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5"
+            >
               <div className="flex h-7 w-7 items-center justify-center rounded-[6px] bg-[#f6f5f4] text-[#111111] font-bold text-[13px] mb-3 border border-black/[0.06]">
                 1
               </div>
@@ -147,7 +192,11 @@ export default async function HomePage() {
               </p>
             </div>
 
-            <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5">
+            <div
+              data-aos="fade-up"
+              data-aos-delay="200"
+              className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5"
+            >
               <div className="flex h-7 w-7 items-center justify-center rounded-[6px] bg-[#f6f5f4] text-[#111111] font-bold text-[13px] mb-3 border border-black/[0.06]">
                 2
               </div>
@@ -157,7 +206,11 @@ export default async function HomePage() {
               </p>
             </div>
 
-            <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5">
+            <div
+              data-aos="fade-up"
+              data-aos-delay="300"
+              className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5"
+            >
               <div className="flex h-7 w-7 items-center justify-center rounded-[6px] bg-[#f6f5f4] text-[#111111] font-bold text-[13px] mb-3 border border-black/[0.06]">
                 3
               </div>
@@ -167,7 +220,11 @@ export default async function HomePage() {
               </p>
             </div>
 
-            <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5">
+            <div
+              data-aos="fade-up"
+              data-aos-delay="400"
+              className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5"
+            >
               <div className="flex h-7 w-7 items-center justify-center rounded-[6px] bg-[#e6f3fe] text-[#0075de] font-bold text-[13px] mb-3 border border-[#0075de]/20">
                 4
               </div>
@@ -183,7 +240,7 @@ export default async function HomePage() {
       {/* 4. FAQ Section */}
       <section id="faq" className="px-4 sm:px-8">
         <div className="border-t border-black/[0.08] pt-16">
-          <div className="max-w-2xl mb-8">
+          <div data-aos="fade-up" className="max-w-2xl mb-8">
             <span className="text-[12px] font-semibold uppercase tracking-wider text-[#757575]">
               Tanya Jawab
             </span>
@@ -193,7 +250,11 @@ export default async function HomePage() {
           </div>
 
           <div className="space-y-3 max-w-4xl">
-            <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5">
+            <div
+              data-aos="fade-up"
+              data-aos-delay="100"
+              className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5"
+            >
               <h3 className="font-semibold text-[15px] text-[#000000] flex items-center gap-2">
                 <HelpCircle className="h-4 w-4 text-[#0075de] shrink-0" />
                 Apakah saya harus mahir tools AI seperti Midjourney atau DALL-E?
@@ -203,7 +264,11 @@ export default async function HomePage() {
               </p>
             </div>
 
-            <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5">
+            <div
+              data-aos="fade-up"
+              data-aos-delay="200"
+              className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5"
+            >
               <h3 className="font-semibold text-[15px] text-[#000000] flex items-center gap-2">
                 <HelpCircle className="h-4 w-4 text-[#0075de] shrink-0" />
                 Bagaimana cara menambahkan logo dan teks diskon toko saya?
@@ -213,7 +278,11 @@ export default async function HomePage() {
               </p>
             </div>
 
-            <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5">
+            <div
+              data-aos="fade-up"
+              data-aos-delay="300"
+              className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5"
+            >
               <h3 className="font-semibold text-[15px] text-[#000000] flex items-center gap-2">
                 <HelpCircle className="h-4 w-4 text-[#0075de] shrink-0" />
                 Berapa lama waktu verifikasi pembayaran setelah transfer?
@@ -223,7 +292,11 @@ export default async function HomePage() {
               </p>
             </div>
 
-            <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5">
+            <div
+              data-aos="fade-up"
+              data-aos-delay="400"
+              className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5"
+            >
               <h3 className="font-semibold text-[15px] text-[#000000] flex items-center gap-2">
                 <HelpCircle className="h-4 w-4 text-[#0075de] shrink-0" />
                 Apakah gambar desain ini bebas dipakai untuk kebutuhan komersial toko?
@@ -238,7 +311,11 @@ export default async function HomePage() {
 
       {/* 5. Dark Feature Card (Midnight Ink #02093a) */}
       <section className="px-4 sm:px-8">
-        <div className="rounded-[12px] bg-[#02093a] p-8 sm:p-12 text-white text-center">
+        <div
+          data-aos="zoom-in"
+          data-aos-duration="600"
+          className="rounded-[12px] bg-[#02093a] p-8 sm:p-12 text-white text-center"
+        >
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
             Mulai Tingkatkan Kualitas Visual Media Sosial Toko Anda
           </h2>
