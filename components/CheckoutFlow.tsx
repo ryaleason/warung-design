@@ -20,6 +20,7 @@ import {
   ArrowRight,
   ShieldCheck,
   RefreshCw,
+  Mail,
 } from 'lucide-react';
 
 interface CheckoutFlowProps {
@@ -397,20 +398,63 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
             Pembayaran Berhasil Diverifikasi!
           </h2>
           <p className="mx-auto mt-2 max-w-lg text-[15.5px] text-[#615d59] leading-relaxed">
-            Terima kasih, <strong>{order.buyer_name}</strong>! File paket desain Anda sudah siap dan link unduh juga telah dikirim ke email <strong>{order.buyer_email}</strong>.
+            Terima kasih, <strong>{order.buyer_name}</strong>! Pembayaran Anda telah kami terima dan transaksi dinyatakan selesai.
           </p>
 
-          {/* Download Action Box */}
-          <div className="mx-auto mt-8 max-w-md rounded-[12px] bg-[#f6f5f4] border border-black/[0.08] p-6 text-center">
+          {/* Email Delivery & Spam Notice Card */}
+          <div className="mx-auto mt-6 max-w-xl rounded-[12px] bg-[#fffbf0] border-2 border-[#ffb110]/50 p-5 text-left">
+            <div className="flex items-start gap-3.5">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#ffb110]/20 text-[#000000] shrink-0 mt-0.5">
+                <Mail className="h-5 w-5 text-[#b37400]" />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h3 className="text-[16px] font-bold text-[#000000]">
+                    File ZIP &amp; Link Akses Telah Dikirim ke Email
+                  </h3>
+                  <span className="rounded-full bg-[#ffb110] px-2.5 py-0.5 text-[11px] font-bold text-[#000000] uppercase tracking-wide">
+                    Penting
+                  </span>
+                </div>
+
+                <p className="mt-2 text-[14px] text-[#423f3d] leading-relaxed">
+                  Kami telah mengirimkan tautan unduh file bundle desain (.ZIP) langsung ke alamat email Anda:
+                </p>
+
+                <div className="mt-2 inline-flex items-center gap-2 rounded-[6px] bg-[#ffffff] px-3.5 py-1.5 text-[14px] font-semibold text-[#0075de] border border-black/[0.1]">
+                  <Mail className="h-4 w-4 text-[#0075de]" />
+                  <span>{order.buyer_email}</span>
+                </div>
+
+                {/* Important Spam Warning Notice */}
+                <div className="mt-3.5 rounded-[8px] bg-[#ffffff] p-3.5 border border-[#ffb110]/60">
+                  <div className="flex items-start gap-2.5">
+                    <AlertTriangle className="h-4 w-4 text-[#d97706] shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-[13px] font-bold text-[#b45309]">
+                        Wajib Buka &amp; Periksa Folder SPAM / JUNK di Email Anda
+                      </p>
+                      <p className="mt-1 text-[12.5px] text-[#615d59] leading-relaxed">
+                        Jika email belum terlihat di <strong>Kotak Masuk (Inbox)</strong>, silakan langsung <strong>buka folder SPAM atau Junk</strong> pada email Anda. Klik tombol <strong>&ldquo;Bukan Spam&rdquo; (Report not spam)</strong> agar link unduhan file ZIP dapat dibuka dengan aman.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Direct Download Action Box */}
+          <div className="mx-auto mt-6 max-w-xl rounded-[12px] bg-[#f6f5f4] border border-black/[0.08] p-6 text-center">
             <span className="inline-flex items-center gap-1 rounded-full bg-[#e6f3fe] px-2.5 py-0.5 text-[11px] font-semibold text-[#0075de] mb-3">
-              Akses Unduh Langsung
+              Atau Unduh Langsung di Halaman Ini
             </span>
             
             <p className="font-bold text-[#000000] text-[18.5px] mb-1">
               {order.bundle?.name}
             </p>
-            <p className="text-[13.5px] text-[#615d59] mb-6">
-              Berisi gambar feed/story resolusi tinggi + prompt AI text format ZIP/manifest.
+            <p className="text-[13.5px] text-[#615d59] mb-5">
+              Selain lewat email, Anda juga bisa langsung mengunduh file bundle (.ZIP) saat ini juga melalui tombol di bawah:
             </p>
 
             {downloadToken ? (
@@ -419,7 +463,7 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
                 className="w-full inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#0075de] px-5 py-3 text-[15px] font-medium text-white hover:bg-[#0060b8] transition-colors"
               >
                 <Download className="h-4 w-4" />
-                Unduh File Sekarang
+                Unduh File Paket (.ZIP) Sekarang
               </a>
             ) : (
               <a
@@ -427,7 +471,7 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
                 className="w-full inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#0075de] px-5 py-3 text-[15px] font-medium text-white hover:bg-[#0060b8] transition-colors"
               >
                 <Download className="h-4 w-4" />
-                Unduh File Paket
+                Unduh File Paket (.ZIP)
               </a>
             )}
 
