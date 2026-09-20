@@ -22,11 +22,11 @@ export default function Navbar() {
       <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-4 sm:px-8">
         {/* Left Side: Burger Menu + Logo + Brand Name */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Hamburger Menu Button (mobile only, placed left of logo) */}
+          {/* Hamburger Menu Button (mobile only, min 44px tap target) */}
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden flex h-9 w-9 items-center justify-center rounded-[8px] text-[#111111] hover:bg-black/[0.05] transition-colors focus:outline-none"
+            className="md:hidden flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-[8px] text-[#111111] hover:bg-black/[0.05] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] focus-visible:ring-offset-2"
             aria-label={isMobileMenuOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi'}
             aria-expanded={isMobileMenuOpen}
           >
@@ -38,7 +38,7 @@ export default function Navbar() {
           </button>
 
           {/* Logo and Brand Link */}
-          <Link href="/" className="flex items-center gap-2.5 group">
+          <Link href="/" className="flex items-center gap-2.5 group rounded-[6px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de]">
             <Image
               src="/logo.svg"
               alt="Warung Design"
@@ -58,36 +58,36 @@ export default function Navbar() {
         <nav className="hidden md:flex items-center gap-1 sm:gap-2">
           <Link
             href="/#katalog"
-            className="rounded-[8px] px-3 py-1.5 text-[14px] font-medium text-[#757575] hover:text-[#000000] hover:bg-black/[0.04] transition-colors"
+            className="rounded-[8px] px-3 py-1.5 text-[14px] font-medium text-[#54504c] hover:text-[#000000] hover:bg-black/[0.04] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de]"
           >
             Katalog Paket
           </Link>
           <Link
             href="/#cara-pakai"
-            className="rounded-[8px] px-3 py-1.5 text-[14px] font-medium text-[#757575] hover:text-[#000000] hover:bg-black/[0.04] transition-colors"
+            className="rounded-[8px] px-3 py-1.5 text-[14px] font-medium text-[#54504c] hover:text-[#000000] hover:bg-black/[0.04] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de]"
           >
             Cara Pakai
           </Link>
           <Link
             href="/#faq"
-            className="rounded-[8px] px-3 py-1.5 text-[14px] font-medium text-[#757575] hover:text-[#000000] hover:bg-black/[0.04] transition-colors"
+            className="rounded-[8px] px-3 py-1.5 text-[14px] font-medium text-[#54504c] hover:text-[#000000] hover:bg-black/[0.04] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de]"
           >
             FAQ
           </Link>
           <Link
             href="/#katalog"
-            className="ml-2 inline-flex items-center gap-1.5 rounded-[8px] bg-[#0075de] px-3.5 py-1.5 text-[14px] font-medium text-white hover:bg-[#0060b8] transition-colors"
+            className="ml-2 inline-flex items-center gap-1.5 rounded-[8px] bg-[#0075de] px-3.5 py-2 text-[14px] font-medium text-white hover:bg-[#0060b8] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] focus-visible:ring-offset-2"
           >
             <ShoppingBag className="h-4 w-4" />
             <span>Pilih Paket</span>
           </Link>
         </nav>
 
-        {/* Right Side: Mobile Fast CTA Button */}
+        {/* Right Side: Mobile Fast CTA Button (min 44px tap target) */}
         <div className="flex md:hidden items-center gap-2">
           <Link
             href="/#katalog"
-            className="inline-flex items-center gap-1.5 rounded-[8px] bg-[#0075de] px-3 py-1.5 text-[13px] font-medium text-white hover:bg-[#0060b8] transition-colors"
+            className="inline-flex min-h-[44px] items-center gap-1.5 rounded-[8px] bg-[#0075de] px-3.5 py-2 text-[13px] font-medium text-white hover:bg-[#0060b8] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] focus-visible:ring-offset-2"
           >
             <ShoppingBag className="h-3.5 w-3.5" />
             <span>Pilih Paket</span>
@@ -107,7 +107,7 @@ export default function Navbar() {
               <ShoppingBag className="h-4 w-4 text-[#0075de]" />
               <span>Katalog Paket</span>
             </div>
-            <span className="text-[12px] text-[#757575]">Pilihan Bundle</span>
+            <span className="text-[12px] text-[#54504c]">Pilihan Bundle</span>
           </Link>
           <Link
             href="/#cara-pakai"
@@ -118,7 +118,7 @@ export default function Navbar() {
               <HelpCircle className="h-4 w-4 text-[#0075de]" />
               <span>Cara Pakai</span>
             </div>
-            <span className="text-[12px] text-[#757575]">Tutorial</span>
+            <span className="text-[12px] text-[#54504c]">Tutorial</span>
           </Link>
           <Link
             href="/#faq"
@@ -129,7 +129,7 @@ export default function Navbar() {
               <MessageCircle className="h-4 w-4 text-[#0075de]" />
               <span>Tanya Jawab (FAQ)</span>
             </div>
-            <span className="text-[12px] text-[#757575]">Bantuan</span>
+            <span className="text-[12px] text-[#54504c]">Bantuan</span>
           </Link>
 
           <div className="pt-3 mt-2 border-t border-black/[0.06]">

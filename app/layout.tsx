@@ -16,16 +16,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Warung Design — Bundle Prompt AI & Desain Instan untuk UMKM',
+  title: 'Warung Design: Bundle Template & Desain Promosi Siap Pakai untuk UMKM',
   description:
-    'Platform bundle desain promosi siap pakai (feed & story) untuk admin UMKM Indonesia. Tanpa perlu mahir tools AI generatif, tinggal edit di Canva dan langsung posting.',
+    'Platform bundle visual promosi siap pakai (feed & story) untuk pemilik toko dan admin UMKM Indonesia. Tanpa perlu keahlian desain rumit, tinggal pasang teks di Canva dan langsung posting.',
   keywords: [
-    'desain umkm',
-    'bundle prompt ai',
+    'desain promosi umkm',
     'template feed instagram',
-    'poster diskon',
+    'poster diskon olshop',
     'warung design',
-    'desain promosi toko',
+    'konten promosi toko',
   ],
   authors: [{ name: 'Warung Design Team' }],
   icons: {

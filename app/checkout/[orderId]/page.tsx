@@ -33,7 +33,7 @@ export default async function CheckoutPage({ params }: PageProps) {
         <div className="mt-6">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 rounded-[8px] bg-[#0075de] px-4 py-2 text-[14px] font-medium text-white hover:bg-[#0060b8] transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-[8px] bg-[#0075de] px-4 py-2 text-[14px] font-medium text-white hover:bg-[#0060b8] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] focus-visible:ring-offset-2"
           >
             <ArrowLeft className="h-4 w-4" />
             Kembali ke Katalog Paket
@@ -48,7 +48,7 @@ export default async function CheckoutPage({ params }: PageProps) {
       <div className="mb-6">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[#757575] hover:text-[#000000] transition-colors"
+          className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[#54504c] hover:text-[#000000] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] rounded"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           Batal &amp; Kembali ke Beranda

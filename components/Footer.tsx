@@ -20,8 +20,8 @@ export default function Footer() {
               <span className="text-[16px] font-semibold text-[#111111]">Warung Design</span>
             </div>
             <p className="mt-3 max-w-sm text-[14.5px] text-[#615d59] leading-relaxed">
-              Solusi konten promosi &amp; visual siap pakai untuk admin media sosial UMKM Indonesia.
-              Tanpa repot belajar prompt generatif, tinggal edit teks di Canva dan langsung posting!
+              Koleksi template visual promosi siap pakai untuk pemilik toko dan admin media sosial UMKM Indonesia.
+              Gambar resolusi tinggi siap pakai, tinggal pasang teks promo di Canva dan langsung posting.
             </p>
           </div>
 
@@ -29,19 +29,19 @@ export default function Footer() {
             <h4 className="text-[12px] font-semibold uppercase tracking-wider text-[#000000]">
               Navigasi Cepat
             </h4>
-            <ul className="mt-3 space-y-2 text-[13px] text-[#757575]">
+            <ul className="mt-3 space-y-2 text-[13.5px] text-[#54504c]">
               <li>
-                <Link href="/#katalog" className="hover:text-[#000000] transition-colors">
+                <Link href="/#katalog" className="hover:text-[#000000] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] rounded">
                   Katalog Bundle
                 </Link>
               </li>
               <li>
-                <Link href="/#cara-pakai" className="hover:text-[#000000] transition-colors">
-                  Cara Kerja &amp; Tutorial
+                <Link href="/#cara-pakai" className="hover:text-[#000000] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] rounded">
+                  Cara Pakai
                 </Link>
               </li>
               <li>
-                <Link href="/#faq" className="hover:text-[#000000] transition-colors">
+                <Link href="/#faq" className="hover:text-[#000000] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] rounded">
                   Tanya Jawab (FAQ)
                 </Link>
               </li>
@@ -60,7 +60,7 @@ export default function Footer() {
                 href="https://wa.me/6285182510575?text=Halo%20Admin%20Warung%20Desain%2C%20saya%20butuh%20bantuan"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-[8px] bg-emerald-600 px-3.5 py-2 text-[13px] font-medium text-white hover:bg-emerald-700 transition-colors"
+                className="inline-flex min-h-[40px] items-center gap-2 rounded-[8px] bg-emerald-600 px-3.5 py-2 text-[13px] font-medium text-white hover:bg-emerald-700 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700"
               >
                 <MessageCircle className="h-4 w-4" />
                 <span>WA 085182510575</span>
@@ -69,7 +69,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-black/[0.06] pt-6 text-center text-[#757575]">
+        <div className="mt-10 border-t border-black/[0.06] pt-6 text-center text-[#54504c]">
           <p className="text-[13.5px]">© {new Date().getFullYear()} Warung Design</p>
         </div>
       </div>

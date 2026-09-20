@@ -16,7 +16,6 @@ import {
   Check,
   Download,
   MessageCircle,
-  Sparkles,
   ArrowRight,
   ShieldCheck,
   RefreshCw,
@@ -196,13 +195,13 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
           <div className="shrink-0">
             {status === 'pending' && (
               <span className="inline-flex items-center gap-1.5 rounded-full bg-[#ffb110]/20 px-3 py-1 text-[12px] font-semibold text-[#000000] border border-[#ffb110]/40">
-                <Clock className="h-3.5 w-3.5 animate-pulse" />
+                <Clock className="h-3.5 w-3.5 text-[#000000]" />
                 Menunggu Pembayaran
               </span>
             )}
             {status === 'menunggu_verifikasi' && (
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#e6f3fe] px-3 py-1 text-[12px] font-semibold text-[#0075de] border border-[#0075de]/30">
-                <RefreshCw className="h-3.5 w-3.5 animate-spin text-[#0075de]" />
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#e6f3fe] px-3 py-1 text-[12px] font-semibold text-[#005bb5] border border-[#0075de]/30">
+                <RefreshCw className="h-3.5 w-3.5 animate-spin text-[#005bb5]" />
                 Sedang Diverifikasi
               </span>
             )}
@@ -219,8 +218,8 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
               </span>
             )}
             {status === 'kedaluwarsa' && (
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-black/[0.05] px-3 py-1 text-[12px] font-semibold text-[#757575] border border-black/[0.1]">
-                <AlertTriangle className="h-3.5 w-3.5 text-[#757575]" />
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-black/[0.05] px-3 py-1 text-[12px] font-semibold text-[#54504c] border border-black/[0.1]">
+                <AlertTriangle className="h-3.5 w-3.5 text-[#54504c]" />
                 Pesanan Kedaluwarsa
               </span>
             )}

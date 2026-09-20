@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Bundle } from '@/types';
-import { Check, ArrowRight, Layers } from 'lucide-react';
+import { Check, Layers } from 'lucide-react';
 import { formatRupiah } from '@/lib/telegram';
 
 interface BundleCardProps {
@@ -67,7 +67,7 @@ export default function BundleCard({ bundle }: BundleCardProps) {
         {/* Price & Primary Action */}
         <div className="mt-5 flex items-center justify-between border-t border-black/[0.06] pt-3.5">
           <div>
-            <span className="text-[11px] text-[#757575] block uppercase tracking-wider font-medium">Harga Bundle</span>
+            <span className="text-[11px] text-[#54504c] block uppercase tracking-wider font-medium">Harga Paket</span>
             <span className="text-[19px] font-bold tracking-tight text-[#000000]">
               {formatRupiah(bundle.price)}
             </span>
@@ -75,10 +75,9 @@ export default function BundleCard({ bundle }: BundleCardProps) {
 
           <Link
             href={`/bundles/${bundle.slug}`}
-            className="inline-flex items-center gap-1.5 rounded-[8px] bg-[#0075de] px-3.5 py-1.5 text-[14px] font-medium text-white hover:bg-[#0060b8] transition-colors"
+            className="inline-flex items-center justify-center rounded-[8px] bg-[#0075de] px-3.5 py-2 text-[13.5px] font-medium text-white hover:bg-[#0060b8] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] focus-visible:ring-offset-1"
           >
-            <span>Detail</span>
-            <ArrowRight className="h-3.5 w-3.5" />
+            Lihat Paket
           </Link>
         </div>
       </div>

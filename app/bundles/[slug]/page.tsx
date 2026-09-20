@@ -7,7 +7,7 @@ import {
   CheckCircle2,
   ArrowLeft,
   FileCheck,
-  Zap,
+  BookOpen,
 } from 'lucide-react';
 
 interface PageProps {
@@ -33,7 +33,7 @@ export default async function BundleDetailPage({ params }: PageProps) {
       <div className="mb-6">
         <Link
           href="/#katalog"
-          className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[#757575] hover:text-[#000000] transition-colors"
+          className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[#54504c] hover:text-[#000000] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] rounded"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           Kembali ke Semua Paket
@@ -42,14 +42,14 @@ export default async function BundleDetailPage({ params }: PageProps) {
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
         {/* Left Column: Image Gallery & Content (7 cols) */}
-        <div data-aos="fade-right" className="lg:col-span-7 space-y-6">
+        <div className="lg:col-span-7 space-y-6">
           {/* Gallery */}
           <BundleImageGallery images={bundle.preview_images} bundleName={bundle.name} />
 
           {/* Title & Description */}
           <div className="pt-2">
             <div className="flex items-center gap-2 mb-2">
-              <span className="rounded-full bg-[#e6f3fe] px-2.5 py-0.5 text-[11px] font-semibold text-[#0075de]">
+              <span className="rounded-full bg-[#e6f3fe] px-2.5 py-0.5 text-[11px] font-semibold text-[#005bb5]">
                 {bundle.category || 'Paket Bundle'}
               </span>
               {bundle.badge && (
@@ -85,7 +85,7 @@ export default async function BundleDetailPage({ params }: PageProps) {
           {/* Panduan Singkat Pemakaian */}
           <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-6">
             <h2 className="text-[16px] font-semibold text-[#000000] mb-3 flex items-center gap-2">
-              <Zap className="h-4 w-4 text-[#ffb110]" />
+              <BookOpen className="h-4 w-4 text-[#0075de]" />
               Cara Memakai File Setelah Pembelian
             </h2>
             <ol className="list-decimal list-inside space-y-2 text-[13px] text-[#615d59] leading-relaxed">
@@ -106,7 +106,7 @@ export default async function BundleDetailPage({ params }: PageProps) {
         </div>
 
         {/* Right Column: Sticky Checkout Form Card (5 cols) */}
-        <div data-aos="fade-left" className="lg:col-span-5">
+        <div className="lg:col-span-5">
           <div className="sticky top-20">
             <BundleCheckoutCard bundle={bundle} />
           </div>

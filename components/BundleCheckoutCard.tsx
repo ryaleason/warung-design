@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Bundle } from '@/types';
 import { formatRupiah } from '@/lib/telegram';
-import { ArrowRight, ShieldCheck, RefreshCw, Zap } from 'lucide-react';
+import { ShieldCheck, RefreshCw } from 'lucide-react';
 
 interface BundleCheckoutCardProps {
   bundle: Bundle;
@@ -59,7 +59,7 @@ export default function BundleCheckoutCard({ bundle }: BundleCheckoutCardProps) 
   return (
     <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-6">
       <div className="border-b border-black/[0.06] pb-4">
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-[#757575]">
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-[#54504c]">
           Ringkasan Pembelian
         </span>
         <div className="mt-2 flex items-baseline justify-between">
@@ -86,7 +86,7 @@ export default function BundleCheckoutCard({ bundle }: BundleCheckoutCardProps) 
             value={buyerName}
             onChange={(e) => setBuyerName(e.target.value)}
             placeholder="Contoh: Rani Maulida"
-            className="w-full rounded-[8px] border border-black/[0.12] bg-[#ffffff] px-3.5 py-2 text-[14px] text-[#000000] placeholder:text-[#757575]/60 focus:border-[#0075de] focus:outline-none focus:ring-1 focus:ring-[#0075de]"
+            className="w-full rounded-[8px] border border-black/[0.12] bg-[#ffffff] px-3.5 py-2 text-[14px] text-[#000000] placeholder:text-[#54504c]/60 focus:border-[#0075de] focus:outline-none focus:ring-1 focus:ring-[#0075de]"
           />
         </div>
 
@@ -100,9 +100,9 @@ export default function BundleCheckoutCard({ bundle }: BundleCheckoutCardProps) 
             value={buyerEmail}
             onChange={(e) => setBuyerEmail(e.target.value)}
             placeholder="Contoh: rani.olshop@gmail.com"
-            className="w-full rounded-[8px] border border-black/[0.12] bg-[#ffffff] px-3.5 py-2 text-[14px] text-[#000000] placeholder:text-[#757575]/60 focus:border-[#0075de] focus:outline-none focus:ring-1 focus:ring-[#0075de]"
+            className="w-full rounded-[8px] border border-black/[0.12] bg-[#ffffff] px-3.5 py-2 text-[14px] text-[#000000] placeholder:text-[#54504c]/60 focus:border-[#0075de] focus:outline-none focus:ring-1 focus:ring-[#0075de]"
           />
-          <p className="mt-1 text-[12.5px] text-[#757575]">
+          <p className="mt-1 text-[12.5px] text-[#54504c]">
             Pastikan email aktif, file download juga akan dikirim ke sini.
           </p>
         </div>
@@ -116,7 +116,7 @@ export default function BundleCheckoutCard({ bundle }: BundleCheckoutCardProps) 
             value={buyerPhone}
             onChange={(e) => setBuyerPhone(e.target.value)}
             placeholder="Contoh: 081234567890"
-            className="w-full rounded-[8px] border border-black/[0.12] bg-[#ffffff] px-3.5 py-2 text-[14px] text-[#000000] placeholder:text-[#757575]/60 focus:border-[#0075de] focus:outline-none focus:ring-1 focus:ring-[#0075de]"
+            className="w-full rounded-[8px] border border-black/[0.12] bg-[#ffffff] px-3.5 py-2 text-[14px] text-[#000000] placeholder:text-[#54504c]/60 focus:border-[#0075de] focus:outline-none focus:ring-1 focus:ring-[#0075de]"
           />
         </div>
 
@@ -129,7 +129,7 @@ export default function BundleCheckoutCard({ bundle }: BundleCheckoutCardProps) 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#0075de] px-4 py-2.5 text-[14px] font-medium text-white hover:bg-[#0060b8] transition-colors disabled:opacity-50"
+          className="w-full inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#0075de] px-4 py-2.5 text-[14px] font-medium text-white hover:bg-[#0060b8] transition-colors disabled:opacity-50 cursor-pointer"
         >
           {isSubmitting ? (
             <>
@@ -137,23 +137,19 @@ export default function BundleCheckoutCard({ bundle }: BundleCheckoutCardProps) 
               Menyiapkan Pembayaran...
             </>
           ) : (
-            <>
-              <Zap className="h-4 w-4" />
-              Lanjut ke Pembayaran QRIS
-              <ArrowRight className="h-4 w-4" />
-            </>
+            'Lanjut ke Pembayaran QRIS'
           )}
         </button>
       </form>
 
-      <div className="mt-5 space-y-2 border-t border-black/[0.06] pt-4 text-[12px] text-[#757575]">
+      <div className="mt-5 space-y-2 border-t border-black/[0.06] pt-4 text-[12px] text-[#54504c]">
         <div className="flex items-center gap-2">
           <ShieldCheck className="h-4 w-4 text-[#0075de] shrink-0" />
           <span>QRIS Statis GoPay Merchant resmi &amp; aman</span>
         </div>
         <div className="flex items-center gap-2">
           <ShieldCheck className="h-4 w-4 text-[#0075de] shrink-0" />
-          <span>Verifikasi &amp; pengiriman otomatis &lt; 15 menit</span>
+          <span>Verifikasi transaksi cepat (5-15 menit pada jam kerja)</span>
         </div>
       </div>
     </div>

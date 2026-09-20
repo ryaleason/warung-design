@@ -76,13 +76,13 @@ export default function FAQAccordion() {
             <button
               type="button"
               onClick={() => toggleItem(item.id)}
-              className="w-full flex items-center justify-between gap-4 p-5 text-left cursor-pointer select-none"
+              className="w-full flex items-center justify-between gap-4 p-5 text-left cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] focus-visible:ring-inset"
               aria-expanded={isOpen}
             >
               <div className="flex items-center gap-3">
                 <div
                   className={`flex h-7 w-7 items-center justify-center rounded-[8px] transition-colors shrink-0 ${
-                    isOpen ? 'bg-[#e6f3fe] text-[#0075de]' : 'bg-[#f6f5f4] text-[#757575]'
+                    isOpen ? 'bg-[#e6f3fe] text-[#0075de]' : 'bg-[#f6f5f4] text-[#54504c]'
                   }`}
                 >
                   <HelpCircle className="h-4 w-4" />
@@ -97,7 +97,7 @@ export default function FAQAccordion() {
               </div>
 
               <div
-                className={`flex h-7 w-7 items-center justify-center rounded-full bg-[#f6f5f4] text-[#757575] transition-transform duration-300 shrink-0 ${
+                className={`flex h-7 w-7 items-center justify-center rounded-full bg-[#f6f5f4] text-[#54504c] transition-transform duration-300 shrink-0 ${
                   isOpen ? 'rotate-180 bg-[#e6f3fe] text-[#0075de]' : ''
                 }`}
               >
