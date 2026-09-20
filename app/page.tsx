@@ -1,12 +1,11 @@
 import { getBundles } from '@/lib/db';
 import BundleCard from '@/components/BundleCard';
 import FAQAccordion from '@/components/FAQAccordion';
+import Image from 'next/image';
+import Link from 'next/link';
 import {
   ShoppingBag,
-  ImageIcon,
-  Smartphone,
-  Clock,
-  ShieldCheck,
+  Check,
   MessageCircle,
 } from 'lucide-react';
 
@@ -14,81 +13,121 @@ export const revalidate = 60; // ISR 60 seconds
 
 export default async function HomePage() {
   const bundles = await getBundles();
+  const featured = bundles[0];
+  const secondaryFeatured = bundles[2] || bundles[1];
 
   return (
     <div className="space-y-24 pb-20 max-w-[1440px] mx-auto">
-      {/* 1. Hero Section */}
-      <section className="pt-16 pb-10 sm:pt-24 sm:pb-14 text-center px-4 sm:px-8">
-        <div className="mx-auto max-w-4xl">
-          {/* Confident, Human Headline without AI pill capsules */}
-          <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-bold tracking-[-0.03em] text-[#111111] leading-[1.18] max-w-3xl mx-auto">
-            Bikin postingan promosi toko makin menarik tanpa repot sewa desainer.
-          </h1>
+      <section className="pt-10 pb-8 sm:pt-16 sm:pb-12 px-4 sm:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          <div className="lg:col-span-7 text-left space-y-6">
 
-          {/* Subhead: clear human value without AI buzzwords */}
-          <p className="mx-auto mt-6 max-w-2xl text-[16px] sm:text-[17px] text-[#595652] leading-relaxed">
-            Koleksi bundle template visual siap upload untuk feed dan story media sosial toko Anda. File gambar resolusi tinggi siap pakai, tinggal ganti foto dan ketik teks promo di Canva dalam hitungan menit.
-          </p>
+            <h1 className="text-3xl sm:text-4xl lg:text-[48px] font-bold tracking-[-0.03em] text-[#111111] leading-[1.2]">
+              Bikin postingan promosi toko makin memikat tanpa repot sewa <span className="text-[#0075de]">desainer</span>.
+            </h1>
 
-          {/* Two-button CTA row: Primary conversion + Secondary anchor */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a
-              href="#katalog"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#0075de] px-6 py-3 text-[15px] font-medium text-white hover:bg-[#0060b8] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] focus-visible:ring-offset-2 cursor-pointer shadow-xs"
-            >
-              <ShoppingBag className="h-4 w-4" />
-              Lihat Katalog Paket
-            </a>
-            <a
-              href="#cara-pakai"
-              className="w-full sm:w-auto inline-flex items-center justify-center rounded-[8px] bg-[#e6f3fe] px-6 py-3 text-[15px] font-medium text-[#005bb5] hover:bg-[#d5ebfc] hover:text-[#004ea2] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] focus-visible:ring-offset-2 cursor-pointer"
-            >
-              Cara Penggunaan
-            </a>
+            <p className="text-[16px] sm:text-[17px] text-[#595652] leading-relaxed max-w-xl">
+              Koleksi bundle template visual musiman siap upload untuk feed dan WhatsApp Story tokomu. Beli putus paket yang sedang dibutuhkan, langsung buka di Canva di HP, ganti foto dan teks promo dalam hitungan menit.
+            </p>
+
+            {/* Actions */}
+            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              <a
+                href="#katalog"
+                className="inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#0075de] px-6 py-3.5 text-[15px] font-medium text-white hover:bg-[#0060b8] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] focus-visible:ring-offset-2 cursor-pointer shadow-xs"
+              >
+                <ShoppingBag className="h-4 w-4" />
+                Lihat Katalog Paket
+              </a>
+              <a
+                href="#cara-pakai"
+                className="inline-flex items-center justify-center rounded-[8px] bg-[#ffffff] border border-black/[0.12] px-6 py-3.5 text-[15px] font-medium text-[#111111] hover:bg-[#f6f5f4] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] focus-visible:ring-offset-2 cursor-pointer"
+              >
+                Cara Penggunaan
+              </a>
+            </div>
+
+            {/* Handcrafted Reassurance: Clean Typography & Real Benefits (No pastel squircle boxes!) */}
+            
           </div>
 
-          {/* Unified Value Highlights: Authentic Warung Trust Bar (R-14 & R-20) */}
-          <div className="mt-14 rounded-[12px] bg-[#ffffff] border border-black/[0.08] p-5 sm:p-6 text-left">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 divide-y sm:divide-y-0 sm:divide-x divide-black/[0.06]">
-              <div className="flex items-start gap-3.5 pt-3 sm:pt-0 sm:px-3 first:pl-0">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] bg-[#e6f3fe] text-[#005bb5]">
-                  <ImageIcon className="h-4 w-4" />
+          {/* Right Column: Tangible Design Lookbook Preview (5 cols) */}
+          <div className="lg:col-span-5">
+            <div className="relative mx-auto max-w-md lg:max-w-none">
+              {/* Main Featured Showcase Card */}
+              <div className="rounded-[16px] border rotate-6 border-black/[0.1] bg-[#ffffff] p-4 sm:p-5 shadow-xs transition-transform hover:-translate-y-0.5">
+                <div className="relative aspect-square w-full rounded-[12px] overflow-hidden bg-[#f6f5f4] border border-black/[0.06]">
+                  {featured && featured.preview_images[0] && (
+                    <Image
+                      src={featured.preview_images[0]}
+                      alt={featured.name}
+                      fill
+                      priority
+                      sizes="(max-width: 768px) 100vw, 450px"
+                      className="object-cover"
+                    />
+                  )}
+                  {/* Subtle Stamp Tag */}
+                  <div className="absolute top-3 left-3">
+                    <span className="inline-flex items-center rounded-full bg-[#000000]/80 backdrop-blur-xs px-2.5 py-1 text-[11px] font-medium text-white">
+                      {featured?.category || 'Template Promosi'}
+                    </span>
+                  </div>
+
+                  <div className="absolute bottom-3 right-3">
+                    <span className="inline-flex items-center rounded-full bg-[#0075de] px-3 py-1 text-[12px] font-bold text-white shadow-xs">
+                      Rp 49.000 (Sekali Beli)
+                    </span>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-[14.5px] font-semibold text-[#111111]">Gambar Jadi Siap Pakai</h4>
-                  <p className="text-[13px] text-[#54504c] mt-0.5 leading-snug">PNG transparan &amp; JPG tajam langsung pakai</p>
+
+                {/* Card Meta & Canva Tag */}
+                <div className="mt-4 flex items-center justify-between">
+                  <div>
+                    <h3 className="font-semibold text-[16px] text-[#111111]">
+                      {featured?.name || 'Paket Promo Pilihan'}
+                    </h3>
+                    <p className="text-[13px] text-[#54504c] mt-0.5">
+                      25+ file PNG transparan &amp; JPG resolusi tinggi
+                    </p>
+                  </div>
+                  <Link
+                    href={`/bundles/${featured?.slug}`}
+                    className="inline-flex items-center justify-center rounded-[6px] bg-[#f6f5f4] hover:bg-black/[0.06] px-3 py-1.5 text-[12.5px] font-semibold text-[#111111] transition-colors border border-black/[0.08]"
+                  >
+                    Buka Preview
+                  </Link>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3.5 pt-3 sm:pt-0 sm:px-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] bg-[#f6d5b8]/50 text-[#8b4513]">
-                  <Smartphone className="h-4 w-4" />
+              {/* Secondary Overlapping Thumbnail for Depth */}
+              {secondaryFeatured && (
+                <div className="hidden sm:flex items-center relative z-100 rotate-x-3 gap-3 mt-3 rounded-[12px] border border-black/[0.08] bg-[#ffffff]/90 p-3">
+                  <div className="relative h-12 w-12 rounded-[8px] overflow-hidden bg-[#f6f5f4] shrink-0 border border-black/[0.06]">
+                    <Image
+                      src={secondaryFeatured.preview_images[0]}
+                      alt={secondaryFeatured.name}
+                      fill
+                      sizes="48px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0 text-left">
+                    <p className="text-[11px] font-medium uppercase tracking-wider text-[#54504c]">
+                      Juga Tersedia di Katalog
+                    </p>
+                    <p className="text-[13.5px] font-semibold text-[#111111] truncate">
+                      {secondaryFeatured.name}
+                    </p>
+                  </div>
+                  <Link
+                    href={`/bundles/${secondaryFeatured.slug}`}
+                    className="text-[12px] font-medium text-[#0075de] hover:underline shrink-0"
+                  >
+                    Lihat Paket
+                  </Link>
                 </div>
-                <div>
-                  <h4 className="text-[14.5px] font-semibold text-[#111111]">Edit Cepat di Canva</h4>
-                  <p className="text-[13px] text-[#54504c] mt-0.5 leading-snug">Tinggal tempel logo toko &amp; teks harga di HP</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3.5 pt-3 sm:pt-0 sm:px-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] bg-[#ffb110]/20 text-[#7a5200]">
-                  <Clock className="h-4 w-4" />
-                </div>
-                <div>
-                  <h4 className="text-[14.5px] font-semibold text-[#111111]">Verifikasi 5-15 Menit</h4>
-                  <p className="text-[13px] text-[#54504c] mt-0.5 leading-snug">Link unduhan otomatis aktif di halaman web</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3.5 pt-3 sm:pt-0 sm:px-3 last:pr-0">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] bg-emerald-50 text-emerald-800">
-                  <ShieldCheck className="h-4 w-4" />
-                </div>
-                <div>
-                  <h4 className="text-[14.5px] font-semibold text-[#111111]">Bebas Royalti Toko</h4>
-                  <p className="text-[13px] text-[#54504c] mt-0.5 leading-snug">Lisensi komersial untuk olshop &amp; medsos tokomu</p>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
