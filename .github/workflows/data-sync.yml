@@ -1,0 +1,32 @@
+name: Daily Data & Metrics Sync
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync-metrics:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Sync Metrics and Push
+        run: |
+          git config --global user.name "ryaleason"
+          git config --global user.email "gabrial1927@gmail.com"
+
+          # Melakukan sync metrics 27 kali
+          for i in {1..27}
+          do
+            echo "Metric sync batch #$i recorded at $(date)" >> sync-metrics.log
+            git add sync-metrics.log
+            git commit -m "chore(sync): update metrics snapshot batch $i"
+          done
+
+          # Push semua commit sekaligus ke repository
+          git push
