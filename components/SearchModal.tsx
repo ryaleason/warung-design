@@ -33,7 +33,6 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
     }, 50);
 
     if (bundles.length === 0) {
-      setIsLoading(true);
       fetch('/api/bundles')
         .then((res) => res.json())
         .then((data) => {
@@ -54,8 +53,6 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
-      setQuery('');
-      setSelectedIndex(0);
     }
     return () => {
       document.body.style.overflow = '';
@@ -83,11 +80,6 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
     return list;
   }, [bundles, query, selectedCategory]);
-
-  // Reset selected index when filtered list changes
-  useEffect(() => {
-    setSelectedIndex(0);
-  }, [filteredBundles.length]);
 
   // Handle keyboard navigation: Escape, ArrowDown, ArrowUp, Enter
   useEffect(() => {

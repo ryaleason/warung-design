@@ -63,7 +63,7 @@ export default function FAQAccordion() {
 
   return (
     <div className="space-y-3 max-w-4xl">
-      {FAQ_ITEMS.map((item, idx) => {
+      {FAQ_ITEMS.map((item) => {
         const isOpen = Boolean(openIds[item.id]);
 
         return (
