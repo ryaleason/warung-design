@@ -16,6 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.warungdesign.web.id'),
   title: 'Warung Design: Bundle Template & Desain Promosi Siap Pakai untuk UMKM',
   description:
     'Platform bundle visual promosi siap pakai (feed & story) untuk pemilik toko dan admin UMKM Indonesia. Tanpa perlu keahlian desain rumit, tinggal pasang teks di Canva dan langsung posting.',

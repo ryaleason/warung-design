@@ -7,14 +7,11 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
 const EMAIL_FROM = process.env.EMAIL_FROM || `Warung Design <${GMAIL_USER}>`;
 
 function getBaseUrl(): string {
-  if (process.env.NEXT_PUBLIC_APP_URL && !process.env.NEXT_PUBLIC_APP_URL.includes('localhost')) {
-    return process.env.NEXT_PUBLIC_APP_URL;
+  if (process.env.NEXT_PUBLIC_APP_URL && !process.env.NEXT_PUBLIC_APP_URL.includes('localhost') && !process.env.NEXT_PUBLIC_APP_URL.includes('.vercel.app')) {
+    return process.env.NEXT_PUBLIC_APP_URL.replace(/\/$/, '');
   }
-  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
-  }
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
+  if (process.env.NODE_ENV === 'production') {
+    return 'https://www.warungdesign.web.id';
   }
   return process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 }
