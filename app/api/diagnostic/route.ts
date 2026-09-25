@@ -32,6 +32,7 @@ export async function GET(req: Request) {
       anon_key_len: anonKey.length,
       anon_key_prefix: anonKey ? anonKey.substring(0, 10) + '...' : null,
       is_supabase_admin_configured: isSupabaseAdminConfigured,
+      using_fallback_anon: serviceRoleKey === 'sb_secret_kyuuOH80FJRE0FiUsbKTDw_zF1al5sj' || !serviceRoleKey,
     },
     test_query: null,
   };
