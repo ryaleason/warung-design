@@ -57,6 +57,11 @@ function saveLocalOrder(order: Order) {
  * Get all active bundles
  */
 export async function getBundles(): Promise<Bundle[]> {
+  // INITIAL_BUNDLES dari lib/data/bundles.ts adalah sumber utama katalog (gambar, badge, deskripsi)
+  if (INITIAL_BUNDLES && INITIAL_BUNDLES.length > 0) {
+    return INITIAL_BUNDLES.filter((b) => b.is_active !== false);
+  }
+
   const supabase = getSupabaseAdmin();
   if (supabase) {
     const { data, error } = await supabase
@@ -70,14 +75,18 @@ export async function getBundles(): Promise<Bundle[]> {
     }
   }
 
-  // Fallback to initial bundles
-  return INITIAL_BUNDLES;
+  return [];
 }
 
 /**
  * Get single bundle by slug
  */
 export async function getBundleBySlug(slug: string): Promise<Bundle | null> {
+  const localBundle = INITIAL_BUNDLES.find((b) => b.slug === slug);
+  if (localBundle) {
+    return localBundle;
+  }
+
   const supabase = getSupabaseAdmin();
   if (supabase) {
     const { data, error } = await supabase
@@ -92,14 +101,18 @@ export async function getBundleBySlug(slug: string): Promise<Bundle | null> {
     }
   }
 
-  const bundle = INITIAL_BUNDLES.find((b) => b.slug === slug);
-  return bundle || null;
+  return null;
 }
 
 /**
  * Get single bundle by ID
  */
 export async function getBundleById(id: string): Promise<Bundle | null> {
+  const localBundle = INITIAL_BUNDLES.find((b) => b.id === id);
+  if (localBundle) {
+    return localBundle;
+  }
+
   const supabase = getSupabaseAdmin();
   if (supabase) {
     const { data, error } = await supabase
@@ -113,8 +126,7 @@ export async function getBundleById(id: string): Promise<Bundle | null> {
     }
   }
 
-  const bundle = INITIAL_BUNDLES.find((b) => b.id === id);
-  return bundle || null;
+  return null;
 }
 
 /**
@@ -267,7 +279,7 @@ export async function getOrderById(id: string): Promise<Order | null> {
       const bundleData = Array.isArray(data.bundles) ? data.bundles[0] : data.bundles;
       const order: Order = {
         ...data,
-        bundle: bundleData || (await getBundleById(data.bundle_id)),
+        bundle: (await getBundleById(data.bundle_id)) || bundleData,
       };
       return order;
     }
@@ -316,7 +328,7 @@ export async function getOrderByCode(code: string): Promise<Order | null> {
       const bundleData = Array.isArray(data.bundles) ? data.bundles[0] : data.bundles;
       return {
         ...data,
-        bundle: bundleData || (await getBundleById(data.bundle_id)),
+        bundle: (await getBundleById(data.bundle_id)) || bundleData,
       };
     }
 
@@ -462,7 +474,7 @@ export async function getOrderByDownloadToken(token: string): Promise<Order | nu
       const bundleData = Array.isArray(data.bundles) ? data.bundles[0] : data.bundles;
       return {
         ...data,
-        bundle: bundleData || (await getBundleById(data.bundle_id)),
+        bundle: (await getBundleById(data.bundle_id)) || bundleData,
       };
     }
   }
