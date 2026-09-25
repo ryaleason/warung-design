@@ -9,7 +9,15 @@ import { Bundle } from '@/types';
 
 export const dynamic = 'force-dynamic';
 
+function isProductionBlocked(): boolean {
+  return process.env.NODE_ENV === 'production' && process.env.ENABLE_ADMIN_PAGE !== 'true';
+}
+
 export async function GET() {
+  if (isProductionBlocked()) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  }
+
   try {
     const bundles = await readBundlesFromFile();
     const gitInfo = await getGitInfo();
@@ -32,6 +40,9 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  if (isProductionBlocked()) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  }
   try {
     const body = await request.json();
     const { bundles, commitMessage, pushToGithub } = body as {

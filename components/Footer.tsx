@@ -45,11 +45,13 @@ export default function Footer() {
                   Tanya Jawab (FAQ)
                 </Link>
               </li>
-              <li>
-                <Link href="/admin" className="hover:text-[#000000] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] rounded">
-                  Admin Katalog (Lokal)
-                </Link>
-              </li>
+              {process.env.NODE_ENV !== 'production' && (
+                <li>
+                  <Link href="/admin" className="hover:text-[#000000] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] rounded">
+                    Admin Katalog (Lokal)
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
 
