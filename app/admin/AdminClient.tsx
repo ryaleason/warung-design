@@ -20,6 +20,9 @@ import {
   Layers,
   CheckCircle2,
   X,
+  Send,
+  Mail,
+  Users,
 } from 'lucide-react';
 import { Bundle } from '@/types';
 
@@ -69,6 +72,19 @@ export default function AdminClient() {
   const [saveResult, setSaveResult] = useState<SaveResult | null>(null);
   const [saveStepStatus, setSaveStepStatus] = useState<string>('');
 
+  // Modal Broadcast ke Pembeli
+  const [showBroadcastModal, setShowBroadcastModal] = useState(false);
+  const [broadcastBundle, setBroadcastBundle] = useState<Bundle | null>(null);
+  const [recipientStats, setRecipientStats] = useState<{ totalUnique: number; successfulCount: number } | null>(null);
+  const [isLoadingRecipients, setIsLoadingRecipients] = useState(false);
+  const [broadcastFilter, setBroadcastFilter] = useState<'sukses_only' | 'all'>('sukses_only');
+  const [broadcastNote, setBroadcastNote] = useState('');
+  const [testEmailInput, setTestEmailInput] = useState('rylaeasoncore@gmail.com');
+  const [isSendingTest, setIsSendingTest] = useState(false);
+  const [testEmailFeedback, setTestEmailFeedback] = useState<string | null>(null);
+  const [isBroadcasting, setIsBroadcasting] = useState(false);
+  const [broadcastResult, setBroadcastResult] = useState<{ sentCount: number; failedCount: number; totalTarget: number } | null>(null);
+
   // Notifikasi toast sederhana
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -78,6 +94,97 @@ export default function AdminClient() {
     setTimeout(() => {
       setToastMessage((prev) => (prev === msg ? null : prev));
     }, 4000);
+  };
+
+  // Buka modal broadcast dan ambil statistik pembeli
+  const handleOpenBroadcastModal = async (bundle: Bundle) => {
+    setBroadcastBundle(bundle);
+    setShowBroadcastModal(true);
+    setBroadcastResult(null);
+    setTestEmailFeedback(null);
+    setBroadcastNote('');
+    setIsLoadingRecipients(true);
+
+    try {
+      const res = await fetch('/api/admin/broadcast');
+      const data = await res.json();
+      if (data.success) {
+        setRecipientStats({
+          totalUnique: data.totalUnique,
+          successfulCount: data.successfulCount,
+        });
+      }
+    } catch (e) {
+      console.error('Error fetching recipient stats:', e);
+    } finally {
+      setIsLoadingRecipients(false);
+    }
+  };
+
+  // Kirim email uji coba (test preview)
+  const handleSendTestEmail = async () => {
+    if (!broadcastBundle || !testEmailInput.trim()) return;
+    setIsSendingTest(true);
+    setTestEmailFeedback(null);
+
+    try {
+      const res = await fetch('/api/admin/broadcast', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          bundleId: broadcastBundle.id,
+          testEmail: testEmailInput.trim(),
+          customNote: broadcastNote,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setTestEmailFeedback(data.message || 'Email tes berhasil dikirim!');
+        showToast('Email tes berhasil dikirim.');
+      } else {
+        setTestEmailFeedback(`Gagal: ${data.error}`);
+      }
+    } catch (err: unknown) {
+      const e = err as Error;
+      setTestEmailFeedback(`Error: ${e.message}`);
+    } finally {
+      setIsSendingTest(false);
+    }
+  };
+
+  // Eksekusi broadcast ke semua pelanggan
+  const handleExecuteBroadcast = async () => {
+    if (!broadcastBundle) return;
+    setIsBroadcasting(true);
+    setBroadcastResult(null);
+
+    try {
+      const res = await fetch('/api/admin/broadcast', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          bundleId: broadcastBundle.id,
+          filter: broadcastFilter,
+          customNote: broadcastNote,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setBroadcastResult({
+          sentCount: data.sentCount,
+          failedCount: data.failedCount,
+          totalTarget: data.totalTarget,
+        });
+        showToast(`Berhasil kirim broadcast ke ${data.sentCount} pembeli!`);
+      } else {
+        showToast(`Gagal: ${data.error}`);
+      }
+    } catch (err: unknown) {
+      const e = err as Error;
+      showToast(`Error: ${e.message}`);
+    } finally {
+      setIsBroadcasting(false);
+    }
   };
 
   // Muat data dari server
@@ -626,6 +733,15 @@ export default function AdminClient() {
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
+                    onClick={() => handleOpenBroadcastModal(selectedBundle)}
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-sky-300 bg-sky-50 px-3 py-1.5 text-[12.5px] font-medium text-sky-800 hover:bg-sky-100 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de]"
+                  >
+                    <Send className="h-3.5 w-3.5 text-[#0075de]" />
+                    <span>Kirim Info ke Pembeli</span>
+                  </button>
+
+                  <button
+                    type="button"
                     onClick={() => handleDuplicateBundle(selectedBundle.id)}
                     className="inline-flex items-center gap-1.5 rounded-lg border border-black/10 px-3 py-1.5 text-[12.5px] font-medium text-stone-700 hover:bg-stone-50 transition-colors"
                   >
@@ -1114,6 +1230,259 @@ export default function AdminClient() {
                       <>
                         <Save className="h-4 w-4" />
                         <span>Konfirmasi Simpan & Push</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Modal Broadcast ke Pembeli */}
+      {showBroadcastModal && broadcastBundle && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-xs animate-in fade-in duration-150">
+          <div className="relative w-full max-w-lg rounded-xl border border-black/10 bg-white p-6 shadow-xl max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-150">
+            {/* Header Modal */}
+            <div className="flex items-start justify-between border-b border-black/[0.08] pb-4">
+              <div className="flex items-center gap-2.5">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-sky-50 text-[#0075de] border border-sky-200">
+                  <Mail className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="text-[16px] font-semibold text-black">
+                    Kirim Info Produk ke Pembeli
+                  </h3>
+                  <p className="text-[12px] text-stone-500">
+                    Kirim email pemberitahuan rilis paket ini ke pelanggan terdaftar
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowBroadcastModal(false)}
+                disabled={isBroadcasting}
+                className="rounded-lg p-1 text-stone-400 hover:bg-stone-100 hover:text-black transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            {/* Konten Modal */}
+            {broadcastResult ? (
+              // Hasil Pengiriman Sukses
+              <div className="py-6 text-center space-y-4">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                  <CheckCircle2 className="h-7 w-7" />
+                </div>
+                <div>
+                  <h4 className="text-[17px] font-bold text-stone-900">
+                    Broadcast Berhasil Dikirim!
+                  </h4>
+                  <p className="mt-1 text-[13.5px] text-stone-600">
+                    Email rilis paket <strong>{broadcastBundle.name}</strong> telah terkirim ke{' '}
+                    <span className="font-semibold text-emerald-700">{broadcastResult.sentCount} pelanggan</span>
+                    {broadcastResult.failedCount > 0 && ` (${broadcastResult.failedCount} gagal)`}.
+                  </p>
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowBroadcastModal(false)}
+                    className="rounded-lg bg-stone-900 px-5 py-2 text-[13px] font-medium text-white hover:bg-black transition-colors"
+                  >
+                    Tutup Jendela
+                  </button>
+                </div>
+              </div>
+            ) : (
+              // Form Konfigurasi Broadcast
+              <div className="mt-5 space-y-5">
+                {/* Ringkasan Paket yang akan dikirim */}
+                <div className="flex items-center gap-3 rounded-lg border border-black/[0.08] bg-[#fcfbf9] p-3">
+                  <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md bg-stone-100 border border-black/[0.06]">
+                    {broadcastBundle.preview_images?.[0] ? (
+                      <img
+                        src={broadcastBundle.preview_images[0]}
+                        alt={broadcastBundle.name}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <ImageIcon className="h-6 w-6 text-stone-300 m-auto mt-4" />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <span className="inline-block text-[11px] font-semibold text-[#0075de] uppercase tracking-wider">
+                      {broadcastBundle.category || 'Paket Template'}
+                    </span>
+                    <h4 className="line-clamp-1 text-[13.5px] font-semibold text-black">
+                      {broadcastBundle.name}
+                    </h4>
+                    <p className="text-[12px] font-medium text-stone-700">
+                      Rp {broadcastBundle.price.toLocaleString('id-ID')}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Pilihan Target Penerima */}
+                <div>
+                  <label className="block text-[13px] font-semibold text-stone-900 mb-2">
+                    Target Penerima Email:
+                  </label>
+                  {isLoadingRecipients ? (
+                    <div className="flex items-center gap-2 rounded-lg border border-black/[0.06] bg-stone-50 p-3 text-[12.5px] text-stone-500">
+                      <RefreshCw className="h-3.5 w-3.5 animate-spin text-[#0075de]" />
+                      <span>Memuat data pembeli dari Supabase...</span>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <label className={`flex items-start gap-2.5 rounded-lg border p-3 cursor-pointer transition-colors ${
+                        broadcastFilter === 'sukses_only'
+                          ? 'border-[#0075de] bg-blue-50/40'
+                          : 'border-black/[0.08] bg-white hover:bg-stone-50'
+                      }`}>
+                        <input
+                          type="radio"
+                          name="broadcastFilter"
+                          value="sukses_only"
+                          checked={broadcastFilter === 'sukses_only'}
+                          onChange={() => setBroadcastFilter('sukses_only')}
+                          disabled={isBroadcasting}
+                          className="mt-0.5 text-[#0075de] focus:ring-[#0075de]"
+                        />
+                        <div className="text-[12.5px]">
+                          <span className="font-semibold text-stone-900 block">
+                            Hanya Pembeli Transaksi Sukses ({recipientStats?.successfulCount || 0} orang)
+                          </span>
+                          <span className="text-stone-500">
+                            Direkomendasikan. Hanya dikirim ke pelanggan yang sudah pernah membeli dan membayar lunas.
+                          </span>
+                        </div>
+                      </label>
+
+                      <label className={`flex items-start gap-2.5 rounded-lg border p-3 cursor-pointer transition-colors ${
+                        broadcastFilter === 'all'
+                          ? 'border-[#0075de] bg-blue-50/40'
+                          : 'border-black/[0.08] bg-white hover:bg-stone-50'
+                      }`}>
+                        <input
+                          type="radio"
+                          name="broadcastFilter"
+                          value="all"
+                          checked={broadcastFilter === 'all'}
+                          onChange={() => setBroadcastFilter('all')}
+                          disabled={isBroadcasting}
+                          className="mt-0.5 text-[#0075de] focus:ring-[#0075de]"
+                        />
+                        <div className="text-[12.5px]">
+                          <span className="font-semibold text-stone-900 block">
+                            Semua Email Pelanggan Terdaftar ({recipientStats?.totalUnique || 0} orang)
+                          </span>
+                          <span className="text-stone-500">
+                            Termasuk pelanggan dengan status pending atau transaksi sebelumnya.
+                          </span>
+                        </div>
+                      </label>
+                    </div>
+                  )}
+                </div>
+
+                {/* Catatan Tambahan (Opsional) */}
+                <div>
+                  <label className="block text-[13px] font-semibold text-stone-900">
+                    Catatan Tambahan (Opsional)
+                  </label>
+                  <p className="text-[11.5px] text-stone-500 mb-1.5">
+                    Akan ditampilkan sebagai kotak sorotan khusus di dalam email.
+                  </p>
+                  <textarea
+                    rows={2}
+                    value={broadcastNote}
+                    onChange={(e) => setBroadcastNote(e.target.value)}
+                    disabled={isBroadcasting}
+                    placeholder="Contoh: Dapatkan diskon 15% khusus repeat order minggu ini!"
+                    className="w-full rounded-lg border border-black/10 bg-white px-3.5 py-2 text-[13px] text-stone-900 focus:border-[#0075de] focus:outline-none focus:ring-1 focus:ring-[#0075de]"
+                  />
+                </div>
+
+                {/* Box Tes Email Pratinjau */}
+                <div className="rounded-lg border border-amber-200 bg-amber-50/50 p-3.5 space-y-2">
+                  <div className="flex items-center gap-1.5 text-[12.5px] font-semibold text-amber-900">
+                    <Mail className="h-4 w-4 text-amber-700" />
+                    <span>Coba Kirim Email Tes Dulu (Pratinjau)</span>
+                  </div>
+                  <p className="text-[11.5px] text-amber-800 leading-relaxed">
+                    Kirim contoh email ke alamat Anda untuk melihat tampilannya sebelum dikirim ke pelanggan.
+                  </p>
+                  <div className="flex gap-2">
+                    <input
+                      type="email"
+                      value={testEmailInput}
+                      onChange={(e) => setTestEmailInput(e.target.value)}
+                      disabled={isSendingTest || isBroadcasting}
+                      placeholder="email-anda@gmail.com"
+                      className="flex-1 rounded-md border border-amber-300 bg-white px-3 py-1.5 text-[12.5px] text-stone-900 focus:border-[#0075de] focus:outline-none"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleSendTestEmail}
+                      disabled={isSendingTest || isBroadcasting || !testEmailInput.trim()}
+                      className="inline-flex items-center gap-1.5 rounded-md bg-amber-700 px-3 py-1.5 text-[12px] font-medium text-white hover:bg-amber-800 transition-colors disabled:opacity-50"
+                    >
+                      {isSendingTest ? (
+                        <>
+                          <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                          <span>Mengirim...</span>
+                        </>
+                      ) : (
+                        <span>Kirim Tes</span>
+                      )}
+                    </button>
+                  </div>
+                  {testEmailFeedback && (
+                    <p className={`text-[11.5px] ${testEmailFeedback.includes('Gagal') || testEmailFeedback.includes('Error') ? 'text-red-700 font-medium' : 'text-emerald-700 font-medium'}`}>
+                      {testEmailFeedback}
+                    </p>
+                  )}
+                </div>
+
+                {/* Tombol Aksi */}
+                <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-black/[0.08]">
+                  <button
+                    type="button"
+                    onClick={() => setShowBroadcastModal(false)}
+                    disabled={isBroadcasting}
+                    className="rounded-lg border border-black/10 px-4 py-2 text-[13px] font-medium text-stone-700 hover:bg-stone-50 transition-colors disabled:opacity-50"
+                  >
+                    Batal
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleExecuteBroadcast}
+                    disabled={
+                      isBroadcasting ||
+                      isLoadingRecipients ||
+                      (broadcastFilter === 'sukses_only' && (recipientStats?.successfulCount || 0) === 0)
+                    }
+                    className="inline-flex items-center gap-2 rounded-lg bg-[#0075de] px-4 py-2 text-[13px] font-medium text-white hover:bg-[#005bb5] transition-colors disabled:opacity-50 shadow-sm"
+                  >
+                    {isBroadcasting ? (
+                      <>
+                        <RefreshCw className="h-4 w-4 animate-spin" />
+                        <span>Mengirim Broadcast...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="h-4 w-4" />
+                        <span>
+                          Kirim ke{' '}
+                          {broadcastFilter === 'sukses_only'
+                            ? recipientStats?.successfulCount || 0
+                            : recipientStats?.totalUnique || 0}{' '}
+                          Pelanggan
+                        </span>
                       </>
                     )}
                   </button>

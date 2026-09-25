@@ -194,3 +194,196 @@ Warung Design
   console.log(`[EMAIL MOCK] Order URL: ${orderUrl}`);
   return { success: true };
 }
+
+/**
+ * Kirim email pemberitahuan rilis paket/produk baru ke pelanggan
+ */
+export async function sendNewBundleBroadcastEmail(params: {
+  recipientName: string;
+  recipientEmail: string;
+  bundle: Bundle;
+  customNote?: string;
+}): Promise<{ success: boolean; error?: string }> {
+  const { recipientName, recipientEmail, bundle, customNote } = params;
+  const baseUrl = getBaseUrl();
+  const bundleUrl = `${baseUrl}/bundles/${bundle.slug}`;
+  const emailSubject = `[Koleksi Baru] ${bundle.name} - Warung Design`;
+  const mainImage = bundle.preview_images?.[0] || '';
+
+  const plainTextContent = `Halo, ${recipientName}!
+
+Koleksi desain baru telah tersedia di Warung Design untuk materi promosi tokomu:
+
+Paket: ${bundle.name}
+Harga: Rp ${bundle.price.toLocaleString('id-ID')}
+Kategori: ${bundle.category || 'Desain UMKM'}
+
+Deskripsi:
+${bundle.description}
+
+Fitur Utama:
+${bundle.features.map((f) => `- ${f}`).join('\n')}
+
+${customNote ? `Catatan Admin:\n${customNote}\n\n` : ''}Lihat Detail & Preview Lengkap:
+${bundleUrl}
+
+Ada pertanyaan? Hubungi WhatsApp kami di: https://wa.me/6285182510575 (085182510575)
+
+Terima kasih,
+Warung Design
+`.trim();
+
+  const htmlContent = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>${bundle.name} - Warung Design</title>
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f6f5f4; margin: 0; padding: 24px; color: #111111;">
+  <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);">
+    <!-- Header -->
+    <div style="background-color: #111111; padding: 22px 28px; text-align: left;">
+      <span style="color: #ffffff; font-weight: 700; font-size: 17px; letter-spacing: -0.02em;">Warung Design</span>
+      <span style="color: #ffb110; font-size: 11px; font-weight: 600; text-transform: uppercase; margin-left: 10px; background: rgba(255,255,255,0.1); padding: 3px 8px; border-radius: 4px;">Koleksi Baru</span>
+    </div>
+
+    <!-- Body -->
+    <div style="padding: 30px;">
+      <h2 style="margin-top: 0; color: #111111; font-size: 20px; font-weight: 700;">Halo, ${recipientName}! 👋</h2>
+      <p style="color: #615d59; font-size: 15px; line-height: 1.6; margin-bottom: 22px;">
+        Koleksi template visual baru baru saja dirilis di Warung Design. Dirancang khusus untuk memikat calon pembeli di feed Instagram dan WhatsApp Story tokomu.
+      </p>
+
+      ${
+        customNote
+          ? `<div style="background-color: #fcf9f2; border-left: 3px solid #ffb110; padding: 12px 16px; margin-bottom: 22px; font-size: 14px; color: #544f49; line-height: 1.5;">
+              ${customNote}
+            </div>`
+          : ''
+      }
+
+      <!-- Kartu Produk -->
+      <div style="border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden; margin-bottom: 26px;">
+        ${
+          mainImage
+            ? `<div style="background: #f6f5f4; text-align: center;">
+                <img src="${mainImage}" alt="${bundle.name}" style="width: 100%; max-height: 300px; object-fit: cover; display: block;" />
+              </div>`
+            : ''
+        }
+        <div style="padding: 20px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+            <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #0075de; letter-spacing: 0.05em;">
+              ${bundle.category || 'Paket Template'} ${bundle.badge ? `• ${bundle.badge}` : ''}
+            </span>
+            <span style="font-size: 17px; font-weight: 700; color: #111111;">
+              Rp ${bundle.price.toLocaleString('id-ID')}
+            </span>
+          </div>
+
+          <h3 style="margin: 0 0 10px 0; font-size: 18px; color: #111111; font-weight: 600;">
+            ${bundle.name}
+          </h3>
+
+          <p style="margin: 0 0 16px 0; font-size: 14px; color: #615d59; line-height: 1.6;">
+            ${bundle.description}
+          </p>
+
+          <div style="border-top: 1px solid rgba(0, 0, 0, 0.06); padding-top: 14px;">
+            <p style="margin: 0 0 8px 0; font-size: 12.5px; font-weight: 600; color: #111111;">Yang kamu dapatkan:</p>
+            <ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #615d59; line-height: 1.6;">
+              ${bundle.features.slice(0, 4).map((f) => `<li>${f}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tombol CTA -->
+      <div style="text-align: center; margin: 26px 0;">
+        <a href="${bundleUrl}" style="background-color: #0075de; color: #ffffff; text-decoration: none; padding: 13px 30px; border-radius: 8px; font-weight: 600; font-size: 15px; display: inline-block;">
+          Lihat Paket &amp; Pratinjau Desain
+        </a>
+      </div>
+
+      <p style="text-align: center; margin: 0; font-size: 12.5px; color: #757575;">
+        Atau buka tautan langsung: <a href="${bundleUrl}" style="color: #0075de;">${bundleUrl}</a>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div style="background-color: #f6f5f4; border-top: 1px solid rgba(0, 0, 0, 0.08); padding: 18px 28px; text-align: center; font-size: 12px; color: #757575; line-height: 1.5;">
+      <p style="margin: 0 0 6px 0;">
+        Kamu menerima email ini karena pernah berbelanja di Warung Design (${recipientEmail}).
+      </p>
+      <p style="margin: 0;">
+        Ada pertanyaan? Hubungi kami via WhatsApp di <a href="https://wa.me/6285182510575" style="color: #0075de; text-decoration: none; font-weight: 600;">085182510575</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>
+`.trim();
+
+  // 1. Kirim via Gmail SMTP jika ada password
+  if (GMAIL_APP_PASSWORD) {
+    try {
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: GMAIL_USER,
+          pass: GMAIL_APP_PASSWORD.replace(/\s+/g, ''),
+        },
+      });
+
+      await transporter.sendMail({
+        from: `"Warung Design" <${GMAIL_USER}>`,
+        to: recipientEmail,
+        replyTo: GMAIL_USER,
+        subject: emailSubject,
+        text: plainTextContent,
+        html: htmlContent,
+      });
+
+      return { success: true };
+    } catch (gmailErr: unknown) {
+      const err = gmailErr as Error;
+      console.error(`Failed to send broadcast to ${recipientEmail} via Gmail SMTP:`, err);
+    }
+  }
+
+  // 2. Fallback via Resend jika terkonfigurasi
+  if (RESEND_API_KEY && !RESEND_API_KEY.includes('re_your_api_key')) {
+    try {
+      const res = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from: EMAIL_FROM,
+          to: recipientEmail,
+          reply_to: GMAIL_USER,
+          subject: emailSubject,
+          text: plainTextContent,
+          html: htmlContent,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        return { success: false, error: data.message || 'Resend error' };
+      }
+      return { success: true };
+    } catch (err: unknown) {
+      const error = err as Error;
+      return { success: false, error: error.message };
+    }
+  }
+
+  // 3. Mode Simulasi di lokal
+  console.log(`[BROADCAST SIMULATION] To: ${recipientName} <${recipientEmail}>, Bundle: ${bundle.name}`);
+  return { success: true };
+}
+
