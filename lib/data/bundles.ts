@@ -8,7 +8,7 @@ export const INITIAL_BUNDLES: Bundle[] = [
     "description": "Koleksi lengkap 25+ template desain feed & story Instagram bertema Ramadhan & Lebaran. Siap edit & posting dengan nuansa islami modern nan elegan, lengkap dengan prompt Midjourney & DALL-E v3 untuk variasi tak terbatas.",
     "price": 49000,
     "preview_images": [
-      "https://i.pinimg.com/736x/ac/be/40/acbe40d4b8c33c953ab4f5d343ced6cb.jpg",
+      "https://i.pinimg.com/736x/8a/93/84/8a9384ebb309b7cad4241b11a686164b.jpg",
       "https://i.pinimg.com/736x/28/8f/a6/288fa6e08f9dafbb10b84399ed39eb04.jpg",
       "https://i.pinimg.com/736x/b3/c2/85/b3c285e14cf32c912fcd6282dea00f96.jpg",
       "https://i.pinimg.com/736x/67/b9/ae/67b9aef4f55130be846c7aef774dcad8.jpg",
