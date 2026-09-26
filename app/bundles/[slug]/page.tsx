@@ -19,6 +19,26 @@ export async function generateStaticParams() {
   return bundles.map((b) => ({ slug: b.slug }));
 }
 
+export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params;
+  const bundle = await getBundleBySlug(slug);
+  if (!bundle) {
+    return {
+      title: 'Paket Tidak Ditemukan - Warung Design',
+    };
+  }
+
+  return {
+    title: `${bundle.name} | Warung Design`,
+    description: bundle.description,
+    openGraph: {
+      title: `${bundle.name} | Warung Design`,
+      description: bundle.description,
+      images: bundle.preview_images?.[0] ? [bundle.preview_images[0]] : [],
+    },
+  };
+}
+
 export default async function BundleDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const bundle = await getBundleBySlug(slug);
