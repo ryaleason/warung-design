@@ -163,7 +163,13 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
   };
 
 
-  const qrisImageSrc = process.env.NEXT_PUBLIC_QRIS_IMAGE_URL || '/qris.jpeg';
+  const rawQrisUrl = process.env.NEXT_PUBLIC_QRIS_IMAGE_URL?.trim();
+  const qrisImageSrc =
+    !rawQrisUrl ||
+    rawQrisUrl === '/qris-gopay-placeholder.png' ||
+    rawQrisUrl === '/qris-placeholder.svg'
+      ? '/qris.jpeg'
+      : rawQrisUrl;
 
   return (
     <div className="mx-auto max-w-4xl">
@@ -244,6 +250,12 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
                 priority
                 unoptimized
                 className="object-contain p-2"
+                onError={(e) => {
+                  const target = e.currentTarget as HTMLImageElement;
+                  if (!target.src.includes('qris.jpeg')) {
+                    target.src = '/qris.jpeg';
+                  }
+                }}
               />
             </div>
             <p className="mt-3 text-[12.5px] text-[#757575]">
