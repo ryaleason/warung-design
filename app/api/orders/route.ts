@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createOrder, getBundleById } from '@/lib/db';
+import { verifySessionToken } from '@/lib/db/auth';
 import { CreateOrderPayload } from '@/types';
 
 export async function POST(req: NextRequest) {
@@ -29,8 +30,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const token = req.cookies.get('auth_token')?.value;
+    const session = token ? verifySessionToken(token) : null;
+    const userId = session?.userId || body.user_id || null;
+
     const order = await createOrder({
       bundle_id: body.bundle_id,
+      user_id: userId,
       buyer_name: body.buyer_name,
       buyer_email: body.buyer_email,
       buyer_phone: body.buyer_phone,

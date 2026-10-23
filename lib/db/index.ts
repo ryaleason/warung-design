@@ -190,6 +190,7 @@ export async function createOrder(payload: CreateOrderPayload): Promise<Order> {
     id: orderId,
     order_code: orderCode,
     bundle_id: bundle.id,
+    user_id: payload.user_id || null,
     buyer_name: payload.buyer_name.trim(),
     buyer_email: payload.buyer_email.trim().toLowerCase(),
     buyer_phone: payload.buyer_phone ? payload.buyer_phone.trim() : null,

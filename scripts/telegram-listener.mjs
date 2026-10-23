@@ -46,7 +46,7 @@ async function poll() {
           }
         }
       }
-    } catch (err) {
+    } catch {
       // Small pause if network glitch
       await new Promise((r) => setTimeout(r, 2000));
     }

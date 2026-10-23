@@ -4,6 +4,8 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AOSInit from '@/components/AOSInit';
+import { AuthProvider } from '@/components/AuthContext';
+import AuthModal from '@/components/AuthModal';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: '--font-plus-jakarta-sans',
@@ -49,10 +51,13 @@ export default function RootLayout({
       className={`${plusJakartaSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
     >
       <body className="min-h-full flex flex-col bg-[#f6f5f4] text-[#000000] selection:bg-[#e6f3fe] selection:text-[#0075de] font-sans">
-        <AOSInit />
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <AuthProvider>
+          <AOSInit />
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <AuthModal />
+        </AuthProvider>
       </body>
     </html>
   );

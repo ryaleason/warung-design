@@ -4,7 +4,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Bundle } from '@/types';
 import { formatRupiah } from '@/lib/telegram';
-import { ShieldCheck, RefreshCw } from 'lucide-react';
+import { ShieldCheck, RefreshCw, UserCheck } from 'lucide-react';
+import { useAuth } from './AuthContext';
+import GuestCheckoutConfirmModal from './GuestCheckoutConfirmModal';
 
 interface BundleCheckoutCardProps {
   bundle: Bundle;
@@ -12,31 +14,38 @@ interface BundleCheckoutCardProps {
 
 export default function BundleCheckoutCard({ bundle }: BundleCheckoutCardProps) {
   const router = useRouter();
-  const [buyerName, setBuyerName] = useState('');
-  const [buyerEmail, setBuyerEmail] = useState('');
-  const [buyerPhone, setBuyerPhone] = useState('');
+  const { user, openAuthModal } = useAuth();
+
+  const [buyerName, setBuyerName] = useState(user?.name || '');
+  const [buyerEmail, setBuyerEmail] = useState(user?.email || '');
+  const [buyerPhone, setBuyerPhone] = useState(user?.phone || '');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [showGuestConfirmModal, setShowGuestConfirmModal] = useState(false);
 
-  const handleCheckout = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Sync inputs with user account when loaded
+  const [syncedUserId, setSyncedUserId] = useState<string | null>(user?.id || null);
+  if (user && user.id !== syncedUserId) {
+    setSyncedUserId(user.id);
+    if (!buyerName) setBuyerName(user.name);
+    if (!buyerEmail) setBuyerEmail(user.email);
+    if (!buyerPhone && user.phone) setBuyerPhone(user.phone);
+  }
+
+  // Actual order creation function
+  const executeOrderCreation = async () => {
+    setIsSubmitting(true);
     setErrorMsg('');
 
-    if (!buyerName.trim() || !buyerEmail.trim()) {
-      setErrorMsg('Nama dan email wajib diisi untuk pengiriman file');
-      return;
-    }
-
-    setIsSubmitting(true);
     try {
       const res = await fetch('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           bundle_id: bundle.id,
-          buyer_name: buyerName,
-          buyer_email: buyerEmail,
-          buyer_phone: buyerPhone || undefined,
+          buyer_name: buyerName.trim(),
+          buyer_email: buyerEmail.trim(),
+          buyer_phone: buyerPhone.trim() || undefined,
         }),
       });
 
@@ -54,6 +63,26 @@ export default function BundleCheckoutCard({ bundle }: BundleCheckoutCardProps) 
       setErrorMsg(error.message || 'Terjadi kesalahan koneksi');
       setIsSubmitting(false);
     }
+  };
+
+  // Form submit handler
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMsg('');
+
+    if (!buyerName.trim() || !buyerEmail.trim()) {
+      setErrorMsg('Nama dan email wajib diisi untuk pengiriman file');
+      return;
+    }
+
+    // Jika belum login, tampilkan modal konfirmasi guest vs register
+    if (!user) {
+      setShowGuestConfirmModal(true);
+      return;
+    }
+
+    // Jika sudah login, langsung buat pesanan
+    executeOrderCreation();
   };
 
   return (
@@ -75,7 +104,22 @@ export default function BundleCheckoutCard({ bundle }: BundleCheckoutCardProps) 
         </p>
       </div>
 
-      <form onSubmit={handleCheckout} className="mt-5 space-y-4">
+      {/* Logged in indicator */}
+      {user && (
+        <div className="mt-4 rounded-xl bg-emerald-50/70 border border-emerald-200/80 p-3 text-[12.5px] text-emerald-900 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <UserCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+            <span>
+              Masuk sebagai: <strong>{user.name}</strong>
+            </span>
+          </div>
+          <span className="text-[11px] font-medium text-emerald-700 bg-emerald-100/60 px-2 py-0.5 rounded">
+            Tersimpan Permanen
+          </span>
+        </div>
+      )}
+
+      <form onSubmit={handleFormSubmit} className="mt-5 space-y-4">
         <div>
           <label className="block text-[12px] font-medium text-[#111111] mb-1">
             Nama Lengkap <span className="text-[#f64932]">*</span>
@@ -129,7 +173,7 @@ export default function BundleCheckoutCard({ bundle }: BundleCheckoutCardProps) 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#0075de] px-4 py-2.5 text-[14px] font-medium text-white hover:bg-[#0060b8] transition-colors disabled:opacity-50 cursor-pointer"
+          className="w-full inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#0075de] px-4 py-2.5 text-[14px] font-medium text-white hover:bg-[#0060b8] transition-colors disabled:opacity-50 cursor-pointer shadow-xs"
         >
           {isSubmitting ? (
             <>
@@ -152,6 +196,30 @@ export default function BundleCheckoutCard({ bundle }: BundleCheckoutCardProps) 
           <span>Verifikasi transaksi cepat (5-15 menit pada jam kerja)</span>
         </div>
       </div>
+
+      {/* Confirmation Modal when user is guest (not logged in) */}
+      <GuestCheckoutConfirmModal
+        isOpen={showGuestConfirmModal}
+        buyerEmail={buyerEmail}
+        onClose={() => setShowGuestConfirmModal(false)}
+        onConfirmGuest={() => {
+          setShowGuestConfirmModal(false);
+          executeOrderCreation();
+        }}
+        onOpenRegister={() => {
+          setShowGuestConfirmModal(false);
+          openAuthModal(
+            'register',
+            { name: buyerName, email: buyerEmail, phone: buyerPhone },
+            () => executeOrderCreation()
+          );
+        }}
+        onOpenLogin={() => {
+          setShowGuestConfirmModal(false);
+          openAuthModal('login', { email: buyerEmail }, () => executeOrderCreation());
+        }}
+      />
     </div>
   );
 }
+
