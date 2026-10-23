@@ -22,9 +22,14 @@ import {
   X,
   Send,
   Mail,
+  LayoutDashboard,
+  ShoppingBag,
+  CheckSquare,
   Users,
+  Menu,
 } from 'lucide-react';
 import { Bundle } from '@/types';
+import DashboardView from './DashboardView';
 
 function createUniqueId(): string {
   return typeof crypto !== 'undefined' && crypto.randomUUID
@@ -55,6 +60,8 @@ interface SaveResult {
 }
 
 export default function AdminClient() {
+  const [activeNav, setActiveNav] = useState<'analytics' | 'catalog' | 'orders' | 'customers'>('analytics');
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const searchInputId = useId();
   const [bundles, setBundles] = useState<Bundle[]>([]);
   const [initialBundlesJson, setInitialBundlesJson] = useState<string>('');
@@ -457,86 +464,212 @@ export default function AdminClient() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f6f5f4] text-[#111111] flex flex-col font-sans">
-      {/* Top Bar Header */}
-      <header className="sticky top-0 z-40 border-b border-black/[0.08] bg-[#ffffff] px-4 py-3 sm:px-6">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <Link
-              href="/"
-              className="flex items-center gap-2 hover:opacity-85 transition-opacity"
-              title="Ke Halaman Utama"
-            >
+    <div className="min-h-screen bg-[#f6f5f4] text-[#111111] flex flex-col md:flex-row font-sans">
+      {/* Mobile Top Header */}
+      <div className="md:hidden flex items-center justify-between bg-white border-b border-black/[0.08] px-4 py-3">
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/logo.svg"
+            alt="Warung Design"
+            width={26}
+            height={26}
+            className="h-6 w-auto object-contain"
+            unoptimized
+          />
+          <span className="font-bold text-[15px] text-[#111111]">Warung Design</span>
+        </Link>
+        <button
+          onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
+          className="p-2 rounded-lg border border-black/10 hover:bg-stone-50"
+          aria-label="Toggle navigation menu"
+        >
+          <Menu className="w-5 h-5 text-stone-700" />
+        </button>
+      </div>
+
+      {/* Left Sidebar (Desktop fixed, Mobile toggleable - Matches Screenshot) */}
+      <aside
+        className={`${
+          isMobileSidebarOpen ? 'block' : 'hidden'
+        } md:flex w-full md:w-60 lg:w-64 shrink-0 bg-white border-r border-black/[0.08] flex-col justify-between p-5 md:min-h-screen`}
+      >
+        <div>
+          {/* Brand Header */}
+          <div className="hidden md:flex items-center justify-between pb-5 border-b border-black/[0.06]">
+            <Link href="/" className="flex items-center gap-2.5">
               <Image
                 src="/logo.svg"
                 alt="Warung Design"
-                width={28}
-                height={28}
+                width={30}
+                height={30}
                 className="h-7 w-auto object-contain"
                 unoptimized
               />
-              <span className="font-semibold text-[15px] tracking-tight text-[#000000]">
-                Warung Design
-              </span>
-            </Link>
-            <span className="rounded bg-stone-100 px-2 py-0.5 text-[12px] font-medium text-stone-600 border border-stone-200">
-              Admin Lokal
-            </span>
-
-            {/* Git Branch Badge */}
-            {gitInfo && (
-              <div className="hidden items-center gap-1.5 rounded-md bg-emerald-50 px-2.5 py-1 text-[12px] text-emerald-800 border border-emerald-200 md:flex">
-                <GitBranch className="h-3.5 w-3.5" />
-                <span className="font-medium">{gitInfo.branch}</span>
-                <span className="text-emerald-500">/</span>
-                <span className="text-emerald-700 truncate max-w-[200px]" title={gitInfo.remoteUrl}>
-                  GitHub
+              <div>
+                <span className="font-bold text-[15px] tracking-tight text-[#111111] block leading-none">
+                  Warung Design
                 </span>
+                <span className="text-[11px] text-[#757575] font-medium">Admin Studio</span>
               </div>
-            )}
-          </div>
-
-          <div className="flex items-center gap-2.5">
-            {hasUnsavedChanges && (
-              <span className="hidden text-[12.5px] font-medium text-amber-700 sm:inline-flex items-center gap-1.5 bg-amber-50 px-2.5 py-1 rounded border border-amber-200">
-                <span className="h-2 w-2 rounded-full bg-amber-500"></span>
-                Ada perubahan belum disimpan
-              </span>
-            )}
-
-            <button
-              type="button"
-              onClick={loadData}
-              disabled={isLoading}
-              title="Muat Ulang Data dari File"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-black/10 text-stone-600 hover:bg-stone-100 hover:text-black transition-colors"
-            >
-              <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
-            </button>
-
-            <Link
-              href="/"
-              target="_blank"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-black/10 bg-white px-3 py-1.5 text-[13px] font-medium text-stone-700 hover:bg-stone-50 transition-colors"
-            >
-              <span>Pratinjau Web</span>
-              <ExternalLink className="h-3.5 w-3.5" />
             </Link>
+          </div>
+
+          {/* Navigation Menu */}
+          <nav className="mt-5 space-y-1">
+            <button
+              type="button"
+              onClick={() => {
+                setActiveNav('analytics');
+                setIsMobileSidebarOpen(false);
+              }}
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[13px] font-semibold transition-colors ${
+                activeNav === 'analytics'
+                  ? 'bg-sky-50 text-[#0075de]'
+                  : 'text-[#757575] hover:bg-stone-50 hover:text-[#111111]'
+              }`}
+            >
+              <LayoutDashboard className="w-4 h-4" />
+              <span>Analytics</span>
+            </button>
 
             <button
               type="button"
-              onClick={handleOpenSaveModal}
-              className="inline-flex items-center gap-2 rounded-lg bg-[#0075de] px-4 py-1.5 text-[13px] font-medium text-white hover:bg-[#005bb5] transition-colors shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de]"
+              onClick={() => {
+                setActiveNav('catalog');
+                setIsMobileSidebarOpen(false);
+              }}
+              className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-[13px] font-semibold transition-colors ${
+                activeNav === 'catalog'
+                  ? 'bg-sky-50 text-[#0075de]'
+                  : 'text-[#757575] hover:bg-stone-50 hover:text-[#111111]'
+              }`}
             >
-              <Save className="h-4 w-4" />
-              <span>Simpan & Push ke GitHub</span>
+              <div className="flex items-center gap-3">
+                <ShoppingBag className="w-4 h-4" />
+                <span>Products</span>
+              </div>
+              {hasUnsavedChanges && (
+                <span className="h-2 w-2 rounded-full bg-amber-500" title="Ada perubahan belum disimpan" />
+              )}
             </button>
-          </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                setActiveNav('orders');
+                setIsMobileSidebarOpen(false);
+              }}
+              className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-[13px] font-semibold transition-colors ${
+                activeNav === 'orders'
+                  ? 'bg-sky-50 text-[#0075de]'
+                  : 'text-[#757575] hover:bg-stone-50 hover:text-[#111111]'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <CheckSquare className="w-4 h-4" />
+                <span>Orders</span>
+              </div>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setActiveNav('customers');
+                setIsMobileSidebarOpen(false);
+              }}
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[13px] font-semibold transition-colors ${
+                activeNav === 'customers'
+                  ? 'bg-sky-50 text-[#0075de]'
+                  : 'text-[#757575] hover:bg-stone-50 hover:text-[#111111]'
+              }`}
+            >
+              <Users className="w-4 h-4" />
+              <span>Customers</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setIsMobileSidebarOpen(false);
+                if (bundles.length > 0) {
+                  handleOpenBroadcastModal(bundles[0]);
+                } else {
+                  showToast('Belum ada bundle untuk dibroadcast');
+                }
+              }}
+              className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[13px] font-semibold text-[#757575] hover:bg-stone-50 hover:text-[#111111] transition-colors"
+            >
+              <Mail className="w-4 h-4" />
+              <span>Messages</span>
+            </button>
+          </nav>
         </div>
-      </header>
+
+        {/* Sidebar Bottom */}
+        <div className="mt-8 pt-4 border-t border-black/[0.06] space-y-3">
+          {gitInfo && (
+            <div className="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200/80 text-[12px] text-emerald-900">
+              <div className="flex items-center gap-1.5 font-semibold">
+                <GitBranch className="h-3.5 w-3.5 text-emerald-700" />
+                <span>origin/{gitInfo.branch}</span>
+              </div>
+              <p className="text-[11px] text-emerald-700 mt-0.5 truncate">
+                GitHub Repo Terhubung
+              </p>
+            </div>
+          )}
+
+          <Link
+            href="/"
+            target="_blank"
+            className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-[12.5px] font-medium text-[#757575] hover:bg-stone-50 hover:text-[#111111] transition-colors"
+          >
+            <div className="flex items-center gap-2">
+              <ExternalLink className="w-4 h-4" />
+              <span>Pratinjau Web</span>
+            </div>
+            <span className="text-[11px] text-stone-400">Buka</span>
+          </Link>
+        </div>
+      </aside>
 
       {/* Main Content Area */}
-      <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-6 px-4 py-6 sm:px-6 md:flex-row">
+      <main className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+        {activeNav === 'catalog' ? (
+          <div>
+            {/* Top Bar for Catalog Actions */}
+            <div className="sticky top-0 z-30 bg-white border-b border-black/[0.08] px-6 py-3 flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <h2 className="text-[16px] font-bold text-[#111111]">Katalog Bundle</h2>
+                {hasUnsavedChanges && (
+                  <span className="text-[11px] font-medium bg-amber-50 text-amber-800 border border-amber-200 px-2.5 py-0.5 rounded-full">
+                    Ada perubahan belum disimpan
+                  </span>
+                )}
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={loadData}
+                  disabled={isLoading}
+                  title="Muat Ulang"
+                  className="h-8 w-8 inline-flex items-center justify-center rounded-lg border border-black/10 text-stone-600 hover:bg-stone-50"
+                >
+                  <RefreshCw className={`h-3.5 w-3.5 ${isLoading ? 'animate-spin' : ''}`} />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleOpenSaveModal}
+                  className="inline-flex items-center gap-1.5 rounded-xl bg-[#0075de] px-4 py-1.5 text-[13px] font-semibold text-white hover:bg-[#005bb5] transition-colors shadow-xs"
+                >
+                  <Save className="h-3.5 w-3.5" />
+                  <span>Simpan ke GitHub</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-6 p-4 sm:p-6 md:flex-row">
         {/* Left Column: Daftar Bundles */}
         <aside className="w-full md:w-80 lg:w-96 shrink-0 flex flex-col gap-3">
           <div className="flex items-center justify-between">
@@ -1071,6 +1204,11 @@ export default function AdminClient() {
           )}
         </main>
       </div>
+    </div>
+  ) : (
+    <DashboardView activeView={activeNav} onNavigate={setActiveNav} />
+  )}
+</main>
 
       {/* Save & Push Modal Dialog */}
       {showSaveModal && (

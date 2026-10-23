@@ -1,8 +1,18 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { MessageCircle } from 'lucide-react';
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  // Jangan render footer publik di halaman admin
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
+
   return (
     <footer className="border-t border-black/[0.08] bg-[#f6f5f4] mt-20">
       <div className="mx-auto max-w-[1440px] px-4 py-12 sm:px-8">

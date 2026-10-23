@@ -543,3 +543,93 @@ export async function expireOldOrders(): Promise<number> {
 
   return expiredCount;
 }
+
+/**
+ * Check database connection status
+ */
+export async function checkDatabaseHealth(): Promise<{
+  supabaseConnected: boolean;
+  supabaseError?: string;
+  localFileExists: boolean;
+  localOrderCount: number;
+}> {
+  let supabaseConnected = false;
+  let supabaseError: string | undefined;
+
+  const supabase = getSupabaseAdmin();
+  if (supabase) {
+    try {
+      const { error } = await supabase.from('orders').select('id').limit(1);
+      if (error) {
+        supabaseError = error.message || 'Supabase query error';
+      } else {
+        supabaseConnected = true;
+      }
+    } catch (e) {
+      supabaseError = e instanceof Error ? e.message : 'Koneksi Supabase gagal';
+    }
+  } else {
+    supabaseError = 'Supabase admin client belum terkonfigurasi';
+  }
+
+  const map = getLocalOrdersMap();
+  return {
+    supabaseConnected,
+    supabaseError,
+    localFileExists: fs.existsSync(ORDERS_FILE),
+    localOrderCount: map.size,
+  };
+}
+
+/**
+ * Get all orders, merging Supabase and local store
+ */
+export async function getAllOrders(): Promise<Order[]> {
+  const ordersMap = new Map<string, Order>();
+
+  // 1. Fetch from Supabase if available
+  const supabase = getSupabaseAdmin();
+  if (supabase) {
+    try {
+      const { data, error } = await supabase
+        .from('orders')
+        .select('*, bundles(*)')
+        .order('created_at', { ascending: false });
+
+      if (!error && data) {
+        for (const item of data) {
+          const bundleData = Array.isArray(item.bundles) ? item.bundles[0] : item.bundles;
+          const order: Order = {
+            ...item,
+            bundle: (await getBundleById(item.bundle_id)) || bundleData,
+          };
+          ordersMap.set(order.id, order);
+        }
+      }
+    } catch (err) {
+      console.warn('Supabase getAllOrders failed, falling back to local orders:', err);
+    }
+  }
+
+  // 2. Fetch from local store
+  const localMap = getLocalOrdersMap();
+  for (const [id, localOrder] of localMap.entries()) {
+    if (!ordersMap.has(id)) {
+      if (!localOrder.bundle) {
+        localOrder.bundle = (await getBundleById(localOrder.bundle_id)) || undefined;
+      }
+      ordersMap.set(id, localOrder);
+    } else {
+      const existing = ordersMap.get(id)!;
+      if (!existing.bundle) {
+        existing.bundle = (await getBundleById(existing.bundle_id)) || undefined;
+      }
+    }
+  }
+
+  // Return sorted descending by created_at
+  const all = Array.from(ordersMap.values());
+  all.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+  return all;
+}
+

@@ -3,10 +3,12 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { ShoppingBag, Menu, X, HelpCircle, MessageCircle, Search } from 'lucide-react';
 import SearchModal from '@/components/SearchModal';
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -23,6 +25,11 @@ export default function Navbar() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
+
+  // Jangan render navbar publik di halaman admin
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
 
   return (
     <>
