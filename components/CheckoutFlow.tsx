@@ -163,7 +163,7 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
   };
 
 
-  const qrisImageSrc = process.env.NEXT_PUBLIC_QRIS_IMAGE_URL || '/qris-placeholder.svg';
+  const qrisImageSrc = process.env.NEXT_PUBLIC_QRIS_IMAGE_URL || '/qris.jpeg';
 
   return (
     <div className="mx-auto max-w-4xl">
@@ -242,6 +242,7 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
                 alt="QRIS GoPay Merchant"
                 fill
                 priority
+                unoptimized
                 className="object-contain p-2"
               />
             </div>
