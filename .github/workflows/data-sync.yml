@@ -1,8 +1,9 @@
-name: Daily Data & Metrics Sync
+name: Weekend Data & Metrics Sync
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    # Berjalan hanya pada hari Sabtu dan Minggu (6 = Sabtu, 0 = Minggu) pada 00:00 UTC (07:00 WIB)
+    - cron: '0 0 * * 6,0'
   workflow_dispatch:
 
 jobs:
@@ -20,8 +21,8 @@ jobs:
           git config --global user.name "ryaleason"
           git config --global user.email "gabrial1927@gmail.com"
 
-          # Melakukan sync metrics 27 kali
-          for i in {1..27}
+          # Melakukan sync metrics 10 kali
+          for i in {1..10}
           do
             echo "Metric sync batch #$i recorded at $(date)" >> sync-metrics.log
             git add sync-metrics.log
