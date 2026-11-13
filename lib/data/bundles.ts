@@ -27,25 +27,6 @@ export const INITIAL_BUNDLES: Bundle[] = [
     "badge": "Terlaris"
   },
   {
-    "id": "82f3f07f-5e63-49b2-aa2b-3b918a4e0c78",
-    "name": "Paket Template Baru",
-    "slug": "paket-baru-8509",
-    "description": "Deskripsi lengkap mengenai isi paket template, format file, dan keunggulannya.",
-    "price": 49000,
-    "preview_images": [
-      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "file_url": "bundles/paket-baru.zip",
-    "is_active": true,
-    "features": [
-      "20+ Template Desain Siap Pakai",
-      "Format PNG Transparan & File Canva",
-      "Bebas Lisensi Komersial untuk UMKM"
-    ],
-    "category": "Promo & Event",
-    "badge": "Baru"
-  },
-  {
     "id": "b1a2c3d4-0002-4000-8000-000000000002",
     "name": "Paket Diskon & Cuci Gudang Akhir Tahun",
     "slug": "paket-diskon-akhir-tahun",
