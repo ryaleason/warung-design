@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, HelpCircle, MessageCircle, ShoppingBag, User, LogOut, History, ChevronDown } from 'lucide-react';
+import { Menu, X, HelpCircle, MessageCircle, ShoppingBag, User, LogOut, History, ChevronDown, Bot } from 'lucide-react';
 import { useAuth } from './AuthContext';
 
 export default function Navbar() {
@@ -73,6 +73,12 @@ export default function Navbar() {
 
             {/* Desktop Navigation Links aligned to left right next to Logo (Framer Style) */}
             <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
+              <Link
+                href="/#ai-generator"
+                className="rounded-lg px-3 py-1.5 text-[13.5px] font-medium text-[#54504c] hover:text-[#111111] hover:bg-black/[0.04] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de]"
+              >
+                AI Studio
+              </Link>
               <Link
                 href="/#katalog"
                 className="rounded-lg px-3 py-1.5 text-[13.5px] font-medium text-[#54504c] hover:text-[#111111] hover:bg-black/[0.04] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de]"
@@ -214,6 +220,17 @@ export default function Navbar() {
               </div>
             )}
 
+            <Link
+              href="/#ai-generator"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center justify-between rounded-[8px] px-3.5 py-2.5 text-[15px] font-medium text-[#111111] hover:bg-black/[0.05] transition-colors"
+            >
+              <div className="flex items-center gap-2.5">
+                <Bot className="h-4 w-4 text-[#0075de]" />
+                <span>AI Studio</span>
+              </div>
+              <span className="text-[12px] text-[#54504c]">Generator Promo</span>
+            </Link>
             <Link
               href="/#katalog"
               onClick={() => setIsMobileMenuOpen(false)}

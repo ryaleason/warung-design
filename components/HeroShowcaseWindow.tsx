@@ -3,7 +3,18 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Copy, Check, ShoppingBag, ArrowRight, Layers, Bot, Download, Zap } from 'lucide-react';
+import {
+  Copy,
+  Check,
+  ShoppingBag,
+  ArrowRight,
+  Layers,
+  Bot,
+  Download,
+  Zap,
+  Sparkles,
+  RefreshCw,
+} from 'lucide-react';
 import { Bundle } from '@/types';
 import { formatRupiah } from '@/lib/telegram';
 
@@ -11,9 +22,55 @@ interface HeroShowcaseWindowProps {
   featuredBundle?: Bundle;
 }
 
+const BUSINESS_PRESETS = [
+  'Kedai Kopi & Cafe Kuliner',
+  'Fashion & Hijab Muslimah',
+  'Skincare & Klinik Kecantikan',
+  'Kuliner & Makanan Ringan',
+  'Toko Kelontong & Sembako',
+  'Jasa Servis & Percetakan',
+];
+
+const MOMENT_PRESETS = [
+  'Paket Bukber Ramadhan Hemat',
+  'Diskon Gajian Payday Sale',
+  'Flash Sale Akhir Pekan (Weekend Deal)',
+  'Launching Produk / Menu Baru',
+  'Promo Buy 1 Get 1 Free',
+];
+
+const TONE_PRESETS = [
+  'Hangat & Kekeluargaan',
+  'Elegan & Anggun',
+  'Mendesak & FOMO',
+  'Santai & Akrab',
+];
+
 export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindowProps) {
-  const [copiedPrompt, setCopiedPrompt] = useState(false);
   const [activeTab, setActiveTab] = useState<'ai-studio' | 'canva-ready'>('ai-studio');
+
+  // Interactive AI Inputs
+  const [businessType, setBusinessType] = useState('Kedai Kopi & Cafe Kuliner');
+  const [campaignMoment, setCampaignMoment] = useState('Paket Bukber Ramadhan Hemat');
+  const [tone, setTone] = useState('Hangat & Kekeluargaan');
+  const [productDetail, setProductDetail] = useState('');
+
+  // AI Output & State
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [copiedHeadline, setCopiedHeadline] = useState(false);
+  const [copiedCaption, setCopiedCaption] = useState(false);
+  const [copiedPrompt, setCopiedPrompt] = useState(false);
+
+  const [aiOutput, setAiOutput] = useState({
+    headline: 'Reuni Hangat, Buka Puasa Hemat! Paket Bukber Buy 2 Get 1 Free',
+    caption:
+      'Bulan Ramadhan tiba, saatnya menjalin silaturahmi bersama keluarga dan sahabat terdekat. Nikmati paket bukber hemat kami dengan menu pilihan kopi dan hidangan istimewa. Dapatkan penawaran Buy 2 Get 1 Free khusus reservasi minggu ini. Hubungi kami via link di bio untuk amankan meja Anda.',
+    visualPrompt:
+      'cinematic commercial photography of iced caramel macchiato and Indonesian artisanal toast on rustic dark wood, golden hour sunbeam, photorealistic, 8k --ar 1:1',
+    designTips:
+      'Gunakan palet warna hangat (krem & cokelat kayu), taruh teks judul di area sepertiga atas foto agar tidak menutupi produk.',
+  });
 
   const bundle = featuredBundle || {
     id: 'b1a2c3d4-0001-4000-8000-000000000001',
@@ -31,16 +88,59 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
     ],
   };
 
-  const samplePrompt = 'cinematic commercial photography of iced caramel macchiato and Indonesian artisanal toast on rustic dark wood, golden hour sunbeam, photorealistic, 8k --ar 1:1';
+  const handleGenerateAI = async () => {
+    setIsGenerating(true);
+    setErrorMsg('');
+    try {
+      const res = await fetch('/api/ai/generate-promo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          businessType,
+          campaignMoment,
+          tone,
+          productDetail: productDetail.trim() || undefined,
+        }),
+      });
 
-  const handleCopyPrompt = () => {
-    navigator.clipboard.writeText(samplePrompt);
-    setCopiedPrompt(true);
-    setTimeout(() => setCopiedPrompt(false), 2000);
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        throw new Error(json.error || 'Gagal menghasilkan konten dengan AI.');
+      }
+
+      const formattedTips = Array.isArray(json.data.designTips)
+        ? json.data.designTips.join(' ')
+        : json.data.designTips;
+
+      setAiOutput({
+        headline: json.data.headline,
+        caption: json.data.caption,
+        visualPrompt: json.data.visualPrompt,
+        designTips: formattedTips,
+      });
+    } catch (err: any) {
+      setErrorMsg(err.message || 'Terjadi kesalahan saat memproses generasi AI.');
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleCopy = (text: string, type: 'headline' | 'caption' | 'prompt') => {
+    navigator.clipboard.writeText(text);
+    if (type === 'headline') {
+      setCopiedHeadline(true);
+      setTimeout(() => setCopiedHeadline(false), 2000);
+    } else if (type === 'caption') {
+      setCopiedCaption(true);
+      setTimeout(() => setCopiedCaption(false), 2000);
+    } else {
+      setCopiedPrompt(true);
+      setTimeout(() => setCopiedPrompt(false), 2000);
+    }
   };
 
   return (
-    <div className="relative mx-auto w-full max-w-6xl">
+    <div className="relative mx-auto w-full max-w-6xl" id="ai-generator">
       {/* Main Window Container */}
       <div className="overflow-hidden rounded-2xl border border-black/[0.15] bg-[#ffffff] shadow-2xl transition-all">
         {/* Window Chrome / Title Bar */}
@@ -59,82 +159,149 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
             <button
               type="button"
               onClick={() => setActiveTab('ai-studio')}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-[11.5px] font-semibold transition-all ${
+              className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-[11.5px] font-semibold transition-all cursor-pointer ${
                 activeTab === 'ai-studio'
                   ? 'bg-white text-[#111111] shadow-xs'
                   : 'text-[#615d59] hover:text-[#111111]'
               }`}
             >
               <Bot className="h-3.5 w-3.5 text-[#0075de]" />
-              <span className="hidden xs:inline">Preview</span> AI Studio
+              <span>AI Studio Live</span>
             </button>
             <button
               type="button"
               onClick={() => setActiveTab('canva-ready')}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-[11.5px] font-semibold transition-all ${
+              className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-[11.5px] font-semibold transition-all cursor-pointer ${
                 activeTab === 'canva-ready'
                   ? 'bg-white text-[#111111] shadow-xs'
                   : 'text-[#615d59] hover:text-[#111111]'
               }`}
             >
               <Layers className="h-3.5 w-3.5 text-[#54504c]" />
-              <span className="hidden xs:inline">Aset</span> Desain Jadi
+              <span>Aset Desain Jadi</span>
             </button>
           </div>
         </div>
 
         {/* Window Content: 2-Column Split Interface */}
         <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-black/[0.08] bg-[#ffffff]">
-          {/* Left Column: AI Promo & Prompt Generator Preview (7 cols) */}
+          {/* Left Column: Interactive AI Studio Generator (7 cols) */}
           <div className="lg:col-span-7 p-5 sm:p-7 flex flex-col justify-between space-y-6">
             <div>
               {/* Studio Header */}
               <div className="flex items-center justify-between border-b border-black/[0.06] pb-3 mb-4">
-                <h4 className="text-[14px] font-bold text-[#111111]">
-                  Simulator Promosi Toko
-                </h4>
+                <div className="flex items-center gap-2">
+                  <Sparkles className="h-4 w-4 text-[#0075de]" />
+                  <h4 className="text-[14px] font-bold text-[#111111]">
+                    Generator Promosi Gemini AI
+                  </h4>
+                </div>
                 <span className="text-[12px] text-[#54504c]">
-                  Generator Teks &amp; Prompt AI
+                  Live Powered by Google Gemini
                 </span>
               </div>
 
-              {/* Form Input Simulation */}
+              {/* Form Input Section */}
               <div className="rounded-xl border border-black/[0.08] bg-[#fbfaf9] p-4 space-y-3.5 text-left">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#54504c] mb-1">
                       Jenis Usaha Toko
                     </label>
-                    <div className="rounded-lg border border-black/[0.1] bg-white px-3 py-2 text-[13px] font-medium text-[#111111] shadow-2xs">
-                      Kedai Kopi &amp; Cafe Kuliner
-                    </div>
+                    <select
+                      value={businessType}
+                      onChange={(e) => setBusinessType(e.target.value)}
+                      className="w-full rounded-lg border border-black/[0.12] bg-white px-3 py-2 text-[13px] font-medium text-[#111111] shadow-2xs focus:border-[#0075de] focus:outline-none focus:ring-1 focus:ring-[#0075de]"
+                    >
+                      {BUSINESS_PRESETS.map((item) => (
+                        <option key={item} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div>
                     <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#54504c] mb-1">
                       Momen Kampanye Promo
                     </label>
-                    <div className="rounded-lg border border-black/[0.1] bg-white px-3 py-2 text-[13px] font-medium text-[#111111] shadow-2xs">
-                      Paket Bukber Ramadhan Hemat
-                    </div>
+                    <select
+                      value={campaignMoment}
+                      onChange={(e) => setCampaignMoment(e.target.value)}
+                      className="w-full rounded-lg border border-black/[0.12] bg-white px-3 py-2 text-[13px] font-medium text-[#111111] shadow-2xs focus:border-[#0075de] focus:outline-none focus:ring-1 focus:ring-[#0075de]"
+                    >
+                      {MOMENT_PRESETS.map((item) => (
+                        <option key={item} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 
+                {/* Tone Selectors */}
                 <div>
-                  <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#54504c] mb-1">
+                  <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#54504c] mb-1.5">
                     Tone &amp; Gaya Bahasa
                   </label>
                   <div className="flex flex-wrap gap-1.5">
-                    <span className="rounded-md bg-[#111111] text-white px-2.5 py-1 text-[11.5px] font-medium">
-                      Hangat &amp; Kekeluargaan
-                    </span>
-                    <span className="rounded-md bg-white border border-black/[0.08] px-2.5 py-1 text-[11.5px] font-medium text-[#54504c]">
-                      Menggugah Selera
-                    </span>
-                    <span className="rounded-md bg-white border border-black/[0.08] px-2.5 py-1 text-[11.5px] font-medium text-[#54504c]">
-                      Ajakan Bukber Bareng
-                    </span>
+                    {TONE_PRESETS.map((t) => (
+                      <button
+                        key={t}
+                        type="button"
+                        onClick={() => setTone(t)}
+                        className={`rounded-md px-2.5 py-1 text-[11.5px] font-medium transition-all cursor-pointer ${
+                          tone === t
+                            ? 'bg-[#111111] text-white'
+                            : 'bg-white border border-black/[0.08] text-[#54504c] hover:border-[#0075de]/40 hover:text-[#111111]'
+                        }`}
+                      >
+                        {t}
+                      </button>
+                    ))}
                   </div>
                 </div>
+
+                {/* Optional Product Detail Input */}
+                <div>
+                  <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#54504c] mb-1">
+                    Detail Tawaran Khusus (Opsional)
+                  </label>
+                  <input
+                    type="text"
+                    value={productDetail}
+                    onChange={(e) => setProductDetail(e.target.value)}
+                    placeholder="Contoh: Diskon 20% khusus 50 pembeli pertama"
+                    className="w-full rounded-lg border border-black/[0.12] bg-white px-3 py-2 text-[13px] text-[#111111] placeholder:text-stone-400 shadow-2xs focus:border-[#0075de] focus:outline-none focus:ring-1 focus:ring-[#0075de]"
+                  />
+                </div>
+
+                {/* Trigger Button */}
+                <div className="pt-1">
+                  <button
+                    type="button"
+                    onClick={handleGenerateAI}
+                    disabled={isGenerating}
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-[#0075de] hover:bg-[#005bb5] disabled:opacity-70 text-white py-2.5 px-4 text-[13.5px] font-semibold transition-all shadow-sm cursor-pointer"
+                  >
+                    {isGenerating ? (
+                      <>
+                        <RefreshCw className="h-4 w-4 animate-spin" />
+                        <span>Sedang Meracik dengan Gemini AI...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="h-4 w-4" />
+                        <span>Buat Ide Promo dengan Gemini AI</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {errorMsg && (
+                  <p className="text-[12px] text-red-600 bg-red-50 border border-red-200 rounded-md p-2">
+                    {errorMsg}
+                  </p>
+                )}
               </div>
 
               {/* AI Output Generation Showcase Box */}
@@ -142,15 +309,65 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
                 <div className="flex items-center justify-between">
                   <span className="text-[12.5px] font-bold text-[#111111] flex items-center gap-1.5">
                     <Zap className="h-3.5 w-3.5 text-[#0075de]" />
-                    Rekomendasi Copywriting &amp; Prompt AI:
+                    Hasil Racikan Copywriting &amp; Prompt AI:
                   </span>
                 </div>
 
                 {/* Generated Headline */}
                 <div className="rounded-lg bg-white border border-black/[0.06] p-3 shadow-2xs">
-                  <p className="text-[11px] font-semibold uppercase tracking-wider text-[#54504c]">Headline Poster</p>
-                  <p className="text-[14px] font-bold text-[#111111] mt-0.5">
-                    &ldquo;Reuni Hangat, Buka Puasa Hemat! Paket Bukber Buy 2 Get 1 Free&rdquo;
+                  <div className="flex items-center justify-between mb-1">
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-[#54504c]">
+                      Headline Poster Promosi
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => handleCopy(aiOutput.headline, 'headline')}
+                      className="inline-flex items-center gap-1 text-[11px] font-medium text-[#0075de] hover:underline cursor-pointer"
+                    >
+                      {copiedHeadline ? (
+                        <>
+                          <Check className="h-3 w-3 text-emerald-600" />
+                          <span>Tersalin!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="h-3 w-3" />
+                          <span>Salin Headline</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                  <p className="text-[14px] font-bold text-[#111111] leading-snug">
+                    &ldquo;{aiOutput.headline}&rdquo;
+                  </p>
+                </div>
+
+                {/* Generated Social Media Caption */}
+                <div className="rounded-lg bg-white border border-black/[0.06] p-3 shadow-2xs">
+                  <div className="flex items-center justify-between mb-1">
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-[#54504c]">
+                      Caption Feed &amp; Broadcast WhatsApp
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => handleCopy(aiOutput.caption, 'caption')}
+                      className="inline-flex items-center gap-1 text-[11px] font-medium text-[#0075de] hover:underline cursor-pointer"
+                    >
+                      {copiedCaption ? (
+                        <>
+                          <Check className="h-3 w-3 text-emerald-600" />
+                          <span>Tersalin!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="h-3 w-3" />
+                          <span>Salin Caption</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                  <p className="text-[12.5px] text-[#444444] leading-relaxed whitespace-pre-line max-h-36 overflow-y-auto pr-1">
+                    {aiOutput.caption}
                   </p>
                 </div>
 
@@ -158,12 +375,12 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
                 <div className="rounded-lg bg-white border border-black/[0.06] p-3 shadow-2xs">
                   <div className="flex items-center justify-between mb-1">
                     <p className="text-[11px] font-semibold uppercase tracking-wider text-[#54504c]">
-                      Prompt AI Midjourney / DALL-E (Bonus):
+                      Formula Prompt AI Midjourney / DALL-E 3:
                     </p>
                     <button
                       type="button"
-                      onClick={handleCopyPrompt}
-                      className="inline-flex items-center gap-1 text-[11px] font-medium text-[#0075de] hover:underline"
+                      onClick={() => handleCopy(aiOutput.visualPrompt, 'prompt')}
+                      className="inline-flex items-center gap-1 text-[11px] font-medium text-[#0075de] hover:underline cursor-pointer"
                     >
                       {copiedPrompt ? (
                         <>
@@ -179,9 +396,17 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
                     </button>
                   </div>
                   <p className="text-[12px] font-mono text-[#54504c] bg-[#f6f5f4] p-2 rounded-md leading-relaxed break-all">
-                    {samplePrompt}
+                    {aiOutput.visualPrompt}
                   </p>
                 </div>
+
+                {/* Design Tips */}
+                {aiOutput.designTips && (
+                  <div className="rounded-lg bg-[#e6f3fe]/40 border border-[#0075de]/15 p-2.5 text-[11.5px] text-[#005bb5] leading-relaxed">
+                    <span className="font-semibold block mb-0.5">Saran Desain Canva:</span>
+                    {aiOutput.designTips}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -265,7 +490,7 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
 
               <Link
                 href={`/bundles/${bundle.slug}`}
-                className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#0075de] hover:bg-[#0060b8] text-white py-3 px-4 text-[14px] font-semibold transition-colors shadow-xs group"
+                className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#0075de] hover:bg-[#0060b8] text-white py-3 px-4 text-[14px] font-semibold transition-colors shadow-xs group cursor-pointer"
               >
                 <ShoppingBag className="h-4 w-4" />
                 <span>Beli Paket Ini Sekarang</span>

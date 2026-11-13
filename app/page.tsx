@@ -115,7 +115,7 @@ export default async function HomePage() {
         {/* Full-width Background Image edge-to-edge */}
         <div className="absolute inset-0 -z-10 w-full h-full">
           <Image
-            src="https://i.pinimg.com/736x/e8/73/45/e87345d660d548d27dd233af07eeb1c9.jpg"
+            src="https://i.pinimg.com/736x/af/e7/66/afe766353ba363649756113dad79e18f.jpg"
             alt="Latar Belakang Showcase Warung Desain"
             fill
             priority
