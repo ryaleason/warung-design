@@ -29,8 +29,9 @@ export default function HomeCatalogSection({ bundles }: HomeCatalogSectionProps)
       {/* Header & Filter Controls */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 border-b border-black/[0.08] pb-6">
         <div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#111111]">
-            Pilihan Paket Desain Siap Pakai
+          <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000]">
+            Pilihan Paket Desain{' '}
+            <span className="italic font-normal">Siap Pakai</span>
           </h2>
           <p className="mt-2 text-[15px] sm:text-[16px] text-[#595652] max-w-xl">
             Pilih bundle yang sesuai dengan kampanye tokomu saat ini. Bayar sekali lewat QRIS, unduh file resolusi tinggi, dan langsung posting ke media sosial.

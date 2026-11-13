@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Plus_Jakarta_Sans, Geist_Mono } from 'next/font/google';
+import { Plus_Jakarta_Sans, Geist_Mono, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -10,6 +10,14 @@ import AuthModal from '@/components/AuthModal';
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: '--font-plus-jakarta-sans',
   subsets: ['latin'],
+  display: 'swap',
+});
+
+const playfairDisplay = Playfair_Display({
+  variable: '--font-serif',
+  subsets: ['latin'],
+  display: 'swap',
+  style: ['normal', 'italic'],
 });
 
 const geistMono = Geist_Mono({
@@ -48,7 +56,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${plusJakartaSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
+      className={`${plusJakartaSans.variable} ${geistMono.variable} ${playfairDisplay.variable} h-full antialiased scroll-smooth`}
     >
       <body className="min-h-full flex flex-col bg-[#ffffff] text-[#000000] selection:bg-[#e6f3fe] selection:text-[#0075de] font-sans">
         <AuthProvider>

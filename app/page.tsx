@@ -39,15 +39,15 @@ export default async function HomePage() {
           </div>
 
           {/* Editorial Display Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-[60px] font-bold tracking-tight text-[#111111] leading-[1.12]">
+          <h1 className="font-serif text-3xl sm:text-5xl lg:text-[62px] font-semibold tracking-tight text-[#000000] leading-[1.14]">
             Asisten AI &amp; Desain Promosi{' '}
-            <span className="text-[#0075de]">
+            <span className="italic font-normal">
               untuk Seluruh Toko Anda
             </span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-[16px] sm:text-[19px] text-[#54504c] leading-relaxed max-w-2xl mx-auto">
+          <p className="text-[16px] sm:text-[19px] text-[#444444] leading-relaxed max-w-2xl mx-auto">
             Ubah ide promo mendadak menjadi materi feed Instagram &amp; WhatsApp Story siap posting dalam hitungan menit. Pilih puluhan bundle desain jadi, atau racik variasi unik dengan panduan prompt AI.
           </p>
 
@@ -148,8 +148,9 @@ export default async function HomePage() {
         {/* 4. CORE PHILOSOPHY / VALUE STATEMENT                      */}
         {/* ========================================================= */}
         <section className="px-4 sm:px-8 text-center max-w-4xl mx-auto space-y-3">
-          <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-[#111111] leading-tight">
-            Satu platform promosi, dari ide pertama hingga siap posting
+          <h2 className="font-serif text-2xl sm:text-4xl lg:text-[44px] font-semibold tracking-tight text-[#000000] leading-tight">
+            Satu platform promosi,{' '}
+            <span className="italic font-normal">dari ide pertama hingga siap posting</span>
           </h2>
           <p className="text-[16px] sm:text-[18px] text-[#54504c] leading-relaxed max-w-2xl mx-auto">
             Tak perlu lagi bingung memikirkan konsep visual, meraba prompt bahasa Inggris, atau menguras kas toko untuk sewa agensi jutaan rupiah.
@@ -163,8 +164,9 @@ export default async function HomePage() {
           {/* Feature 1: Left Copy, Right Visual */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             <div className="lg:col-span-6 space-y-5 text-left">
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#111111] leading-snug">
-                Rancang materi promosi dalam hitungan menit, bukan berhari-hari
+              <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000] leading-snug">
+                Rancang materi promosi{' '}
+                <span className="italic font-normal">dalam hitungan menit, bukan berhari-hari</span>
               </h3>
               <p className="text-[15px] sm:text-[16px] text-[#54504c] leading-relaxed">
                 Tak perlu membuka kanvas kosong dan bingung mau bikin apa saat toko butuh promo mendadak. Setiap bundle menyajikan puluhan desain beresolusi tinggi dengan tipografi dan komposisi matang yang siap menarik pembeli.
@@ -231,8 +233,9 @@ export default async function HomePage() {
           {/* Feature 2: Full Width / Centered Showcase */}
           <div className="rounded-2xl border border-black/[0.1] bg-white p-6 sm:p-10 shadow-sm text-center max-w-5xl mx-auto space-y-6">
             <div className="max-w-2xl mx-auto space-y-3">
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#111111]">
-                Formula Prompt AI yang paham pasar &amp; budaya UMKM Indonesia
+              <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000]">
+                Formula Prompt AI yang paham{' '}
+                <span className="italic font-normal">pasar &amp; budaya UMKM Indonesia</span>
               </h3>
               <p className="text-[15px] sm:text-[16px] text-[#54504c] leading-relaxed">
                 Lupakan tutorial prompt bahasa Inggris yang rumit dan tidak sesuai selera lokal. Setiap paket menyertakan teks prompt Midjourney &amp; DALL-E v3 yang siap kamu salin-tempel untuk eksplorasi tanpa batas.
@@ -296,8 +299,9 @@ export default async function HomePage() {
             </div>
 
             <div className="lg:col-span-6 order-1 lg:order-2 space-y-5 text-left">
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#111111] leading-snug">
-                Buka langsung di Canva HP, edit teks &amp; logo tanpa ribet
+              <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000] leading-snug">
+                Buka langsung di Canva HP,{' '}
+                <span className="italic font-normal">edit teks &amp; logo tanpa ribet</span>
               </h3>
               <p className="text-[15px] sm:text-[16px] text-[#54504c] leading-relaxed">
                 Didesain khusus untuk admin media sosial dan pemilik toko yang sering bekerja hanya bermodalkan smartphone. Tak perlu instal software berat seperti Photoshop atau laptop spek dewa.
@@ -330,8 +334,9 @@ export default async function HomePage() {
         {/* ========================================================= */}
         <section className="px-4 sm:px-8 text-center max-w-5xl mx-auto space-y-10">
           <div className="max-w-2xl mx-auto space-y-3">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#111111]">
-              Terhubung dengan semua tools andalan jualanmu
+            <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000]">
+              Terhubung dengan semua tools{' '}
+              <span className="italic font-normal">andalan jualanmu</span>
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#54504c]">
               Aset dan formula prompt Warung Desain dirancang agar bekerja mulus dengan ekosistem aplikasi yang kamu gunakan setiap hari.
@@ -358,11 +363,10 @@ export default async function HomePage() {
                   logos: [{ src: '/logos/whatsapp.svg', alt: 'WhatsApp Business' }],
                 },
                 {
-                  name: 'TikTok & Reels',
+                  name: 'TikTok',
                   desc: 'Cover video promo',
                   logos: [
                     { src: '/logos/tiktok.svg', alt: 'TikTok' },
-                    { src: '/logos/instagram.svg', alt: 'Reels' },
                   ],
                 },
                 {
@@ -429,7 +433,7 @@ export default async function HomePage() {
                     {tool.logos.map((lg, lIdx) => (
                       <div
                         key={lIdx}
-                        className={`h-8 rounded-lg bg-[#f8f8f7] border border-black/[0.06] flex items-center justify-center p-1.5 shrink-0 ${
+                        className={`h-10 rounded-lg bg-white  flex items-center justify-center p-1.5 shrink-0 ${
                           lg.wide ? 'px-2 min-w-8' : 'w-8'
                         }`}
                       >
@@ -438,10 +442,10 @@ export default async function HomePage() {
                           alt={lg.alt}
                           className={`object-contain ${
                             lg.wide
-                              ? 'h-3.5 w-auto'
+                              ? 'h-10 w-10'
                               : lg.isSwatch
-                              ? 'h-4.5 w-4.5 rounded-[3px]'
-                              : 'h-5 w-5'
+                              ? 'h-4.5 w-10 rounded-[3px]'
+                              : 'h-10 w-10'
                           }`}
                           loading="lazy"
                         />
@@ -462,8 +466,9 @@ export default async function HomePage() {
         <section id="alur-transaksi" className="px-4 sm:px-8 max-w-6xl mx-auto scroll-mt-20">
           <div className="border-t border-black/[0.08] pt-16">
             <div className="max-w-2xl mb-10 text-left">
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#111111]">
-                Cara Praktis Berbelanja di Warung Desain
+              <h2 className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-[#000000]">
+                Cara Praktis Berbelanja{' '}
+                <span className="italic font-normal">di Warung Desain</span>
               </h2>
               <p className="mt-2 text-[15px] sm:text-[16px] text-[#54504c]">
                 Tanpa perlu mendaftar akun atau berlangganan bulanan. Cukup beli putus paket yang sedang dibutuhkan.
@@ -527,8 +532,9 @@ export default async function HomePage() {
         {/* ========================================================= */}
         <section className="px-4 sm:px-8 max-w-6xl mx-auto space-y-10">
           <div className="text-center max-w-2xl mx-auto space-y-2">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#111111]">
-              Disukai oleh ratusan admin &amp; pemilik UMKM
+            <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000]">
+              Disukai oleh ratusan admin &amp;{' '}
+              <span className="italic font-normal">pemilik UMKM</span>
             </h2>
             <p className="text-[15px] text-[#54504c]">
               Cerita nyata dari mereka yang berhasil menghemat biaya desain promosi.
@@ -612,8 +618,9 @@ export default async function HomePage() {
         <section id="faq" className="px-4 sm:px-8 max-w-4xl mx-auto scroll-mt-20">
           <div className="border-t border-black/[0.08] pt-16 space-y-8">
             <div className="text-left">
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#111111]">
-                Pertanyaan yang Sering Diajukan
+              <h2 className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-[#000000]">
+                Pertanyaan yang{' '}
+                <span className="italic font-normal">Sering Diajukan</span>
               </h2>
               <p className="mt-1.5 text-[15px] text-[#54504c]">
                 Penjelasan ringkas seputar pembelian, format file, lisensi, dan rencana AI Studio.
@@ -632,8 +639,9 @@ export default async function HomePage() {
         <section className="px-4 sm:px-8 max-w-6xl mx-auto">
           <div className="rounded-3xl bg-[#111111] p-8 sm:p-14 text-white text-center shadow-xl">
             <div className="max-w-2xl mx-auto space-y-4">
-              <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-bold tracking-tight leading-tight">
-                Bikin materi promosi tokomu naik kelas hari ini
+              <h2 className="font-serif text-2xl sm:text-4xl lg:text-[42px] font-semibold tracking-tight leading-tight text-white">
+                Bikin materi promosi tokomu{' '}
+                <span className="italic font-normal">naik kelas hari ini</span>
               </h2>
 
               <p className="text-[15px] sm:text-[17px] text-white/75 leading-relaxed">

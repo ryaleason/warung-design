@@ -206,7 +206,7 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
               </div>
 
               {/* Product Title */}
-              <h3 className="text-[18px] sm:text-[20px] font-bold text-[#111111] leading-snug">
+              <h3 className="font-serif text-[18px] sm:text-[20px] font-semibold text-[#000000] leading-snug">
                 {bundle.name}
               </h3>
               <p className="mt-1 text-[13px] text-[#615d59]">
