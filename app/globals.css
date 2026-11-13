@@ -22,8 +22,8 @@
   --color-midnight-ink: #02093a;
   --color-peach: #f6d5b8;
 
-  --background: var(--color-paper-warmth);
-  --foreground: var(--color-ink-black);
+  --background: #ffffff;
+  --foreground: #000000;
 }
 
 @theme inline {
@@ -55,7 +55,7 @@ html {
 }
 
 body {
-  background-color: #f6f5f4;
+  background-color: #ffffff;
   color: #000000;
   font-family: var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;

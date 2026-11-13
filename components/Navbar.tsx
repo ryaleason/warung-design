@@ -36,7 +36,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full border-b border-black/[0.08] bg-[#f6f5f4]/90 backdrop-blur-md notion-nav-shadow">
+      <header className="sticky top-0 z-40 w-full border-b border-black/[0.08] bg-[#ffffff]/90 backdrop-blur-md notion-nav-shadow">
         <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-4 sm:px-8">
           {/* Left Side: Burger Menu + Logo + Brand Name */}
           <div className="flex items-center gap-2 sm:gap-4">
@@ -201,7 +201,7 @@ export default function Navbar() {
 
         {/* Mobile Drawer / Dropdown Navigation Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-black/[0.08] bg-[#f6f5f4]/98 backdrop-blur-md px-4 py-4 space-y-1 shadow-lg transition-all animate-in fade-in duration-200">
+          <div className="md:hidden border-t border-black/[0.08] bg-[#ffffff]/98 backdrop-blur-md px-4 py-4 space-y-1 shadow-lg transition-all animate-in fade-in duration-200">
             {user ? (
               <div className="border-b border-black/[0.06] pb-3 mb-2 px-3.5 pt-1">
                 <div className="text-[14px] font-bold text-[#111111]">{user.name}</div>

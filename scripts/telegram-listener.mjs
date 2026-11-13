@@ -3,15 +3,20 @@ import path from 'path';
 
 // Read .env.local
 const envPath = path.join(process.cwd(), '.env.local');
-let token = '7778598706:AAH07-bDfc59aJRDWbkVtbWpcYUzORendMI';
-let secret = 'rahasia_warung_123';
+let token = process.env.TELEGRAM_BOT_TOKEN || '';
+let secret = process.env.TELEGRAM_WEBHOOK_SECRET || 'rahasia_warung_123';
 
 if (fs.existsSync(envPath)) {
   const content = fs.readFileSync(envPath, 'utf-8');
   for (const line of content.split('\n')) {
-    if (line.startsWith('TELEGRAM_BOT_TOKEN=')) token = line.split('=')[1].trim();
-    if (line.startsWith('TELEGRAM_WEBHOOK_SECRET=')) secret = line.split('=')[1].trim();
+    if (line.startsWith('TELEGRAM_BOT_TOKEN=')) token = line.split('=')[1].trim().replace(/^['"]|['"]$/g, '');
+    if (line.startsWith('TELEGRAM_WEBHOOK_SECRET=')) secret = line.split('=')[1].trim().replace(/^['"]|['"]$/g, '');
   }
+}
+
+if (!token) {
+  console.error('❌ TELEGRAM_BOT_TOKEN tidak ditemukan di .env.local atau environment!');
+  process.exit(1);
 }
 
 console.log('🤖 [Telegram Dev Listener] Memantau klik tombol Telegram untuk localhost:3000...');

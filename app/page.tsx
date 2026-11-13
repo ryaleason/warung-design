@@ -1,10 +1,15 @@
 import { getBundles } from '@/lib/db';
-import BundleCard from '@/components/BundleCard';
+import HeroShowcaseWindow from '@/components/HeroShowcaseWindow';
+import HomeCatalogSection from '@/components/HomeCatalogSection';
 import FAQAccordion from '@/components/FAQAccordion';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
   ShoppingBag,
+  ArrowRight,
+  CheckCircle2,
+  Smartphone,
+  Quote,
   MessageCircle,
 } from 'lucide-react';
 
@@ -16,268 +21,560 @@ export default async function HomePage() {
   const secondaryFeatured = bundles[2] || bundles[1];
 
   return (
-    <div className="space-y-24 pb-20 max-w-[1440px] mx-auto">
-      <section className="pt-10 pb-8 sm:pt-16 sm:pb-12 px-4 sm:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          <div className="lg:col-span-7 text-left space-y-6">
-
-            <h1 className="text-3xl sm:text-4xl lg:text-[48px] font-bold tracking-[-0.03em] text-[#111111] leading-[1.2]">
-              Bikin postingan promosi toko makin memikat tanpa repot sewa <span className="text-[#0075de]">desainer</span>.
-            </h1>
-
-            <p className="text-[16px] sm:text-[17px] text-[#595652] leading-relaxed max-w-xl">
-              Koleksi bundle template visual musiman siap upload untuk feed dan WhatsApp Story tokomu. Beli putus paket yang sedang dibutuhkan, langsung buka di Canva di HP, ganti foto dan teks promo dalam hitungan menit.
-            </p>
-
-            {/* Actions */}
-            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-              <a
-                href="#katalog"
-                className="inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#0075de] px-6 py-3.5 text-[15px] font-medium text-white hover:bg-[#0060b8] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] focus-visible:ring-offset-2 cursor-pointer shadow-xs"
-              >
-                <ShoppingBag className="h-4 w-4" />
-                Lihat Katalog Paket
-              </a>
-              <a
-                href="#cara-pakai"
-                className="inline-flex items-center justify-center rounded-[8px] bg-[#ffffff] border border-black/[0.12] px-6 py-3.5 text-[15px] font-medium text-[#111111] hover:bg-[#f6f5f4] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] focus-visible:ring-offset-2 cursor-pointer"
-              >
-                Cara Penggunaan
-              </a>
-            </div>
-
-            {/* Handcrafted Reassurance: Clean Typography & Real Benefits (No pastel squircle boxes!) */}
-            
+    <div className="space-y-20 sm:space-y-28 pb-24 w-full overflow-hidden">
+      {/* ========================================================= */}
+      {/* 1. HERO TOP SECTION (Heading, Subtitle, Actions, Stats)  */}
+      {/* ========================================================= */}
+      <section className="pt-8 sm:pt-14 pb-2 px-4 sm:px-8 text-center max-w-[1440px] mx-auto">
+        <div className="max-w-4xl mx-auto space-y-6">
+          {/* Top Announcement Bar */}
+          <div className="inline-flex items-center gap-2 rounded-full border border-black/[0.1] bg-white px-4 py-1.5 text-[12.5px] font-medium text-[#111111] shadow-2xs">
+            <span className="font-semibold text-[#111111]">Warung Desain Studio</span>
+            <span className="text-black/25">|</span>
+            <span className="text-[#54504c] hidden xs:inline">
+              Desain Promosi &amp; Asisten AI untuk UMKM
+            </span>
+            <span className="text-[#54504c] xs:hidden">Studio Desain UMKM</span>
+            <ArrowRight className="h-3.5 w-3.5 text-[#54504c]" />
           </div>
 
-          {/* Right Column: Tangible Design Lookbook Preview (5 cols) */}
-          <div className="lg:col-span-5">
-            <div className="relative mx-auto max-w-md lg:max-w-none">
-              {/* Main Featured Showcase Card */}
-              <div className="rounded-[16px] border rotate-6 border-black/[0.1] bg-[#ffffff] p-4 sm:p-5 shadow-xs transition-transform hover:-translate-y-0.5">
-                <div className="relative aspect-square w-full rounded-[12px] overflow-hidden bg-[#f6f5f4] border border-black/[0.06]">
+          {/* Editorial Display Headline */}
+          <h1 className="text-3xl sm:text-5xl lg:text-[60px] font-bold tracking-tight text-[#111111] leading-[1.12]">
+            Asisten AI &amp; Desain Promosi{' '}
+            <span className="text-[#0075de]">
+              untuk Seluruh Toko Anda
+            </span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="text-[16px] sm:text-[19px] text-[#54504c] leading-relaxed max-w-2xl mx-auto">
+            Ubah ide promo mendadak menjadi materi feed Instagram &amp; WhatsApp Story siap posting dalam hitungan menit. Pilih puluhan bundle desain jadi, atau racik variasi unik dengan panduan prompt AI.
+          </p>
+
+          {/* Hero CTAs */}
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5">
+            <a
+              href="#katalog"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-xl bg-[#111111] px-7 py-4 text-[15px] font-semibold text-white hover:bg-black/85 transition-all shadow-md hover:shadow-lg cursor-pointer group"
+            >
+              <ShoppingBag className="h-4 w-4" />
+              <span>Eksplor Katalog Paket</span>
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </a>
+            <a
+              href="#alur-transaksi"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-white border border-black/[0.12] px-6 py-4 text-[15px] font-semibold text-[#111111] hover:bg-[#f6f5f4] transition-all cursor-pointer shadow-2xs"
+            >
+              <span>Cara Kerja &amp; Pembayaran</span>
+            </a>
+          </div>
+
+          {/* Reassurance Micro-Copy */}
+          <p className="text-[12.5px] text-[#54504c] pt-1">
+            Mulai Rp 40 ribuan • Sekali bayar tanpa langganan • Siap buka di Canva HP • Lisensi Bebas Komersial
+          </p>
+
+          {/* 4-Item Social Proof Metrics Bar */}
+          <div className="pt-6 border-t border-black/[0.08] grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 text-left max-w-3xl mx-auto">
+            <div className="border-l-2 border-[#111111] pl-3 py-1">
+              <span className="block text-xl sm:text-2xl font-bold tracking-tight text-[#111111]">500+</span>
+              <span className="text-[12px] text-[#54504c]">UMKM Terbantu</span>
+            </div>
+            <div className="border-l-2 border-[#111111] pl-3 py-1">
+              <span className="block text-xl sm:text-2xl font-bold tracking-tight text-[#111111]">98%</span>
+              <span className="text-[12px] text-[#54504c]">Kepuasan Pelanggan</span>
+            </div>
+            <div className="border-l-2 border-[#111111] pl-3 py-1">
+              <span className="block text-xl sm:text-2xl font-bold tracking-tight text-[#111111]">100+</span>
+              <span className="text-[12px] text-[#54504c]">Desain Siap Pakai</span>
+            </div>
+            <div className="border-l-2 border-[#0075de] pl-3 py-1">
+              <span className="block text-xl sm:text-2xl font-bold tracking-tight text-[#111111]">4.9 / 5.0</span>
+              <span className="text-[12px] text-[#54504c]">Rating Ulasan UMKM</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================= */}
+      {/* 2. FULL-WIDTH HERO SHOWCASE BANNER (ChatPRD Style)        */}
+      {/* Full dari Ujung Kanan ke Kiri Layar                       */}
+      {/* ========================================================= */}
+      <section className="relative w-full py-12 sm:py-16 md:py-24 px-4 sm:px-8 lg:px-12 overflow-hidden my-2">
+        {/* Full-width Background Image edge-to-edge */}
+        <div className="absolute inset-0 -z-10 w-full h-full">
+          <Image
+            src="https://i.pinimg.com/736x/e8/73/45/e87345d660d548d27dd233af07eeb1c9.jpg"
+            alt="Latar Belakang Showcase Warung Desain"
+            fill
+            priority
+            quality={95}
+            className="object-cover object-center"
+            sizes="100vw"
+          />
+        </div>
+
+        {/* Floating Mockup Window Centered */}
+        <div className="relative z-10 max-w-6xl mx-auto">
+          <HeroShowcaseWindow featuredBundle={featured} />
+        </div>
+      </section>
+
+      {/* Main Content Sections Wrapper */}
+      <div className="max-w-[1440px] mx-auto space-y-24 sm:space-y-32">
+        {/* ========================================================= */}
+        {/* 3. SEKTOR UMKM YANG TERBANTU                              */}
+        {/* ========================================================= */}
+        <section className="px-4 sm:px-8 text-center">
+          <p className="text-[12px] uppercase tracking-wider font-semibold text-[#54504c] mb-3">
+            Dirancang untuk berbagai jenis usaha:
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[14px] font-medium text-[#54504c] max-w-4xl mx-auto">
+            <span>Kedai Kopi &amp; Cafe</span>
+            <span className="text-black/20 hidden sm:inline">•</span>
+            <span>Fashion &amp; Hijab Olshop</span>
+            <span className="text-black/20 hidden sm:inline">•</span>
+            <span>Kuliner &amp; Katering</span>
+            <span className="text-black/20 hidden sm:inline">•</span>
+            <span>Skincare &amp; Beauty</span>
+            <span className="text-black/20 hidden sm:inline">•</span>
+            <span>Bakery &amp; Pastry</span>
+            <span className="text-black/20 hidden sm:inline">•</span>
+            <span>Retail &amp; Toko Oleh-oleh</span>
+          </div>
+        </section>
+
+        {/* ========================================================= */}
+        {/* 4. CORE PHILOSOPHY / VALUE STATEMENT                      */}
+        {/* ========================================================= */}
+        <section className="px-4 sm:px-8 text-center max-w-4xl mx-auto space-y-3">
+          <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-[#111111] leading-tight">
+            Satu platform promosi, dari ide pertama hingga siap posting
+          </h2>
+          <p className="text-[16px] sm:text-[18px] text-[#54504c] leading-relaxed max-w-2xl mx-auto">
+            Tak perlu lagi bingung memikirkan konsep visual, meraba prompt bahasa Inggris, atau menguras kas toko untuk sewa agensi jutaan rupiah.
+          </p>
+        </section>
+
+        {/* ========================================================= */}
+        {/* 5. FEATURE DEEP-DIVES (3 Sections)                        */}
+        {/* ========================================================= */}
+        <section className="px-4 sm:px-8 space-y-16 sm:space-y-24 max-w-6xl mx-auto">
+          {/* Feature 1: Left Copy, Right Visual */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div className="lg:col-span-6 space-y-5 text-left">
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#111111] leading-snug">
+                Rancang materi promosi dalam hitungan menit, bukan berhari-hari
+              </h3>
+              <p className="text-[15px] sm:text-[16px] text-[#54504c] leading-relaxed">
+                Tak perlu membuka kanvas kosong dan bingung mau bikin apa saat toko butuh promo mendadak. Setiap bundle menyajikan puluhan desain beresolusi tinggi dengan tipografi dan komposisi matang yang siap menarik pembeli.
+              </p>
+              <ul className="space-y-3 pt-2">
+                <li className="flex items-start gap-2.5 text-[14px] text-[#111111]">
+                  <CheckCircle2 className="h-5 w-5 text-[#0075de] shrink-0 mt-0.5" />
+                  <span>Format PNG transparan &amp; JPG HD siap posting ke feed (1:1) dan WhatsApp Story (9:16).</span>
+                </li>
+                <li className="flex items-start gap-2.5 text-[14px] text-[#111111]">
+                  <CheckCircle2 className="h-5 w-5 text-[#0075de] shrink-0 mt-0.5" />
+                  <span>Didesain khusus untuk momen promosi toko (diskon, promo gajian, buka puasa, flash sale).</span>
+                </li>
+                <li className="flex items-start gap-2.5 text-[14px] text-[#111111]">
+                  <CheckCircle2 className="h-5 w-5 text-[#0075de] shrink-0 mt-0.5" />
+                  <span>Bebas royalti komersial untuk kebutuhan jualan tokomu selamanya.</span>
+                </li>
+              </ul>
+              <div className="pt-2">
+                <a
+                  href="#katalog"
+                  className="inline-flex items-center gap-2 text-[14px] font-semibold text-[#0075de] hover:underline"
+                >
+                  <span>Lihat paket desain di katalog</span>
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
+
+            <div className="lg:col-span-6">
+              <div className="relative rounded-2xl border border-black/[0.1] bg-white p-5 shadow-lg overflow-hidden">
+                <div className="relative aspect-square sm:aspect-4/3 w-full rounded-xl overflow-hidden bg-[#f6f5f4] border border-black/[0.06]">
                   {featured && featured.preview_images[0] && (
                     <Image
                       src={featured.preview_images[0]}
                       alt={featured.name}
                       fill
-                      priority
-                      sizes="(max-width: 768px) 100vw, 450px"
+                      sizes="(max-width: 1024px) 100vw, 550px"
                       className="object-cover"
                     />
                   )}
-                  {/* Subtle Stamp Tag */}
-                  <div className="absolute top-3 left-3">
-                    <span className="inline-flex items-center rounded-full bg-[#000000]/80 backdrop-blur-xs px-2.5 py-1 text-[11px] font-medium text-white">
-                      {featured?.category || 'Template Promosi'}
-                    </span>
-                  </div>
-
                   <div className="absolute bottom-3 right-3">
-                    <span className="inline-flex items-center rounded-full bg-[#0075de] px-3 py-1 text-[12px] font-bold text-white shadow-xs">
+                    <span className="rounded-md bg-[#0075de] px-3.5 py-1 text-[12px] font-bold text-white shadow-xs">
                       Rp 49.000 (Sekali Beli)
                     </span>
                   </div>
                 </div>
-
-                {/* Card Meta & Canva Tag */}
-                <div className="mt-4 flex items-center justify-between">
+                <div className="mt-4 flex items-center justify-between text-left">
                   <div>
-                    <h3 className="font-semibold text-[16px] text-[#111111]">
-                      {featured?.name || 'Paket Promo Pilihan'}
-                    </h3>
-                    <p className="text-[13px] text-[#54504c] mt-0.5">
-                      25+ file PNG transparan &amp; JPG resolusi tinggi
-                    </p>
+                    <p className="font-semibold text-[15px] text-[#111111]">{featured?.name}</p>
+                    <p className="text-[12.5px] text-[#54504c]">25+ aset resolusi tinggi PNG &amp; JPG</p>
                   </div>
                   <Link
                     href={`/bundles/${featured?.slug}`}
-                    className="inline-flex items-center justify-center rounded-[6px] bg-[#f6f5f4] hover:bg-black/[0.06] px-3 py-1.5 text-[12.5px] font-semibold text-[#111111] transition-colors border border-black/[0.08]"
+                    className="rounded-lg bg-[#f6f5f4] border border-black/[0.08] px-3 py-1.5 text-[12.5px] font-semibold text-[#111111] hover:bg-black/[0.06]"
                   >
-                    Buka Preview
+                    Buka Detail
                   </Link>
                 </div>
               </div>
+            </div>
+          </div>
 
-              {/* Secondary Overlapping Thumbnail for Depth */}
-              {secondaryFeatured && (
-                <div className="hidden sm:flex items-center relative z-100 rotate-x-3 gap-3 mt-3 rounded-[12px] border border-black/[0.08] bg-[#ffffff]/90 p-3">
-                  <div className="relative h-12 w-12 rounded-[8px] overflow-hidden bg-[#f6f5f4] shrink-0 border border-black/[0.06]">
+          {/* Feature 2: Full Width / Centered Showcase */}
+          <div className="rounded-2xl border border-black/[0.1] bg-white p-6 sm:p-10 shadow-sm text-center max-w-5xl mx-auto space-y-6">
+            <div className="max-w-2xl mx-auto space-y-3">
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#111111]">
+                Formula Prompt AI yang paham pasar &amp; budaya UMKM Indonesia
+              </h3>
+              <p className="text-[15px] sm:text-[16px] text-[#54504c] leading-relaxed">
+                Lupakan tutorial prompt bahasa Inggris yang rumit dan tidak sesuai selera lokal. Setiap paket menyertakan teks prompt Midjourney &amp; DALL-E v3 yang siap kamu salin-tempel untuk eksplorasi tanpa batas.
+              </p>
+            </div>
+
+            {/* Prompt Card */}
+            <div className="rounded-xl border border-black/[0.08] bg-[#fbfaf9] p-5 sm:p-6 text-left max-w-3xl mx-auto space-y-4 shadow-2xs">
+              <div className="flex items-center justify-between border-b border-black/[0.06] pb-3">
+                <span className="text-[12.5px] font-semibold text-[#111111]">
+                  Contoh Formula Prompt Paket Kuliner &amp; Cafe:
+                </span>
+                <span className="text-[12px] font-medium text-[#54504c]">
+                  Midjourney v6.1 &amp; DALL-E 3
+                </span>
+              </div>
+              <p className="font-mono text-[12.5px] sm:text-[13px] text-[#111111] bg-white p-3.5 rounded-lg leading-relaxed border border-black/[0.06]">
+                &ldquo;professional appetizing food photography of Indonesian iced es kopi susu in clear cup with ice condensation, paired with golden crispy roti bakar, warm afternoon sunbeam lighting, cafe ambient background, 8k resolution, shot on 85mm lens --ar 1:1&rdquo;
+              </p>
+              <div className="flex flex-wrap items-center justify-between gap-3 text-[12px] text-[#54504c]">
+                <span>Hasil foto produk realistis tanpa sewa studio foto</span>
+                <span className="font-medium text-[#0075de]">Termasuk panduan modifikasi</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Feature 3: Left Visual, Right Copy */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div className="lg:col-span-6 order-2 lg:order-1">
+              <div className="rounded-2xl border border-black/[0.1] bg-white p-5 shadow-lg text-left space-y-4">
+                <div className="flex items-center justify-between border-b border-black/[0.06] pb-3">
+                  <span className="text-[12.5px] font-semibold text-[#111111] flex items-center gap-1.5">
+                    <Smartphone className="h-4 w-4 text-[#0075de]" />
+                    Simulasi Edit di Aplikasi Canva HP
+                  </span>
+                  <span className="text-[12px] font-medium text-[#54504c]">
+                    Selesai dalam 2 Menit
+                  </span>
+                </div>
+                <div className="relative aspect-4/3 w-full rounded-xl overflow-hidden bg-[#f6f5f4] border border-black/[0.06]">
+                  {secondaryFeatured && secondaryFeatured.preview_images[0] && (
                     <Image
                       src={secondaryFeatured.preview_images[0]}
                       alt={secondaryFeatured.name}
                       fill
-                      sizes="48px"
+                      sizes="(max-width: 1024px) 100vw, 550px"
                       className="object-cover"
                     />
+                  )}
+                  <div className="absolute top-4 right-4 rounded-lg bg-white/95 p-2.5 shadow-md border border-black/10 text-[11px] font-medium text-[#111111] space-y-1">
+                    <span className="block text-[10px] text-[#54504c] uppercase font-semibold">Layer Terbuka:</span>
+                    <div>Ganti Foto Produk Sendiri</div>
+                    <div>Ketik Teks Diskon Tokomu</div>
                   </div>
-                  <div className="flex-1 min-w-0 text-left">
-                    <p className="text-[11px] font-medium uppercase tracking-wider text-[#54504c]">
-                      Juga Tersedia di Katalog
-                    </p>
-                    <p className="text-[13.5px] font-semibold text-[#111111] truncate">
-                      {secondaryFeatured.name}
-                    </p>
+                </div>
+                <div className="flex items-center justify-between text-[12.5px] text-[#54504c]">
+                  <span>Tinggal tempel logo &amp; ganti harga</span>
+                  <span className="font-semibold text-[#111111]">100% Cocok Canva Gratis</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-6 order-1 lg:order-2 space-y-5 text-left">
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#111111] leading-snug">
+                Buka langsung di Canva HP, edit teks &amp; logo tanpa ribet
+              </h3>
+              <p className="text-[15px] sm:text-[16px] text-[#54504c] leading-relaxed">
+                Didesain khusus untuk admin media sosial dan pemilik toko yang sering bekerja hanya bermodalkan smartphone. Tak perlu instal software berat seperti Photoshop atau laptop spek dewa.
+              </p>
+              <ul className="space-y-3 pt-2">
+                <li className="flex items-start gap-2.5 text-[14px] text-[#111111]">
+                  <CheckCircle2 className="h-5 w-5 text-[#0075de] shrink-0 mt-0.5" />
+                  <span>Drag &amp; drop foto produk tokomu langsung ke dalam frame template.</span>
+                </li>
+                <li className="flex items-start gap-2.5 text-[14px] text-[#111111]">
+                  <CheckCircle2 className="h-5 w-5 text-[#0075de] shrink-0 mt-0.5" />
+                  <span>Ubah nominal harga diskon dan alamat toko dalam 3 ketukan jari.</span>
+                </li>
+                <li className="flex items-start gap-2.5 text-[14px] text-[#111111]">
+                  <CheckCircle2 className="h-5 w-5 text-[#0075de] shrink-0 mt-0.5" />
+                  <span>Disertai panduan singkat berbahasa Indonesia yang ramah pemula.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* ========================================================= */}
+        {/* 6. E-COMMERCE CATALOG SECTION                             */}
+        {/* ========================================================= */}
+        <HomeCatalogSection bundles={bundles} />
+
+        {/* ========================================================= */}
+        {/* 7. ECOSYSTEM / CONNECTED TOOLS GRID                       */}
+        {/* ========================================================= */}
+        <section className="px-4 sm:px-8 text-center max-w-5xl mx-auto space-y-10">
+          <div className="max-w-2xl mx-auto space-y-3">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#111111]">
+              Terhubung dengan semua tools andalan jualanmu
+            </h2>
+            <p className="text-[15px] sm:text-[16px] text-[#54504c]">
+              Aset dan formula prompt Warung Desain dirancang agar bekerja mulus dengan ekosistem aplikasi yang kamu gunakan setiap hari.
+            </p>
+          </div>
+
+          {/* 12 Tools Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 text-left">
+            {[
+              { name: 'Canva', desc: 'Edit teks & logo di HP' },
+              { name: 'Instagram', desc: 'Feed 1:1 & Story 9:16' },
+              { name: 'WhatsApp Business', desc: 'Katalog & Update Status' },
+              { name: 'TikTok & Reels', desc: 'Cover video promo' },
+              { name: 'GoPay & QRIS', desc: 'Pembayaran instan' },
+              { name: 'CapCut', desc: 'Animasi poster promo' },
+              { name: 'Meta Ads', desc: 'Materi iklan berkonversi' },
+              { name: 'Midjourney', desc: 'Generasi visual AI' },
+              { name: 'Shopee & Tokopedia', desc: 'Banner etalase toko' },
+              { name: 'Figma', desc: 'Kustomisasi file desainer' },
+              { name: 'ChatGPT & Claude', desc: 'Racikan caption & copy promo' },
+              { name: 'DALL-E 3', desc: 'Formula prompt visual' },
+            ].map((tool, idx) => (
+              <div
+                key={idx}
+                className="rounded-xl border border-black/[0.08] bg-white p-4 hover:border-black/[0.18] transition-colors shadow-2xs space-y-1"
+              >
+                <h4 className="font-bold text-[14px] text-[#111111]">{tool.name}</h4>
+                <p className="text-[12.5px] text-[#54504c] leading-snug">{tool.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ========================================================= */}
+        {/* 8. ALUR TRANSAKSI E-COMMERCE                              */}
+        {/* ========================================================= */}
+        <section id="alur-transaksi" className="px-4 sm:px-8 max-w-6xl mx-auto scroll-mt-20">
+          <div className="border-t border-black/[0.08] pt-16">
+            <div className="max-w-2xl mb-10 text-left">
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#111111]">
+                Cara Praktis Berbelanja di Warung Desain
+              </h2>
+              <p className="mt-2 text-[15px] sm:text-[16px] text-[#54504c]">
+                Tanpa perlu mendaftar akun atau berlangganan bulanan. Cukup beli putus paket yang sedang dibutuhkan.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-left">
+              <div className="rounded-xl border border-black/[0.08] bg-white p-5 flex flex-col justify-between shadow-2xs">
+                <div>
+                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#f6f5f4] text-[#111111] font-bold text-[13px] mb-3 border border-black/[0.06]">
+                    1
                   </div>
-                  <Link
-                    href={`/bundles/${secondaryFeatured.slug}`}
-                    className="text-[12px] font-medium text-[#0075de] hover:underline shrink-0"
-                  >
-                    Lihat Paket
-                  </Link>
+                  <h3 className="font-semibold text-[15px] text-[#111111] mb-1.5">Pilih Paket Desain</h3>
+                  <p className="text-[13.5px] text-[#54504c] leading-relaxed">
+                    Buka detail paket untuk melihat preview gambar resolusi tinggi yang pas dengan tema tokomu.
+                  </p>
                 </div>
-              )}
+              </div>
+
+              <div className="rounded-xl border border-black/[0.08] bg-white p-5 flex flex-col justify-between shadow-2xs">
+                <div>
+                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#f6f5f4] text-[#111111] font-bold text-[13px] mb-3 border border-black/[0.06]">
+                    2
+                  </div>
+                  <h3 className="font-semibold text-[15px] text-[#111111] mb-1.5">Bayar via QRIS</h3>
+                  <p className="text-[13.5px] text-[#54504c] leading-relaxed">
+                    Scan QRIS resmi GoPay Merchant dengan nominal pas sampai 3 digit kode unik verifikasi.
+                  </p>
+                </div>
+              </div>
+
+              <div className="rounded-xl border border-black/[0.08] bg-white p-5 flex flex-col justify-between shadow-2xs">
+                <div>
+                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#f6f5f4] text-[#111111] font-bold text-[13px] mb-3 border border-black/[0.06]">
+                    3
+                  </div>
+                  <h3 className="font-semibold text-[15px] text-[#111111] mb-1.5">Konfirmasi Nama</h3>
+                  <p className="text-[13.5px] text-[#54504c] leading-relaxed">
+                    Ketik nama pengirim lalu klik &ldquo;Cek Pembayaran&rdquo; agar mutasi langsung dicocokkan owner via Telegram.
+                  </p>
+                </div>
+              </div>
+
+              <div className="rounded-xl border border-black/[0.08] bg-white p-5 flex flex-col justify-between shadow-2xs">
+                <div>
+                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#0075de] text-white font-bold text-[13px] mb-3 shadow-xs">
+                    4
+                  </div>
+                  <h3 className="font-semibold text-[15px] text-[#111111] mb-1.5">Unduh &amp; Langsung Edit</h3>
+                  <p className="text-[13.5px] text-[#54504c] leading-relaxed">
+                    Link file ZIP langsung aktif di layar dan cadangan dikirim ke email. Siap posting ke medsos!
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* 2. Bundle Catalog Section */}
-      <section id="katalog" className="px-4 sm:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-          <div>
-            <div className="text-[12px] font-semibold uppercase tracking-wider text-[#54504c]">
-              Etalase Desain
-            </div>
-            <h2 className="mt-1 text-2xl sm:text-3xl font-bold tracking-[-0.025em] text-[#111111]">
-              Pilihan Paket Desain Siap Pakai
+        {/* ========================================================= */}
+        {/* 9. TESTIMONIAL WALL                                       */}
+        {/* ========================================================= */}
+        <section className="px-4 sm:px-8 max-w-6xl mx-auto space-y-10">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#111111]">
+              Disukai oleh ratusan admin &amp; pemilik UMKM
             </h2>
-            <p className="mt-1.5 text-[15px] sm:text-[16px] text-[#595652]">
-              Pilih paket sesuai momen promosi toko atau kategori bisnis Anda.
-            </p>
-          </div>
-        </div>
-
-        {/* Grid Bundles */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {bundles.map((bundle) => (
-            <div key={bundle.id}>
-              <BundleCard bundle={bundle} />
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 3. Cara Pakai / Alur Penggunaan */}
-      <section id="cara-pakai" className="px-4 sm:px-8">
-        <div className="border-t border-black/[0.08] pt-16">
-          <div className="max-w-2xl mb-10">
-            <span className="text-[12px] font-semibold uppercase tracking-wider text-[#54504c]">
-              Alur Penggunaan
-            </span>
-            <h2 className="mt-1 text-2xl sm:text-3xl font-bold tracking-[-0.025em] text-[#111111]">
-              Cara Praktis Menggunakan Warung Desain
-            </h2>
-            <p className="mt-2 text-[15px] sm:text-[16px] text-[#595652]">
-              Tanpa perlu mendaftar akun atau langganan bulanan. Cukup beli putus paket yang sedang dibutuhkan.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5 flex flex-col justify-between">
-              <div>
-                <div className="flex h-7 w-7 items-center justify-center rounded-[6px] bg-[#f6f5f4] text-[#111111] font-bold text-[13px] mb-3 border border-black/[0.06]">
-                  1
-                </div>
-                <h3 className="font-semibold text-[15px] text-[#111111] mb-1.5">Pilih Paket</h3>
-                <p className="text-[14px] text-[#595652] leading-relaxed">
-                  Buka detail paket untuk melihat preview gambar resolusi tinggi yang sesuai tema tokomu.
-                </p>
-              </div>
-            </div>
-
-            <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5 flex flex-col justify-between">
-              <div>
-                <div className="flex h-7 w-7 items-center justify-center rounded-[6px] bg-[#f6f5f4] text-[#111111] font-bold text-[13px] mb-3 border border-black/[0.06]">
-                  2
-                </div>
-                <h3 className="font-semibold text-[15px] text-[#111111] mb-1.5">Bayar via QRIS</h3>
-                <p className="text-[14px] text-[#595652] leading-relaxed">
-                  Scan QRIS resmi GoPay Merchant dengan nominal pas sampai 3 digit kode unik verifikasi.
-                </p>
-              </div>
-            </div>
-
-            <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5 flex flex-col justify-between">
-              <div>
-                <div className="flex h-7 w-7 items-center justify-center rounded-[6px] bg-[#f6f5f4] text-[#111111] font-bold text-[13px] mb-3 border border-black/[0.06]">
-                  3
-                </div>
-                <h3 className="font-semibold text-[15px] text-[#111111] mb-1.5">Konfirmasi Nama</h3>
-                <p className="text-[14px] text-[#595652] leading-relaxed">
-                  Ketik nama pengirim lalu klik &quot;Cek Pembayaran&quot; agar mutasi langsung dicocokkan.
-                </p>
-              </div>
-            </div>
-
-            <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-5 flex flex-col justify-between">
-              <div>
-                <div className="flex h-7 w-7 items-center justify-center rounded-[6px] bg-[#e6f3fe] text-[#005bb5] font-bold text-[13px] mb-3 border border-[#0075de]/20">
-                  4
-                </div>
-                <h3 className="font-semibold text-[15px] text-[#111111] mb-1.5">Unduh &amp; Edit di Canva</h3>
-                <p className="text-[14px] text-[#595652] leading-relaxed">
-                  File ZIP langsung bisa diunduh di web dan terkirim ke email. Siap diposting ke medsos toko!
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. FAQ Section */}
-      <section id="faq" className="px-4 sm:px-8">
-        <div className="border-t border-black/[0.08] pt-16">
-          <div className="max-w-2xl mb-8">
-            <span className="text-[12px] font-semibold uppercase tracking-wider text-[#54504c]">
-              Tanya Jawab
-            </span>
-            <h2 className="mt-1 text-2xl sm:text-3xl font-bold tracking-[-0.025em] text-[#111111]">
-              Pertanyaan yang Sering Diajukan
-            </h2>
-            <p className="mt-1.5 text-[15px] sm:text-[16px] text-[#595652]">
-              Penjelasan ringkas seputar pembelian dan pemakaian file desain.
+            <p className="text-[15px] text-[#54504c]">
+              Cerita nyata dari mereka yang berhasil menghemat biaya desain promosi.
             </p>
           </div>
 
-          <div>
-            <FAQAccordion />
-          </div>
-        </div>
-      </section>
+          {/* Featured Review Card + Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            {/* Featured Large Highlight Review (5 cols) */}
+            <div className="lg:col-span-5 rounded-2xl bg-white border border-black/[0.1] p-6 sm:p-8 flex flex-col justify-between text-left shadow-sm">
+              <div>
+                <Quote className="h-8 w-8 text-[#54504c] mb-4 opacity-75" />
+                <p className="text-[16px] sm:text-[17px] font-medium text-[#111111] leading-relaxed">
+                  &ldquo;Dulu kalau owner minta promo mendadak pas weekend, saya bisa stres begadang cuma buat cari ide di Canva dari kanvas kosong. Sejak pakai bundle Warung Desain, tinggal ganti nominal promo dan pasang foto produk, 5 menit udah tayang di feed dan story WhatsApp!&rdquo;
+                </p>
+              </div>
+              <div className="pt-6 mt-6 border-t border-black/[0.08] flex items-center gap-3">
+                <div className="h-10 w-10 rounded-full bg-[#111111] text-white font-bold flex items-center justify-center text-sm shadow-xs">
+                  RN
+                </div>
+                <div>
+                  <p className="font-bold text-[14px] text-[#111111]">Rani Novitasari</p>
+                  <p className="text-[12px] text-[#54504c]">Admin Sosmed Coffee &amp; Eatery, Bandung</p>
+                </div>
+              </div>
+            </div>
 
-      {/* 5. Closing Section: Authentic Warmth of Warung Design */}
-      <section className="px-4 sm:px-8">
-        <div className="rounded-[16px] bg-[#221f1d] p-8 sm:p-12 text-white text-center shadow-xs">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-[12px] font-medium text-white/90 mb-4 border border-white/10">
-            Mulai Promosi Sekarang
-          </span>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight max-w-2xl mx-auto leading-tight">
-            Tingkatkan Kualitas Visual Media Sosial Toko Anda Hari Ini
-          </h2>
-          <p className="mx-auto mt-3 max-w-xl text-[15px] sm:text-[16.5px] text-white/80 leading-relaxed">
-            Pilih paket desain siap upload dengan harga terjangkau mulai Rp 40 ribuan. Beli sekali, gunakan untuk promosi bisnis Anda selamanya.
-          </p>
-          <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a
-              href="#katalog"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#0075de] px-6 py-3 text-[14.5px] font-medium text-white hover:bg-[#0060b8] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white cursor-pointer"
-            >
-              <ShoppingBag className="h-4 w-4" />
-              Pilih Paket Desain di Katalog
-            </a>
-            <a
-              href="https://wa.me/6285182510575?text=Halo%20Admin%20Warung%20Design%2C%20saya%20ingin%20tanya%20seputar%20paket%20desain"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-[8px] bg-white/10 hover:bg-white/15 px-5 py-3 text-[14.5px] font-medium text-white transition-colors border border-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white cursor-pointer"
-            >
-              <MessageCircle className="h-4 w-4" />
-              Konsultasi via WhatsApp
-            </a>
+            {/* Grid of 4 Supporting Reviews (7 cols) */}
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+              {[
+                {
+                  text: 'Paket Promo Ramadhannya beneran ngebantu banget! Visualnya islami modern dan gak norak. Followers pada nanya siapa yang desainin.',
+                  name: 'Dimas Prasetyo',
+                  role: 'Owner Katering Harian, Surabaya',
+                  initial: 'DP',
+                },
+                {
+                  text: 'Harganya murah banget cuma 40 ribuan sekali beli dapet puluhan file HD. Dibanding sewa freelancer 500rb per poster, ini jauh lebih hemat buat UMKM pemula.',
+                  name: 'Siti Sarah',
+                  role: 'Owner Olshop Hijab, Solo',
+                  initial: 'SS',
+                },
+                {
+                  text: 'Bonus formula prompt AI-nya daging banget! Saya coba copas ke Midjourney ternyata langsung keluar gambar estetik yang pas buat katalog produk baru.',
+                  name: 'Kevin Wijaya',
+                  role: 'Admin Thrift & Distro, Jakarta',
+                  initial: 'KW',
+                },
+                {
+                  text: 'Proses bayar pakai QRIS cepet banget. Habis transfer langsung dapet link download file ZIP-nya tanpa harus tunggu berjam-jam.',
+                  name: 'Lestari Handayani',
+                  role: 'Owner Toko Kue & Bakery, Malang',
+                  initial: 'LH',
+                },
+              ].map((review, i) => (
+                <div
+                  key={i}
+                  className="rounded-xl border border-black/[0.08] bg-white p-5 flex flex-col justify-between shadow-2xs hover:border-black/[0.18] transition-colors"
+                >
+                  <p className="text-[13.5px] text-[#54504c] leading-relaxed">
+                    &ldquo;{review.text}&rdquo;
+                  </p>
+                  <div className="pt-4 mt-4 border-t border-black/[0.06] flex items-center gap-2.5">
+                    <div className="h-8 w-8 rounded-full bg-[#f6f5f4] text-[#111111] font-bold flex items-center justify-center text-xs border border-black/[0.08]">
+                      {review.initial}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-[13px] text-[#111111]">{review.name}</p>
+                      <p className="text-[11px] text-[#54504c]">{review.role}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* ========================================================= */}
+        {/* 10. FAQ ACCORDION SECTION                                 */}
+        {/* ========================================================= */}
+        <section id="faq" className="px-4 sm:px-8 max-w-4xl mx-auto scroll-mt-20">
+          <div className="border-t border-black/[0.08] pt-16 space-y-8">
+            <div className="text-left">
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#111111]">
+                Pertanyaan yang Sering Diajukan
+              </h2>
+              <p className="mt-1.5 text-[15px] text-[#54504c]">
+                Penjelasan ringkas seputar pembelian, format file, lisensi, dan rencana AI Studio.
+              </p>
+            </div>
+
+            <div>
+              <FAQAccordion />
+            </div>
+          </div>
+        </section>
+
+        {/* ========================================================= */}
+        {/* 11. CLOSING HIGH-IMPACT CTA BANNER                        */}
+        {/* ========================================================= */}
+        <section className="px-4 sm:px-8 max-w-6xl mx-auto">
+          <div className="rounded-3xl bg-[#111111] p-8 sm:p-14 text-white text-center shadow-xl">
+            <div className="max-w-2xl mx-auto space-y-4">
+              <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-bold tracking-tight leading-tight">
+                Bikin materi promosi tokomu naik kelas hari ini
+              </h2>
+
+              <p className="text-[15px] sm:text-[17px] text-white/75 leading-relaxed">
+                Pilih bundle desain siap upload dengan harga terjangkau mulai Rp 40 ribuan. Beli sekali, unduh instan, dan promosikan bisnismu selamanya.
+              </p>
+
+              <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3">
+                <a
+                  href="#katalog"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-white px-7 py-3.5 text-[14.5px] font-bold text-[#111111] hover:bg-white/90 transition-all shadow-md cursor-pointer"
+                >
+                  <ShoppingBag className="h-4 w-4" />
+                  Pilih Paket di Katalog
+                </a>
+                <a
+                  href="https://wa.me/6285182510575?text=Halo%20Admin%20Warung%20Design%2C%20saya%20ingin%20tanya%20seputar%20paket%20desain"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 hover:bg-white/15 px-6 py-3.5 text-[14.5px] font-semibold text-white transition-all border border-white/15 cursor-pointer"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Konsultasi via WhatsApp
+                </a>
+              </div>
+
+              <p className="text-[11.5px] text-white/50 pt-2">
+                Tanpa langganan bulanan • Pembayaran QRIS instan • Bebas komersial UMKM
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

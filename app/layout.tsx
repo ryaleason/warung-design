@@ -50,7 +50,7 @@ export default function RootLayout({
       lang="id"
       className={`${plusJakartaSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col bg-[#f6f5f4] text-[#000000] selection:bg-[#e6f3fe] selection:text-[#0075de] font-sans">
+      <body className="min-h-full flex flex-col bg-[#ffffff] text-[#000000] selection:bg-[#e6f3fe] selection:text-[#0075de] font-sans">
         <AuthProvider>
           <AOSInit />
           <Navbar />

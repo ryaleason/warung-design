@@ -14,7 +14,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="border-t border-black/[0.08] bg-[#f6f5f4] mt-20">
+    <footer className="border-t border-black/[0.08] bg-[#ffffff] mt-20">
       <div className="mx-auto max-w-[1440px] px-4 py-12 sm:px-8">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           <div className="md:col-span-2">
