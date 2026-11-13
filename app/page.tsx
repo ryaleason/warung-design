@@ -338,28 +338,119 @@ export default async function HomePage() {
             </p>
           </div>
 
-          {/* 12 Tools Grid */}
+          {/* 12 Tools Grid with Official Brand Logos */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 text-left">
-            {[
-              { name: 'Canva', desc: 'Edit teks & logo di HP' },
-              { name: 'Instagram', desc: 'Feed 1:1 & Story 9:16' },
-              { name: 'WhatsApp Business', desc: 'Katalog & Update Status' },
-              { name: 'TikTok & Reels', desc: 'Cover video promo' },
-              { name: 'GoPay & QRIS', desc: 'Pembayaran instan' },
-              { name: 'CapCut', desc: 'Animasi poster promo' },
-              { name: 'Meta Ads', desc: 'Materi iklan berkonversi' },
-              { name: 'Midjourney', desc: 'Generasi visual AI' },
-              { name: 'Shopee & Tokopedia', desc: 'Banner etalase toko' },
-              { name: 'Figma', desc: 'Kustomisasi file desainer' },
-              { name: 'ChatGPT & Claude', desc: 'Racikan caption & copy promo' },
-              { name: 'DALL-E 3', desc: 'Formula prompt visual' },
-            ].map((tool, idx) => (
+            {(
+              [
+                {
+                  name: 'Canva',
+                  desc: 'Edit teks & logo di HP',
+                  logos: [{ src: '/logos/canva.svg', alt: 'Canva' }],
+                },
+                {
+                  name: 'Instagram',
+                  desc: 'Feed 1:1 & Story 9:16',
+                  logos: [{ src: '/logos/instagram.svg', alt: 'Instagram' }],
+                },
+                {
+                  name: 'WhatsApp Business',
+                  desc: 'Katalog & Update Status',
+                  logos: [{ src: '/logos/whatsapp.svg', alt: 'WhatsApp Business' }],
+                },
+                {
+                  name: 'TikTok & Reels',
+                  desc: 'Cover video promo',
+                  logos: [
+                    { src: '/logos/tiktok.svg', alt: 'TikTok' },
+                    { src: '/logos/instagram.svg', alt: 'Reels' },
+                  ],
+                },
+                {
+                  name: 'GoPay & QRIS',
+                  desc: 'Pembayaran instan',
+                  logos: [
+                    { src: '/logos/gopay.svg', alt: 'GoPay' },
+                    { src: '/logos/qris.svg', alt: 'QRIS', wide: true },
+                  ],
+                },
+                {
+                  name: 'CapCut',
+                  desc: 'Animasi poster promo',
+                  logos: [{ src: '/logos/capcut.svg', alt: 'CapCut' }],
+                },
+                {
+                  name: 'Meta Ads',
+                  desc: 'Materi iklan berkonversi',
+                  logos: [{ src: '/logos/meta.svg', alt: 'Meta' }],
+                },
+                {
+                  name: 'Midjourney',
+                  desc: 'Generasi visual AI',
+                  logos: [{ src: '/logos/midjourney.svg', alt: 'Midjourney' }],
+                },
+                {
+                  name: 'Shopee & Tokopedia',
+                  desc: 'Banner etalase toko',
+                  logos: [
+                    { src: '/logos/shopee.svg', alt: 'Shopee' },
+                    { src: '/logos/tokopedia.svg', alt: 'Tokopedia' },
+                  ],
+                },
+                {
+                  name: 'Figma',
+                  desc: 'Kustomisasi file desainer',
+                  logos: [{ src: '/logos/figma.svg', alt: 'Figma' }],
+                },
+                {
+                  name: 'ChatGPT & Claude',
+                  desc: 'Racikan caption & copy promo',
+                  logos: [
+                    { src: '/logos/openai.svg', alt: 'ChatGPT' },
+                    { src: '/logos/claude.svg', alt: 'Claude' },
+                  ],
+                },
+                {
+                  name: 'DALL-E 3',
+                  desc: 'Formula prompt visual',
+                  logos: [{ src: '/logos/dalle.svg', alt: 'DALL-E 3', isSwatch: true }],
+                },
+              ] as Array<{
+                name: string;
+                desc: string;
+                logos: Array<{ src: string; alt: string; wide?: boolean; isSwatch?: boolean }>;
+              }>
+            ).map((tool, idx) => (
               <div
                 key={idx}
-                className="rounded-xl border border-black/[0.08] bg-white p-4 hover:border-black/[0.18] transition-colors shadow-2xs space-y-1"
+                className="rounded-xl border border-black/[0.08] bg-white p-4 sm:p-4.5 hover:border-black/[0.18] transition-all hover:shadow-xs group flex flex-col justify-between"
               >
-                <h4 className="font-bold text-[14px] text-[#111111]">{tool.name}</h4>
-                <p className="text-[12.5px] text-[#54504c] leading-snug">{tool.desc}</p>
+                <div>
+                  <div className="flex items-center gap-1.5 mb-3 h-8">
+                    {tool.logos.map((lg, lIdx) => (
+                      <div
+                        key={lIdx}
+                        className={`h-8 rounded-lg bg-[#f8f8f7] border border-black/[0.06] flex items-center justify-center p-1.5 shrink-0 ${
+                          lg.wide ? 'px-2 min-w-8' : 'w-8'
+                        }`}
+                      >
+                        <img
+                          src={lg.src}
+                          alt={lg.alt}
+                          className={`object-contain ${
+                            lg.wide
+                              ? 'h-3.5 w-auto'
+                              : lg.isSwatch
+                              ? 'h-4.5 w-4.5 rounded-[3px]'
+                              : 'h-5 w-5'
+                          }`}
+                          loading="lazy"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <h4 className="font-bold text-[14px] text-[#111111] tracking-tight">{tool.name}</h4>
+                  <p className="text-[12.5px] text-[#54504c] leading-snug mt-1">{tool.desc}</p>
+                </div>
               </div>
             ))}
           </div>
