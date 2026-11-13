@@ -180,4 +180,20 @@ p {
   box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 117, 222, 0.15);
 }
 
+/* FAQ Auto-Cycling Progress Bar */
+@keyframes faq-progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.animate-faq-progress {
+  animation-name: faq-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
 
