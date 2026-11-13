@@ -8,11 +8,7 @@ import {
   Check,
   ShoppingBag,
   ArrowRight,
-  Layers,
-  Bot,
   Download,
-  Zap,
-  Sparkles,
   RefreshCw,
 } from 'lucide-react';
 import { Bundle } from '@/types';
@@ -140,97 +136,93 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
   };
 
   return (
-    <div className="relative mx-auto w-full max-w-6xl" id="ai-generator">
-      {/* Main Window Container - Harmonized with Deep Sapphire Background Image */}
-      <div className="overflow-hidden rounded-2xl border border-blue-400/25 bg-[#03091e]/95 backdrop-blur-xl shadow-[0_20px_60px_-15px_rgba(0,117,222,0.45),0_0_0_1px_rgba(59,130,246,0.18)] transition-all">
-        {/* Window Chrome / Title Bar */}
-        <div className="flex items-center justify-between border-b border-blue-500/20 bg-[#071338]/90 px-4 py-3 sm:px-6">
+    <div className="relative mx-auto w-full max-w-6xl text-left" id="ai-generator">
+      {/* Studio Surface Container */}
+      <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-[0_24px_50px_-12px_rgba(2,12,40,0.18)] transition-all">
+        {/* Navigation Bar */}
+        <div className="flex items-center justify-between border-b border-slate-100 bg-[#f8fafc] px-5 py-3 sm:px-7">
           <div className="flex items-center gap-2">
-            <span className="h-3 w-3 rounded-full bg-white/20 inline-block border border-white/10" />
-            <span className="h-3 w-3 rounded-full bg-white/20 inline-block border border-white/10" />
-            <span className="h-3 w-3 rounded-full bg-white/20 inline-block border border-white/10" />
-            <span className="ml-3 text-[12px] sm:text-[13px] font-medium text-blue-100/90 hidden sm:inline-block">
-              Warung Desain AI Studio: Generator Promo &amp; E-Commerce Hub
+            <span className="text-[13px] font-semibold text-slate-800 tracking-tight">
+              Studio Promosi Warung Desain
+            </span>
+            <span className="text-[12px] text-slate-300 hidden sm:inline-block">•</span>
+            <span className="text-[12px] text-slate-500 hidden sm:inline-block">
+              Copywriting &amp; Prompt Visual Siap Pakai
             </span>
           </div>
 
-          {/* Quick Tabs in Title Bar */}
-          <div className="flex items-center gap-1.5 bg-[#020718]/60 border border-blue-500/20 p-1 rounded-lg">
+          {/* Segmented Control */}
+          <div className="flex items-center bg-slate-200/60 p-1 rounded-lg text-[12px]">
             <button
               type="button"
               onClick={() => setActiveTab('ai-studio')}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-[11.5px] font-semibold transition-all cursor-pointer ${
+              className={`px-3 py-1 rounded-md font-medium transition-all cursor-pointer ${
                 activeTab === 'ai-studio'
-                  ? 'bg-[#0075de] text-white shadow-xs'
-                  : 'text-blue-200/70 hover:text-white'
+                  ? 'bg-white text-slate-900 shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <Bot className="h-3.5 w-3.5 text-blue-200" />
-              <span>AI Studio Live</span>
+              Generator Promosi
             </button>
             <button
               type="button"
               onClick={() => setActiveTab('canva-ready')}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-[11.5px] font-semibold transition-all cursor-pointer ${
+              className={`px-3 py-1 rounded-md font-medium transition-all cursor-pointer ${
                 activeTab === 'canva-ready'
-                  ? 'bg-[#0075de] text-white shadow-xs'
-                  : 'text-blue-200/70 hover:text-white'
+                  ? 'bg-white text-slate-900 shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <Layers className="h-3.5 w-3.5 text-blue-300" />
-              <span>Aset Desain Jadi</span>
+              Katalog Desain
             </button>
           </div>
         </div>
 
-        {/* Window Content: 2-Column Split Interface */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-blue-500/20 bg-transparent">
-          {/* Left Column: Interactive AI Studio Generator (7 cols) */}
-          <div className="lg:col-span-7 p-5 sm:p-7 flex flex-col justify-between space-y-6 bg-[#040c24]/85">
+        {/* 2-Column Split Interface */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-slate-100 bg-white">
+          {/* Left Column: Interactive Promo Generator (7 cols) */}
+          <div className="lg:col-span-7 p-6 sm:p-8 flex flex-col justify-between space-y-6">
             <div>
-              {/* Studio Header */}
-              <div className="flex items-center justify-between border-b border-blue-500/20 pb-3 mb-4">
-                <div className="flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 text-[#38bdf8]" />
-                  <h4 className="text-[14px] font-bold text-white">
-                    Generator Promosi Gemini AI
-                  </h4>
-                </div>
-                <span className="text-[12px] text-blue-200/70">
-                  Live Powered by Google Gemini
-                </span>
+              {/* Header */}
+              <div className="border-b border-slate-100 pb-3 mb-5">
+                <h3 className="text-[16px] font-bold text-slate-900 tracking-tight">
+                  Generator Materi Promosi
+                </h3>
+                <p className="text-[12.5px] text-slate-500 mt-0.5">
+                  Pilih kategori usaha dan momen penawaran untuk meracik copywriting dan prompt visual.
+                </p>
               </div>
 
               {/* Form Input Section */}
-              <div className="rounded-xl border border-blue-400/25 bg-[#071744]/75 p-4 space-y-3.5 text-left shadow-inner">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="rounded-xl border border-slate-200/80 bg-[#f8fafc] p-4 sm:p-5 space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div>
-                    <label className="block text-[11px] font-semibold uppercase tracking-wider text-blue-200/80 mb-1">
+                    <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
                       Jenis Usaha Toko
                     </label>
                     <select
                       value={businessType}
                       onChange={(e) => setBusinessType(e.target.value)}
-                      className="w-full rounded-lg border border-blue-400/30 bg-[#030c26] px-3 py-2 text-[13px] font-medium text-white shadow-2xs focus:border-[#38bdf8] focus:outline-none focus:ring-1 focus:ring-[#38bdf8]"
+                      className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-[13px] font-medium text-slate-900 shadow-xs focus:border-[#0075de] focus:outline-none focus:ring-2 focus:ring-[#0075de]/15"
                     >
                       {BUSINESS_PRESETS.map((item) => (
-                        <option key={item} value={item} className="bg-[#030c26] text-white">
+                        <option key={item} value={item}>
                           {item}
                         </option>
                       ))}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[11px] font-semibold uppercase tracking-wider text-blue-200/80 mb-1">
+                    <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
                       Momen Kampanye Promo
                     </label>
                     <select
                       value={campaignMoment}
                       onChange={(e) => setCampaignMoment(e.target.value)}
-                      className="w-full rounded-lg border border-blue-400/30 bg-[#030c26] px-3 py-2 text-[13px] font-medium text-white shadow-2xs focus:border-[#38bdf8] focus:outline-none focus:ring-1 focus:ring-[#38bdf8]"
+                      className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-[13px] font-medium text-slate-900 shadow-xs focus:border-[#0075de] focus:outline-none focus:ring-2 focus:ring-[#0075de]/15"
                     >
                       {MOMENT_PRESETS.map((item) => (
-                        <option key={item} value={item} className="bg-[#030c26] text-white">
+                        <option key={item} value={item}>
                           {item}
                         </option>
                       ))}
@@ -240,7 +232,7 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
 
                 {/* Tone Selectors */}
                 <div>
-                  <label className="block text-[11px] font-semibold uppercase tracking-wider text-blue-200/80 mb-1.5">
+                  <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
                     Tone &amp; Gaya Bahasa
                   </label>
                   <div className="flex flex-wrap gap-1.5">
@@ -249,10 +241,10 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
                         key={t}
                         type="button"
                         onClick={() => setTone(t)}
-                        className={`rounded-md px-2.5 py-1 text-[11.5px] font-medium transition-all cursor-pointer ${
+                        className={`rounded-lg px-3 py-1.5 text-[12px] font-medium transition-all cursor-pointer ${
                           tone === t
-                            ? 'bg-[#0075de] text-white border border-blue-300/40 shadow-[0_0_12px_rgba(0,117,222,0.45)]'
-                            : 'bg-[#030c26]/80 border border-blue-400/25 text-blue-200 hover:text-white hover:border-[#38bdf8]/60'
+                            ? 'bg-slate-900 text-white shadow-xs'
+                            : 'bg-white border border-slate-200 text-slate-600 hover:text-slate-900 hover:border-slate-300'
                         }`}
                       >
                         {t}
@@ -263,7 +255,7 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
 
                 {/* Optional Product Detail Input */}
                 <div>
-                  <label className="block text-[11px] font-semibold uppercase tracking-wider text-blue-200/80 mb-1">
+                  <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
                     Detail Tawaran Khusus (Opsional)
                   </label>
                   <input
@@ -271,175 +263,171 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
                     value={productDetail}
                     onChange={(e) => setProductDetail(e.target.value)}
                     placeholder="Contoh: Diskon 20% khusus 50 pembeli pertama"
-                    className="w-full rounded-lg border border-blue-400/30 bg-[#030c26] px-3 py-2 text-[13px] text-white placeholder:text-blue-300/40 shadow-2xs focus:border-[#38bdf8] focus:outline-none focus:ring-1 focus:ring-[#38bdf8]"
+                    className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-[13px] text-slate-900 placeholder:text-slate-400 shadow-xs focus:border-[#0075de] focus:outline-none focus:ring-2 focus:ring-[#0075de]/15"
                   />
                 </div>
 
-                {/* Trigger Button */}
+                {/* Submit Button */}
                 <div className="pt-1">
                   <button
                     type="button"
                     onClick={handleGenerateAI}
                     disabled={isGenerating}
-                    className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#0060c7] via-[#0075de] to-[#0284c7] hover:brightness-110 disabled:opacity-70 text-white py-2.5 px-4 text-[13.5px] font-semibold transition-all shadow-[0_4px_18px_rgba(0,117,222,0.45)] cursor-pointer"
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-[#0075de] hover:bg-[#0060b8] disabled:opacity-70 text-white py-3 px-5 text-[14px] font-semibold transition-colors shadow-sm cursor-pointer"
                   >
                     {isGenerating ? (
                       <>
                         <RefreshCw className="h-4 w-4 animate-spin" />
-                        <span>Sedang Meracik dengan Gemini AI...</span>
+                        <span>Sedang Meracik Materi Promosi...</span>
                       </>
                     ) : (
-                      <>
-                        <Sparkles className="h-4 w-4" />
-                        <span>Buat Ide Promo dengan Gemini AI</span>
-                      </>
+                      <span>Buat Ide Promo Sekarang</span>
                     )}
                   </button>
                 </div>
 
                 {errorMsg && (
-                  <p className="text-[12px] text-red-200 bg-red-950/70 border border-red-500/40 rounded-md p-2">
+                  <p className="text-[12.5px] text-red-700 bg-red-50 border border-red-200 rounded-lg p-2.5">
                     {errorMsg}
                   </p>
                 )}
               </div>
 
-              {/* AI Output Generation Showcase Box */}
-              <div className="mt-4 rounded-xl border border-blue-400/25 bg-[#071744]/75 p-4 text-left space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-[12.5px] font-bold text-white flex items-center gap-1.5">
-                    <Zap className="h-3.5 w-3.5 text-[#38bdf8]" />
-                    Hasil Racikan Copywriting &amp; Prompt AI:
+              {/* AI Output Section */}
+              <div className="mt-5 rounded-xl border border-slate-200/80 bg-white p-4 sm:p-5 space-y-4 shadow-xs">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                  <span className="text-[12px] font-semibold uppercase tracking-wider text-slate-500">
+                    Hasil Rekomendasi Promosi
                   </span>
                 </div>
 
-                {/* Generated Headline */}
-                <div className="rounded-lg bg-[#030c26]/90 border border-blue-400/20 p-3 shadow-2xs">
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-blue-200/80">
-                      Headline Poster Promosi
-                    </p>
+                {/* Headline */}
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-medium text-slate-400 uppercase tracking-wider">
+                      Headline Poster
+                    </span>
                     <button
                       type="button"
                       onClick={() => handleCopy(aiOutput.headline, 'headline')}
-                      className="inline-flex items-center gap-1 text-[11px] font-medium text-[#38bdf8] hover:text-white cursor-pointer"
+                      className="inline-flex items-center gap-1 text-[11.5px] font-medium text-[#0075de] hover:underline cursor-pointer"
                     >
                       {copiedHeadline ? (
                         <>
-                          <Check className="h-3 w-3 text-emerald-400" />
-                          <span>Tersalin!</span>
+                          <Check className="h-3.5 w-3.5 text-emerald-600" />
+                          <span>Tersalin</span>
                         </>
                       ) : (
                         <>
-                          <Copy className="h-3 w-3" />
+                          <Copy className="h-3.5 w-3.5" />
                           <span>Salin Headline</span>
                         </>
                       )}
                     </button>
                   </div>
-                  <p className="text-[14px] font-bold text-white leading-snug">
+                  <p className="text-[15px] font-bold text-slate-900 leading-snug">
                     &ldquo;{aiOutput.headline}&rdquo;
                   </p>
                 </div>
 
-                {/* Generated Social Media Caption */}
-                <div className="rounded-lg bg-[#030c26]/90 border border-blue-400/20 p-3 shadow-2xs">
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-blue-200/80">
-                      Caption Feed &amp; Broadcast WhatsApp
-                    </p>
+                {/* Caption */}
+                <div className="space-y-1 pt-3 border-t border-slate-100">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-medium text-slate-400 uppercase tracking-wider">
+                      Caption Feed &amp; WhatsApp
+                    </span>
                     <button
                       type="button"
                       onClick={() => handleCopy(aiOutput.caption, 'caption')}
-                      className="inline-flex items-center gap-1 text-[11px] font-medium text-[#38bdf8] hover:text-white cursor-pointer"
+                      className="inline-flex items-center gap-1 text-[11.5px] font-medium text-[#0075de] hover:underline cursor-pointer"
                     >
                       {copiedCaption ? (
                         <>
-                          <Check className="h-3 w-3 text-emerald-400" />
-                          <span>Tersalin!</span>
+                          <Check className="h-3.5 w-3.5 text-emerald-600" />
+                          <span>Tersalin</span>
                         </>
                       ) : (
                         <>
-                          <Copy className="h-3 w-3" />
+                          <Copy className="h-3.5 w-3.5" />
                           <span>Salin Caption</span>
                         </>
                       )}
                     </button>
                   </div>
-                  <p className="text-[12.5px] text-blue-50/90 leading-relaxed whitespace-pre-line max-h-36 overflow-y-auto pr-1">
+                  <p className="text-[12.5px] text-slate-700 leading-relaxed whitespace-pre-line max-h-36 overflow-y-auto pr-1">
                     {aiOutput.caption}
                   </p>
                 </div>
 
-                {/* Generated Prompt Formula */}
-                <div className="rounded-lg bg-[#030c26]/90 border border-blue-400/20 p-3 shadow-2xs">
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-blue-200/80">
-                      Formula Prompt AI Midjourney / DALL-E 3:
-                    </p>
+                {/* Visual Prompt */}
+                <div className="space-y-1.5 pt-3 border-t border-slate-100">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-medium text-slate-400 uppercase tracking-wider">
+                      Formula Prompt AI (Midjourney / DALL-E)
+                    </span>
                     <button
                       type="button"
                       onClick={() => handleCopy(aiOutput.visualPrompt, 'prompt')}
-                      className="inline-flex items-center gap-1 text-[11px] font-medium text-[#38bdf8] hover:text-white cursor-pointer"
+                      className="inline-flex items-center gap-1 text-[11.5px] font-medium text-[#0075de] hover:underline cursor-pointer"
                     >
                       {copiedPrompt ? (
                         <>
-                          <Check className="h-3 w-3 text-emerald-400" />
-                          <span>Tersalin!</span>
+                          <Check className="h-3.5 w-3.5 text-emerald-600" />
+                          <span>Tersalin</span>
                         </>
                       ) : (
                         <>
-                          <Copy className="h-3 w-3" />
+                          <Copy className="h-3.5 w-3.5" />
                           <span>Salin Formula</span>
                         </>
                       )}
                     </button>
                   </div>
-                  <p className="text-[12px] font-mono text-blue-200 bg-[#020717] border border-blue-500/20 p-2 rounded-md leading-relaxed break-all">
+                  <p className="text-[11.5px] font-mono text-slate-600 bg-slate-50 border border-slate-200/70 p-2.5 rounded-lg leading-relaxed break-all">
                     {aiOutput.visualPrompt}
                   </p>
                 </div>
 
                 {/* Design Tips */}
                 {aiOutput.designTips && (
-                  <div className="rounded-lg bg-blue-950/70 border border-blue-400/30 p-2.5 text-[11.5px] text-blue-200 leading-relaxed">
-                    <span className="font-semibold block mb-0.5 text-[#38bdf8]">Saran Desain Canva:</span>
+                  <div className="pt-3 border-t border-slate-100 text-[12px] text-slate-600 border-l-2 border-[#0075de] pl-3 py-0.5">
+                    <span className="font-semibold text-slate-800">Panduan Desain Canva: </span>
                     {aiOutput.designTips}
                   </div>
                 )}
               </div>
             </div>
 
-            {/* Quick Micro Value Bar */}
-            <div className="pt-2 flex items-center justify-between text-[12px] text-blue-200/70 border-t border-blue-500/20">
-              <span>Disesuaikan untuk bahasa &amp; budaya UMKM lokal</span>
-              <span className="font-medium text-white">Format 1080x1080 &amp; 9:16</span>
+            {/* Micro Value Bar */}
+            <div className="pt-3 flex items-center justify-between text-[12px] text-slate-500 border-t border-slate-100">
+              <span>Bahasa &amp; konteks disesuaikan untuk UMKM Indonesia</span>
+              <span className="font-medium text-slate-700">Format 1080x1080 &amp; 9:16</span>
             </div>
           </div>
 
-          {/* Right Column: Live E-Commerce Product Bundle Showcase (5 cols) */}
-          <div className="lg:col-span-5 p-5 sm:p-7 bg-[#05102d]/85 flex flex-col justify-between">
+          {/* Right Column: Featured Product Bundle (5 cols) */}
+          <div className="lg:col-span-5 p-6 sm:p-8 bg-[#f8fafc] flex flex-col justify-between">
             <div>
               {/* Product Info Bar */}
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[12px] font-semibold text-blue-100">
-                  Katalog Paket Pilihan
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                  Paket Pilihan Siap Pakai
                 </span>
-                <span className="text-[12px] text-blue-200/70">
+                <span className="text-[12px] text-slate-500">
                   Kategori: Promo &amp; Event
                 </span>
               </div>
 
               {/* Product Title */}
-              <h3 className="font-serif text-[18px] sm:text-[20px] font-semibold text-white leading-snug">
+              <h3 className="font-serif text-[19px] sm:text-[21px] font-semibold text-slate-900 leading-snug">
                 {bundle.name}
               </h3>
-              <p className="mt-1 text-[13px] text-blue-200/80">
-                Koleksi aset grafis promosi siap pakai langsung di Canva HP + formula prompt AI.
+              <p className="mt-1 text-[13px] text-slate-600">
+                Koleksi aset grafis promosi siap pakai langsung di Canva HP dan formula prompt visual.
               </p>
 
               {/* Tangible Visual Product Card */}
-              <div className="relative aspect-4/3 w-full rounded-xl overflow-hidden border border-blue-400/30 bg-[#020718] mt-4 shadow-md group">
+              <div className="relative aspect-4/3 w-full rounded-xl overflow-hidden border border-slate-200 bg-white mt-4 shadow-xs group">
                 {bundle.preview_images && bundle.preview_images[0] && (
                   <Image
                     src={bundle.preview_images[0]}
@@ -451,53 +439,53 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
                 )}
                 {/* Overlay Tag */}
                 <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-[11px] font-medium text-white drop-shadow-xs">
-                  <span className="rounded-md bg-black/80 px-2.5 py-1">
+                  <span className="rounded-md bg-slate-900/85 px-2.5 py-1">
                     25+ File PNG &amp; JPG HD
                   </span>
-                  <span className="rounded-md bg-black/80 px-2.5 py-1">
+                  <span className="rounded-md bg-slate-900/85 px-2.5 py-1">
                     Canva Ready
                   </span>
                 </div>
               </div>
 
               {/* Features List */}
-              <div className="mt-4 space-y-1.5 text-left">
+              <div className="mt-4 space-y-2 text-left">
                 {bundle.features?.slice(0, 3).map((feature, i) => (
-                  <div key={i} className="flex items-center gap-2 text-[12px] text-blue-100/90">
-                    <Check className="h-3.5 w-3.5 text-[#38bdf8] shrink-0" />
+                  <div key={i} className="flex items-center gap-2 text-[12.5px] text-slate-700">
+                    <Check className="h-4 w-4 text-[#0075de] shrink-0" />
                     <span>{feature}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Instant E-Commerce Checkout Action Box */}
-            <div className="mt-6 pt-4 border-t border-blue-500/20 space-y-3">
+            {/* Instant Checkout Action Box */}
+            <div className="mt-6 pt-5 border-t border-slate-200 space-y-3">
               <div className="flex items-baseline justify-between">
                 <div>
-                  <span className="text-[11px] uppercase tracking-wider text-blue-300/70 font-semibold block">
+                  <span className="text-[11px] uppercase tracking-wider text-slate-500 font-semibold block">
                     Sekali Bayar (Tanpa Langganan)
                   </span>
-                  <span className="text-2xl font-bold tracking-tight text-white">
+                  <span className="text-2xl font-bold tracking-tight text-slate-900">
                     {formatRupiah(bundle.price)}
                   </span>
                 </div>
-                <span className="text-[11px] text-[#38bdf8] font-medium flex items-center gap-1">
-                  <Download className="h-3 w-3" />
+                <span className="text-[11.5px] text-[#0075de] font-medium flex items-center gap-1">
+                  <Download className="h-3.5 w-3.5" />
                   Instant Download
                 </span>
               </div>
 
               <Link
                 href={`/bundles/${bundle.slug}`}
-                className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#0066d6] to-[#0075de] hover:from-[#0058b8] hover:to-[#006cc9] text-white py-3 px-4 text-[14px] font-semibold transition-all shadow-[0_4px_18px_rgba(0,117,222,0.45)] group cursor-pointer"
+                className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#0075de] hover:bg-[#0060b8] text-white py-3.5 px-4 text-[14px] font-semibold transition-colors shadow-sm group cursor-pointer"
               >
                 <ShoppingBag className="h-4 w-4" />
                 <span>Beli Paket Ini Sekarang</span>
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>
 
-              <p className="text-center text-[11px] text-blue-200/60">
+              <p className="text-center text-[11.5px] text-slate-500">
                 Bayar aman via QRIS GoPay Merchant • Link unduhan otomatis aktif
               </p>
             </div>
