@@ -8,7 +8,6 @@ import {
   ShoppingBag,
   ArrowRight,
   CheckCircle2,
-  Smartphone,
   Quote,
   MessageCircle,
 } from 'lucide-react';
@@ -18,7 +17,6 @@ export const revalidate = 60; // ISR 60 seconds
 export default async function HomePage() {
   const bundles = await getBundles();
   const featured = bundles[0];
-  const secondaryFeatured = bundles[2] || bundles[1];
 
   return (
     <div className="space-y-20 sm:space-y-28 pb-24 w-full overflow-hidden">
@@ -45,7 +43,7 @@ export default async function HomePage() {
           {/* Editorial Display Headline with Blue Accent Italic Serif */}
           <h1 className="font-serif text-3xl sm:text-5xl lg:text-[62px] font-semibold tracking-tight text-[#000000] leading-[1.14]">
             Asisten AI &amp; Desain Promosi{' '}
-            <span className="italic font-normal text-[#0075de]">
+            <span className="italic font-normal text-[#000000]">
               untuk Seluruh Toko Anda
             </span>
           </h1>
@@ -268,38 +266,14 @@ export default async function HomePage() {
 
           {/* Feature 3: Left Visual, Right Copy */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            <div className="lg:col-span-6 order-2 lg:order-1">
-              <div className="rounded-2xl border border-black/[0.1] bg-white p-5 shadow-lg text-left space-y-4">
-                <div className="flex items-center justify-between border-b border-black/[0.06] pb-3">
-                  <span className="text-[12.5px] font-semibold text-[#111111] flex items-center gap-1.5">
-                    <Smartphone className="h-4 w-4 text-[#0075de]" />
-                    Simulasi Edit di Aplikasi Canva HP
-                  </span>
-                  <span className="text-[12px] font-medium text-[#54504c]">
-                    Selesai dalam 2 Menit
-                  </span>
-                </div>
-                <div className="relative aspect-4/3 w-full rounded-xl overflow-hidden bg-[#f6f5f4] border border-black/[0.06]">
-                  {secondaryFeatured && secondaryFeatured.preview_images[0] && (
-                    <Image
-                      src={secondaryFeatured.preview_images[0]}
-                      alt={secondaryFeatured.name}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 550px"
-                      className="object-cover"
-                    />
-                  )}
-                  <div className="absolute top-4 right-4 rounded-lg bg-white/95 p-2.5 shadow-md border border-black/10 text-[11px] font-medium text-[#111111] space-y-1">
-                    <span className="block text-[10px] text-[#54504c] uppercase font-semibold">Layer Terbuka:</span>
-                    <div>Ganti Foto Produk Sendiri</div>
-                    <div>Ketik Teks Diskon Tokomu</div>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between text-[12.5px] text-[#54504c]">
-                  <span>Tinggal tempel logo &amp; ganti harga</span>
-                  <span className="font-semibold text-[#111111]">100% Cocok Canva Gratis</span>
-                </div>
-              </div>
+            <div className="lg:col-span-6 order-2 lg:order-1 flex items-center justify-center">
+              <Image
+                src="/mockup-section.png"
+                alt="Mockup Canva Warung Desain"
+                width={1159}
+                height={1358}
+                className="w-full h-auto max-w-lg object-contain"
+              />
             </div>
 
             <div className="lg:col-span-6 order-1 lg:order-2 space-y-5 text-left">
@@ -538,7 +512,7 @@ export default async function HomePage() {
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000]">
               Disukai oleh ratusan admin &amp;{' '}
-              <span className="italic font-normal text-[#0075de]">pemilik UMKM</span>
+              <span className="italic font-normal text-[#000000]">pemilik UMKM</span>
             </h2>
             <p className="text-[15px] text-[#54504c]">
               Cerita nyata dari mereka yang berhasil menghemat biaya desain promosi.
