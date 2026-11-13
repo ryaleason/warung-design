@@ -35,6 +35,7 @@
 
 ## 3. Environment Variables (Vercel)
 
+- [ ] `GEMINI_API_KEY` (Google Gemini AI Studio API Key)
 - [ ] `NEXT_PUBLIC_SUPABASE_URL`
 - [ ] `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - [ ] `SUPABASE_SERVICE_ROLE_KEY` (⚠️ jangan pernah expose ke client-side)
