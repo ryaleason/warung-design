@@ -26,22 +26,9 @@ export default async function HomePage() {
         {/* Subtle Ambient Blue Radial Glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 -z-10 w-full max-w-5xl h-[460px] bg-[radial-gradient(ellipse_at_top,rgba(0,117,222,0.08),transparent_70%)] pointer-events-none" />
 
-        <div className="max-w-4xl mx-auto space-y-6">
+        <div className="max-w-4xl mx-auto space-y-8">
           {/* Top Announcement Bar with Blue Accent */}
-          <div
-            data-aos="fade-down"
-            data-aos-duration="600"
-            className="inline-flex items-center gap-2 rounded-full border border-[#0075de]/20 bg-[#0075de]/[0.04] px-4 py-1.5 text-[12.5px] font-medium text-[#111111] shadow-2xs hover:border-[#0075de]/35 transition-colors"
-          >
-            <span className="flex h-2 w-2 rounded-full bg-[#0075de] animate-pulse"></span>
-            <span className="font-semibold text-[#0075de]">Warung Desain Studio</span>
-            <span className="text-black/25">|</span>
-            <span className="text-[#54504c] hidden xs:inline">
-              Desain Promosi &amp; Asisten AI untuk UMKM
-            </span>
-            <span className="text-[#54504c] xs:hidden">Studio Desain UMKM</span>
-            <ArrowRight className="h-3.5 w-3.5 text-[#0075de]" />
-          </div>
+
 
           {/* Editorial Display Headline with Blue Accent Italic Serif */}
           <h1
