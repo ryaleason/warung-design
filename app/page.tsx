@@ -586,7 +586,7 @@ export default async function HomePage() {
             <div className="text-left">
               <h2 className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-[#000000]">
                 Pertanyaan yang{' '}
-                <span className="italic font-normal text-[#0075de]">Sering Diajukan</span>
+                <span className="italic font-normal text-[#000000]">Sering Diajukan</span>
               </h2>
               <p className="mt-1.5 text-[15px] text-[#54504c]">
                 Penjelasan ringkas seputar pembelian, format file, lisensi, dan rencana AI Studio.
