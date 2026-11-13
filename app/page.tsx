@@ -25,23 +25,27 @@ export default async function HomePage() {
       {/* ========================================================= */}
       {/* 1. HERO TOP SECTION (Heading, Subtitle, Actions, Stats)  */}
       {/* ========================================================= */}
-      <section className="pt-8 sm:pt-14 pb-2 px-4 sm:px-8 text-center max-w-[1440px] mx-auto">
+      <section className="relative pt-8 sm:pt-14 pb-2 px-4 sm:px-8 text-center max-w-[1440px] mx-auto">
+        {/* Subtle Ambient Blue Radial Glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 -z-10 w-full max-w-5xl h-[460px] bg-[radial-gradient(ellipse_at_top,rgba(0,117,222,0.08),transparent_70%)] pointer-events-none" />
+
         <div className="max-w-4xl mx-auto space-y-6">
-          {/* Top Announcement Bar */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-black/[0.1] bg-white px-4 py-1.5 text-[12.5px] font-medium text-[#111111] shadow-2xs">
-            <span className="font-semibold text-[#111111]">Warung Desain Studio</span>
+          {/* Top Announcement Bar with Blue Accent */}
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#0075de]/20 bg-[#0075de]/[0.04] px-4 py-1.5 text-[12.5px] font-medium text-[#111111] shadow-2xs hover:border-[#0075de]/35 transition-colors">
+            <span className="flex h-2 w-2 rounded-full bg-[#0075de] animate-pulse"></span>
+            <span className="font-semibold text-[#0075de]">Warung Desain Studio</span>
             <span className="text-black/25">|</span>
             <span className="text-[#54504c] hidden xs:inline">
               Desain Promosi &amp; Asisten AI untuk UMKM
             </span>
             <span className="text-[#54504c] xs:hidden">Studio Desain UMKM</span>
-            <ArrowRight className="h-3.5 w-3.5 text-[#54504c]" />
+            <ArrowRight className="h-3.5 w-3.5 text-[#0075de]" />
           </div>
 
-          {/* Editorial Display Headline */}
+          {/* Editorial Display Headline with Blue Accent Italic Serif */}
           <h1 className="font-serif text-3xl sm:text-5xl lg:text-[62px] font-semibold tracking-tight text-[#000000] leading-[1.14]">
             Asisten AI &amp; Desain Promosi{' '}
-            <span className="italic font-normal">
+            <span className="italic font-normal text-[#0075de]">
               untuk Seluruh Toko Anda
             </span>
           </h1>
@@ -55,7 +59,7 @@ export default async function HomePage() {
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5">
             <a
               href="#katalog"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-xl bg-[#111111] px-7 py-4 text-[15px] font-semibold text-white hover:bg-black/85 transition-all shadow-md hover:shadow-lg cursor-pointer group"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-xl bg-[#0075de] hover:bg-[#005bb5] px-7 py-4 text-[15px] font-semibold text-white transition-all shadow-md hover:shadow-lg cursor-pointer group"
             >
               <ShoppingBag className="h-4 w-4" />
               <span>Eksplor Katalog Paket</span>
@@ -63,7 +67,7 @@ export default async function HomePage() {
             </a>
             <a
               href="#alur-transaksi"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-white border border-black/[0.12] px-6 py-4 text-[15px] font-semibold text-[#111111] hover:bg-[#f6f5f4] transition-all cursor-pointer shadow-2xs"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-white border border-black/[0.12] hover:border-[#0075de]/30 px-6 py-4 text-[15px] font-semibold text-[#111111] hover:text-[#0075de] hover:bg-[#f6f5f4] transition-all cursor-pointer shadow-2xs"
             >
               <span>Cara Kerja &amp; Pembayaran</span>
             </a>
@@ -74,22 +78,22 @@ export default async function HomePage() {
             Mulai Rp 40 ribuan • Sekali bayar tanpa langganan • Siap buka di Canva HP • Lisensi Bebas Komersial
           </p>
 
-          {/* 4-Item Social Proof Metrics Bar */}
+          {/* 4-Item Social Proof Metrics Bar with Blue Numbers & Accent Borders */}
           <div className="pt-6 border-t border-black/[0.08] grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 text-left max-w-3xl mx-auto">
-            <div className="border-l-2 border-[#111111] pl-3 py-1">
-              <span className="block text-xl sm:text-2xl font-bold tracking-tight text-[#111111]">500+</span>
+            <div className="border-l-2 border-[#0075de] pl-3 py-1">
+              <span className="block text-xl sm:text-2xl font-bold tracking-tight text-[#0075de]">500+</span>
               <span className="text-[12px] text-[#54504c]">UMKM Terbantu</span>
             </div>
-            <div className="border-l-2 border-[#111111] pl-3 py-1">
-              <span className="block text-xl sm:text-2xl font-bold tracking-tight text-[#111111]">98%</span>
+            <div className="border-l-2 border-[#0075de] pl-3 py-1">
+              <span className="block text-xl sm:text-2xl font-bold tracking-tight text-[#0075de]">98%</span>
               <span className="text-[12px] text-[#54504c]">Kepuasan Pelanggan</span>
             </div>
-            <div className="border-l-2 border-[#111111] pl-3 py-1">
-              <span className="block text-xl sm:text-2xl font-bold tracking-tight text-[#111111]">100+</span>
+            <div className="border-l-2 border-[#0075de] pl-3 py-1">
+              <span className="block text-xl sm:text-2xl font-bold tracking-tight text-[#0075de]">100+</span>
               <span className="text-[12px] text-[#54504c]">Desain Siap Pakai</span>
             </div>
             <div className="border-l-2 border-[#0075de] pl-3 py-1">
-              <span className="block text-xl sm:text-2xl font-bold tracking-tight text-[#111111]">4.9 / 5.0</span>
+              <span className="block text-xl sm:text-2xl font-bold tracking-tight text-[#0075de]">4.9 / 5.0</span>
               <span className="text-[12px] text-[#54504c]">Rating Ulasan UMKM</span>
             </div>
           </div>
@@ -150,7 +154,7 @@ export default async function HomePage() {
         <section className="px-4 sm:px-8 text-center max-w-4xl mx-auto space-y-3">
           <h2 className="font-serif text-2xl sm:text-4xl lg:text-[44px] font-semibold tracking-tight text-[#000000] leading-tight">
             Satu platform promosi,{' '}
-            <span className="italic font-normal">dari ide pertama hingga siap posting</span>
+            <span className="italic font-normal text-[#0075de]">dari ide pertama hingga siap posting</span>
           </h2>
           <p className="text-[16px] sm:text-[18px] text-[#54504c] leading-relaxed max-w-2xl mx-auto">
             Tak perlu lagi bingung memikirkan konsep visual, meraba prompt bahasa Inggris, atau menguras kas toko untuk sewa agensi jutaan rupiah.
@@ -166,7 +170,7 @@ export default async function HomePage() {
             <div className="lg:col-span-6 space-y-5 text-left">
               <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000] leading-snug">
                 Rancang materi promosi{' '}
-                <span className="italic font-normal">dalam hitungan menit, bukan berhari-hari</span>
+                <span className="italic font-normal text-[#0075de]">dalam hitungan menit</span>, bukan berhari-hari
               </h3>
               <p className="text-[15px] sm:text-[16px] text-[#54504c] leading-relaxed">
                 Tak perlu membuka kanvas kosong dan bingung mau bikin apa saat toko butuh promo mendadak. Setiap bundle menyajikan puluhan desain beresolusi tinggi dengan tipografi dan komposisi matang yang siap menarik pembeli.
@@ -235,7 +239,7 @@ export default async function HomePage() {
             <div className="max-w-2xl mx-auto space-y-3">
               <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000]">
                 Formula Prompt AI yang paham{' '}
-                <span className="italic font-normal">pasar &amp; budaya UMKM Indonesia</span>
+                <span className="italic font-normal text-[#0075de]">pasar &amp; budaya UMKM Indonesia</span>
               </h3>
               <p className="text-[15px] sm:text-[16px] text-[#54504c] leading-relaxed">
                 Lupakan tutorial prompt bahasa Inggris yang rumit dan tidak sesuai selera lokal. Setiap paket menyertakan teks prompt Midjourney &amp; DALL-E v3 yang siap kamu salin-tempel untuk eksplorasi tanpa batas.
@@ -301,7 +305,7 @@ export default async function HomePage() {
             <div className="lg:col-span-6 order-1 lg:order-2 space-y-5 text-left">
               <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000] leading-snug">
                 Buka langsung di Canva HP,{' '}
-                <span className="italic font-normal">edit teks &amp; logo tanpa ribet</span>
+                <span className="italic font-normal text-[#0075de]">edit teks &amp; logo tanpa ribet</span>
               </h3>
               <p className="text-[15px] sm:text-[16px] text-[#54504c] leading-relaxed">
                 Didesain khusus untuk admin media sosial dan pemilik toko yang sering bekerja hanya bermodalkan smartphone. Tak perlu instal software berat seperti Photoshop atau laptop spek dewa.
@@ -336,7 +340,7 @@ export default async function HomePage() {
           <div className="max-w-2xl mx-auto space-y-3">
             <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000]">
               Terhubung dengan semua tools{' '}
-              <span className="italic font-normal">andalan jualanmu</span>
+              <span className="italic font-normal text-[#0075de]">andalan jualanmu</span>
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#54504c]">
               Aset dan formula prompt Warung Desain dirancang agar bekerja mulus dengan ekosistem aplikasi yang kamu gunakan setiap hari.
@@ -426,7 +430,7 @@ export default async function HomePage() {
             ).map((tool, idx) => (
               <div
                 key={idx}
-                className="rounded-xl border border-black/[0.08] bg-white p-4 sm:p-4.5 hover:border-black/[0.18] transition-all hover:shadow-xs group flex flex-col justify-between"
+                className="rounded-xl border border-black/[0.08] hover:border-[#0075de]/35 bg-white p-4 sm:p-4.5 hover:shadow-xs transition-all group flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center gap-1.5 mb-3 h-8">
@@ -468,7 +472,7 @@ export default async function HomePage() {
             <div className="max-w-2xl mb-10 text-left">
               <h2 className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-[#000000]">
                 Cara Praktis Berbelanja{' '}
-                <span className="italic font-normal">di Warung Desain</span>
+                <span className="italic font-normal text-[#0075de]">di Warung Desain</span>
               </h2>
               <p className="mt-2 text-[15px] sm:text-[16px] text-[#54504c]">
                 Tanpa perlu mendaftar akun atau berlangganan bulanan. Cukup beli putus paket yang sedang dibutuhkan.
@@ -476,9 +480,9 @@ export default async function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-left">
-              <div className="rounded-xl border border-black/[0.08] bg-white p-5 flex flex-col justify-between shadow-2xs">
+              <div className="rounded-xl border border-black/[0.08] hover:border-[#0075de]/30 bg-white p-5 flex flex-col justify-between shadow-2xs transition-colors">
                 <div>
-                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#f6f5f4] text-[#111111] font-bold text-[13px] mb-3 border border-black/[0.06]">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#0075de]/10 text-[#0075de] font-bold text-[13px] mb-3 border border-[#0075de]/20 shadow-2xs">
                     1
                   </div>
                   <h3 className="font-semibold text-[15px] text-[#111111] mb-1.5">Pilih Paket Desain</h3>
@@ -488,9 +492,9 @@ export default async function HomePage() {
                 </div>
               </div>
 
-              <div className="rounded-xl border border-black/[0.08] bg-white p-5 flex flex-col justify-between shadow-2xs">
+              <div className="rounded-xl border border-black/[0.08] hover:border-[#0075de]/30 bg-white p-5 flex flex-col justify-between shadow-2xs transition-colors">
                 <div>
-                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#f6f5f4] text-[#111111] font-bold text-[13px] mb-3 border border-black/[0.06]">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#0075de]/10 text-[#0075de] font-bold text-[13px] mb-3 border border-[#0075de]/20 shadow-2xs">
                     2
                   </div>
                   <h3 className="font-semibold text-[15px] text-[#111111] mb-1.5">Bayar via QRIS</h3>
@@ -500,9 +504,9 @@ export default async function HomePage() {
                 </div>
               </div>
 
-              <div className="rounded-xl border border-black/[0.08] bg-white p-5 flex flex-col justify-between shadow-2xs">
+              <div className="rounded-xl border border-black/[0.08] hover:border-[#0075de]/30 bg-white p-5 flex flex-col justify-between shadow-2xs transition-colors">
                 <div>
-                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#f6f5f4] text-[#111111] font-bold text-[13px] mb-3 border border-black/[0.06]">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#0075de]/10 text-[#0075de] font-bold text-[13px] mb-3 border border-[#0075de]/20 shadow-2xs">
                     3
                   </div>
                   <h3 className="font-semibold text-[15px] text-[#111111] mb-1.5">Konfirmasi Nama</h3>
@@ -512,7 +516,7 @@ export default async function HomePage() {
                 </div>
               </div>
 
-              <div className="rounded-xl border border-black/[0.08] bg-white p-5 flex flex-col justify-between shadow-2xs">
+              <div className="rounded-xl border border-black/[0.08] hover:border-[#0075de]/30 bg-white p-5 flex flex-col justify-between shadow-2xs transition-colors">
                 <div>
                   <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#0075de] text-white font-bold text-[13px] mb-3 shadow-xs">
                     4
@@ -534,7 +538,7 @@ export default async function HomePage() {
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000]">
               Disukai oleh ratusan admin &amp;{' '}
-              <span className="italic font-normal">pemilik UMKM</span>
+              <span className="italic font-normal text-[#0075de]">pemilik UMKM</span>
             </h2>
             <p className="text-[15px] text-[#54504c]">
               Cerita nyata dari mereka yang berhasil menghemat biaya desain promosi.
@@ -544,15 +548,15 @@ export default async function HomePage() {
           {/* Featured Review Card + Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             {/* Featured Large Highlight Review (5 cols) */}
-            <div className="lg:col-span-5 rounded-2xl bg-white border border-black/[0.1] p-6 sm:p-8 flex flex-col justify-between text-left shadow-sm">
+            <div className="lg:col-span-5 rounded-2xl bg-white border border-black/[0.1] hover:border-[#0075de]/30 p-6 sm:p-8 flex flex-col justify-between text-left shadow-sm transition-colors">
               <div>
-                <Quote className="h-8 w-8 text-[#54504c] mb-4 opacity-75" />
+                <Quote className="h-8 w-8 text-[#0075de] mb-4 opacity-80" />
                 <p className="text-[16px] sm:text-[17px] font-medium text-[#111111] leading-relaxed">
                   &ldquo;Dulu kalau owner minta promo mendadak pas weekend, saya bisa stres begadang cuma buat cari ide di Canva dari kanvas kosong. Sejak pakai bundle Warung Desain, tinggal ganti nominal promo dan pasang foto produk, 5 menit udah tayang di feed dan story WhatsApp!&rdquo;
                 </p>
               </div>
               <div className="pt-6 mt-6 border-t border-black/[0.08] flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-[#111111] text-white font-bold flex items-center justify-center text-sm shadow-xs">
+                <div className="h-10 w-10 rounded-full bg-[#0075de] text-white font-bold flex items-center justify-center text-sm shadow-xs">
                   RN
                 </div>
                 <div>
@@ -620,7 +624,7 @@ export default async function HomePage() {
             <div className="text-left">
               <h2 className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-[#000000]">
                 Pertanyaan yang{' '}
-                <span className="italic font-normal">Sering Diajukan</span>
+                <span className="italic font-normal text-[#0075de]">Sering Diajukan</span>
               </h2>
               <p className="mt-1.5 text-[15px] text-[#54504c]">
                 Penjelasan ringkas seputar pembelian, format file, lisensi, dan rencana AI Studio.
@@ -641,7 +645,7 @@ export default async function HomePage() {
             <div className="max-w-2xl mx-auto space-y-4">
               <h2 className="font-serif text-2xl sm:text-4xl lg:text-[42px] font-semibold tracking-tight leading-tight text-white">
                 Bikin materi promosi tokomu{' '}
-                <span className="italic font-normal">naik kelas hari ini</span>
+                <span className="italic font-normal text-[#62aef0]">naik kelas hari ini</span>
               </h2>
 
               <p className="text-[15px] sm:text-[17px] text-white/75 leading-relaxed">

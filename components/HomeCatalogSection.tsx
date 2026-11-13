@@ -31,7 +31,7 @@ export default function HomeCatalogSection({ bundles }: HomeCatalogSectionProps)
         <div>
           <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000]">
             Pilihan Paket Desain{' '}
-            <span className="italic font-normal">Siap Pakai</span>
+            <span className="italic font-normal text-[#0075de]">Siap Pakai</span>
           </h2>
           <p className="mt-2 text-[15px] sm:text-[16px] text-[#595652] max-w-xl">
             Pilih bundle yang sesuai dengan kampanye tokomu saat ini. Bayar sekali lewat QRIS, unduh file resolusi tinggi, dan langsung posting ke media sosial.
@@ -45,8 +45,8 @@ export default function HomeCatalogSection({ bundles }: HomeCatalogSectionProps)
             onClick={() => setSelectedCategory('all')}
             className={`rounded-full px-4 py-2 text-[13px] font-medium transition-all cursor-pointer ${
               selectedCategory === 'all'
-                ? 'bg-[#111111] text-white shadow-xs'
-                : 'bg-white border border-black/[0.1] text-[#54504c] hover:bg-[#f6f5f4]'
+                ? 'bg-[#0075de] text-white shadow-xs'
+                : 'bg-white border border-black/[0.1] text-[#54504c] hover:border-[#0075de]/30 hover:text-[#0075de] hover:bg-[#f6f5f4]'
             }`}
           >
             Semua ({bundles.length})
@@ -62,8 +62,8 @@ export default function HomeCatalogSection({ bundles }: HomeCatalogSectionProps)
                 onClick={() => setSelectedCategory(cat)}
                 className={`rounded-full px-4 py-2 text-[13px] font-medium transition-all cursor-pointer ${
                   isActive
-                    ? 'bg-[#111111] text-white shadow-xs'
-                    : 'bg-white border border-black/[0.1] text-[#54504c] hover:bg-[#f6f5f4]'
+                    ? 'bg-[#0075de] text-white shadow-xs'
+                    : 'bg-white border border-black/[0.1] text-[#54504c] hover:border-[#0075de]/30 hover:text-[#0075de] hover:bg-[#f6f5f4]'
                 }`}
               >
                 {cat} ({count})

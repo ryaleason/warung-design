@@ -12,7 +12,7 @@ export default function BundleCard({ bundle }: BundleCardProps) {
   const mainImage = bundle.preview_images[0] || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80';
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-[12px] border border-black/[0.08] bg-[#ffffff] transition-colors hover:border-black/[0.18]">
+    <div className="group flex flex-col overflow-hidden rounded-[12px] border border-black/[0.08] hover:border-[#0075de]/40 bg-[#ffffff] transition-all hover:shadow-xs">
       {/* Thumbnail Container */}
       <div className="relative aspect-square w-full overflow-hidden bg-[#f6f5f4] border-b border-black/[0.08]">
         <Image
@@ -68,7 +68,7 @@ export default function BundleCard({ bundle }: BundleCardProps) {
         <div className="mt-5 flex items-center justify-between border-t border-black/[0.06] pt-3.5">
           <div>
             <span className="text-[11px] text-[#54504c] block uppercase tracking-wider font-medium">Harga Paket</span>
-            <span className="text-[19px] font-bold tracking-tight text-[#000000]">
+            <span className="text-[19px] font-bold tracking-tight text-[#0075de]">
               {formatRupiah(bundle.price)}
             </span>
           </div>
