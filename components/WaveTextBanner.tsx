@@ -3,16 +3,12 @@
 import { useEffect, useRef } from 'react';
 
 const WAVE_PATH_D =
-  'M -1500 110 C -1420.0 41.2, -1330.0 41.2, -1250.0 110.0 C -1170.0 178.8, -1080.0 178.8, -1000.0 110.0 ' +
-  'C -920.0 41.2, -830.0 41.2, -750.0 110.0 C -670.0 178.8, -580.0 178.8, -500.0 110.0 ' +
-  'C -420.0 41.2, -330.0 41.2, -250.0 110.0 C -170.0 178.8, -80.0 178.8, 0.0 110.0 ' +
-  'C 80.0 41.2, 170.0 41.2, 250.0 110.0 C 330.0 178.8, 420.0 178.8, 500.0 110.0 ' +
-  'C 580.0 41.2, 670.0 41.2, 750.0 110.0 C 830.0 178.8, 920.0 178.8, 1000.0 110.0 ' +
-  'C 1080.0 41.2, 1170.0 41.2, 1250.0 110.0 C 1330.0 178.8, 1420.0 178.8, 1500.0 110.0 ' +
-  'C 1580.0 41.2, 1670.0 41.2, 1750.0 110.0 C 1830.0 178.8, 1920.0 178.8, 2000.0 110.0 ' +
-  'C 2080.0 41.2, 2170.0 41.2, 2250.0 110.0 C 2330.0 178.8, 2420.0 178.8, 2500.0 110.0 ' +
-  'C 2580.0 41.2, 2670.0 41.2, 2750.0 110.0 C 2830.0 178.8, 2920.0 178.8, 3000.0 110.0 ' +
-  'C 3080.0 41.2, 3170.0 41.2, 3250.0 110.0 C 3330.0 178.8, 3420.0 178.8, 3500.0 110.0';
+  'M -1500 130 C -1409.0 66.0, -1341.0 66.0, -1250 130 C -1159.0 194.0, -1091.0 194.0, -1000 130 C -909.0 66.0, -841.0 66.0, -750 130 ' +
+  'C -659.0 194.0, -591.0 194.0, -500 130 C -409.0 66.0, -341.0 66.0, -250 130 C -159.0 194.0, -91.0 194.0, 0 130 C 91.0 66.0, 159.0 66.0, 250 130 ' +
+  'C 341.0 194.0, 409.0 194.0, 500 130 C 591.0 66.0, 659.0 66.0, 750 130 C 841.0 194.0, 909.0 194.0, 1000 130 C 1091.0 66.0, 1159.0 66.0, 1250 130 ' +
+  'C 1341.0 194.0, 1409.0 194.0, 1500 130 C 1591.0 66.0, 1659.0 66.0, 1750 130 C 1841.0 194.0, 1909.0 194.0, 2000 130 C 2091.0 66.0, 2159.0 66.0, 2250 130 ' +
+  'C 2341.0 194.0, 2409.0 194.0, 2500 130 C 2591.0 66.0, 2659.0 66.0, 2750 130 C 2841.0 194.0, 2909.0 194.0, 3000 130 C 3091.0 66.0, 3159.0 66.0, 3250 130 ' +
+  'C 3341.0 194.0, 3409.0 194.0, 3500 130';
 
 export default function WaveTextBanner() {
   const textPathRef = useRef<SVGTextPathElement>(null);
@@ -61,94 +57,100 @@ export default function WaveTextBanner() {
 
   const renderPatternUnit = (isFirst = false) => (
     <tspan ref={isFirst ? patternRef : undefined}>
-      <tspan className="font-serif italic text-white" style={{ fontFamily: 'var(--font-serif)' }}>
+      <tspan
+        className="font-serif italic text-white"
+        style={{ fontFamily: 'var(--font-serif)' }}
+      >
         Warung Design
       </tspan>
-      <tspan className="fill-white/50 text-[14px]"> ✦ </tspan>
-      <tspan className="font-sans font-bold uppercase tracking-wider text-white">
+      <tspan className="fill-white/60 text-[14px]"> ✦ </tspan>
+      <tspan
+        className="font-sans font-bold uppercase tracking-wider text-white"
+        style={{ fontFamily: 'var(--font-plus-jakarta-sans)' }}
+      >
         Template Promosi UMKM
       </tspan>
-      <tspan className="fill-white/50 text-[14px]"> ✦ </tspan>
-      <tspan className="font-serif italic text-white" style={{ fontFamily: 'var(--font-serif)' }}>
+      <tspan className="fill-white/60 text-[14px]"> ✦ </tspan>
+      <tspan
+        className="font-serif italic text-white"
+        style={{ fontFamily: 'var(--font-serif)' }}
+      >
         Buka Langsung di Canva HP
       </tspan>
-      <tspan className="fill-white/50 text-[14px]"> ✦ </tspan>
-      <tspan className="font-sans font-bold uppercase tracking-wider text-white">
+      <tspan className="fill-white/60 text-[14px]"> ✦ </tspan>
+      <tspan
+        className="font-sans font-bold uppercase tracking-wider text-white"
+        style={{ fontFamily: 'var(--font-plus-jakarta-sans)' }}
+      >
         Formula Prompt AI
       </tspan>
-      <tspan className="fill-white/50 text-[14px]"> ✦ </tspan>
-      <tspan className="font-serif italic text-white" style={{ fontFamily: 'var(--font-serif)' }}>
+      <tspan className="fill-white/60 text-[14px]"> ✦ </tspan>
+      <tspan
+        className="font-serif italic text-white"
+        style={{ fontFamily: 'var(--font-serif)' }}
+      >
         Bebas Royalti Komersial
       </tspan>
-      <tspan className="fill-white/50 text-[14px]"> ✦ </tspan>
-      <tspan className="font-sans font-bold uppercase tracking-wider text-white">
+      <tspan className="fill-white/60 text-[14px]"> ✦ </tspan>
+      <tspan
+        className="font-sans font-bold uppercase tracking-wider text-white"
+        style={{ fontFamily: 'var(--font-plus-jakarta-sans)' }}
+      >
         Format PNG &amp; JPG HD
       </tspan>
-      <tspan className="fill-white/50 text-[14px]"> ✦ </tspan>
-      <tspan className="font-serif italic text-white" style={{ fontFamily: 'var(--font-serif)' }}>
+      <tspan className="fill-white/60 text-[14px]"> ✦ </tspan>
+      <tspan
+        className="font-serif italic text-white"
+        style={{ fontFamily: 'var(--font-serif)' }}
+      >
         Mulai Rp 40 Ribuan
       </tspan>
-      <tspan className="fill-white/50 text-[14px]"> ✦ </tspan>
-      <tspan className="font-sans font-bold uppercase tracking-wider text-white">
+      <tspan className="fill-white/60 text-[14px]"> ✦ </tspan>
+      <tspan
+        className="font-sans font-bold uppercase tracking-wider text-white"
+        style={{ fontFamily: 'var(--font-plus-jakarta-sans)' }}
+      >
         Siap Posting Seketika
       </tspan>
-      <tspan className="fill-white/50 text-[14px]"> ✦ </tspan>
+      <tspan className="fill-white/60 text-[14px]"> ✦ </tspan>
     </tspan>
   );
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#0075de] py-6 sm:py-10 select-none shadow-md">
-      {/* Subtle top & bottom ambient glow inside the blue banner */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0060b8]/40 via-transparent to-[#0055a3]/40 pointer-events-none" />
-
+    <section className="relative w-full overflow-hidden py-3 sm:py-6 select-none bg-transparent">
       <div className="relative w-full">
         <svg
-          viewBox="0 0 1600 220"
-          preserveAspectRatio="xMidYMid meet"
-          className="w-full h-44 sm:h-56 md:h-64 pointer-events-none"
+          viewBox="0 0 1600 260"
+          preserveAspectRatio="xMidYMid slice"
+          className="w-full h-44 sm:h-52 md:h-60 pointer-events-none drop-shadow-[0_10px_24px_rgba(0,117,222,0.22)]"
         >
           <defs>
             <path id="wave-center-path" d={WAVE_PATH_D} fill="none" />
-            <linearGradient id="wave-ribbon-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.18" />
-              <stop offset="50%" stopColor="#ffffff" stopOpacity="0.22" />
-              <stop offset="100%" stopColor="#ffffff" stopOpacity="0.18" />
+            <linearGradient id="wave-ribbon-blue" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#006cd2" />
+              <stop offset="50%" stopColor="#0075de" />
+              <stop offset="100%" stopColor="#006cd2" />
             </linearGradient>
           </defs>
 
-          {/* Wavy Ribbon Band behind text */}
+          {/* Wavy Blue Ribbon Band - follows the wave curvature */}
           <path
             d={WAVE_PATH_D}
             fill="none"
-            stroke="url(#wave-ribbon-gradient)"
-            strokeWidth="74"
+            stroke="url(#wave-ribbon-blue)"
+            strokeWidth="84"
             strokeLinecap="round"
-          />
-
-          {/* Ribbon Border Guide Lines */}
-          <path
-            d={WAVE_PATH_D}
-            fill="none"
-            stroke="rgba(255, 255, 255, 0.35)"
-            strokeWidth="1.5"
-            transform="translate(0, -37)"
-          />
-          <path
-            d={WAVE_PATH_D}
-            fill="none"
-            stroke="rgba(255, 255, 255, 0.35)"
-            strokeWidth="1.5"
-            transform="translate(0, 37)"
+            strokeLinejoin="round"
           />
 
           {/* Flowing White Text along the Wave Path */}
           <text
             fill="#ffffff"
-            fontSize="19"
-            letterSpacing="0.04em"
+            fontSize="18.5"
+            letterSpacing="0.03em"
             dominantBaseline="central"
             alignmentBaseline="middle"
-            className="drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)]"
+            className="drop-shadow-[0_1px_2px_rgba(0,0,0,0.18)]"
           >
             <textPath
               ref={textPathRef}
