@@ -2,6 +2,7 @@ import { getBundles } from '@/lib/db';
 import HeroShowcaseWindow from '@/components/HeroShowcaseWindow';
 import HomeCatalogSection from '@/components/HomeCatalogSection';
 import FAQAccordion from '@/components/FAQAccordion';
+import WaveTextBanner from '@/components/WaveTextBanner';
 import Image from 'next/image';
 import {
   ShoppingBag,
@@ -492,6 +493,13 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* ========================================================= */}
+        {/* WAVE TEXT EFFECT BANNER (ChatPRD / Framer Style)          */}
+        {/* ========================================================= */}
+        <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-hidden my-6">
+          <WaveTextBanner />
+        </div>
 
         {/* ========================================================= */}
         {/* 9. TESTIMONIAL WALL                                       */}
