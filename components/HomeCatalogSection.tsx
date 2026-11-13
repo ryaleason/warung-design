@@ -25,7 +25,7 @@ export default function HomeCatalogSection({ bundles }: HomeCatalogSectionProps)
   }, [bundles, selectedCategory]);
 
   return (
-    <section id="katalog" className="px-4 sm:px-8 scroll-mt-20">
+    <section id="katalog" className="px-4 sm:px-8 scroll-mt-20" data-aos="fade-up" data-aos-duration="700">
       {/* Header & Filter Controls */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 border-b border-black/[0.08] pb-6">
         <div>

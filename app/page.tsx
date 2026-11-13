@@ -116,7 +116,7 @@ export default async function HomePage() {
         </div>
 
         {/* Floating Mockup Window Centered */}
-        <div className="relative z-10 max-w-6xl mx-auto">
+        <div className="relative z-10 max-w-6xl mx-auto" data-aos="fade-up" data-aos-duration="800">
           <HeroShowcaseWindow featuredBundle={featured} />
         </div>
       </section>
@@ -126,7 +126,7 @@ export default async function HomePage() {
         {/* ========================================================= */}
         {/* 3. SEKTOR UMKM YANG TERBANTU                              */}
         {/* ========================================================= */}
-        <section className="px-4 sm:px-8 text-center">
+        <section className="px-4 sm:px-8 text-center" data-aos="fade-up" data-aos-duration="700">
           <p className="text-[12px] uppercase tracking-wider font-semibold text-[#54504c] mb-3">
             Dirancang untuk berbagai jenis usaha:
           </p>
@@ -148,7 +148,7 @@ export default async function HomePage() {
         {/* ========================================================= */}
         {/* 4. CORE PHILOSOPHY / VALUE STATEMENT                      */}
         {/* ========================================================= */}
-        <section className="px-4 sm:px-8 text-center max-w-4xl mx-auto space-y-3">
+        <section className="px-4 sm:px-8 text-center max-w-4xl mx-auto space-y-3" data-aos="fade-up" data-aos-duration="700">
           <h2 className="font-serif text-2xl sm:text-4xl lg:text-[44px] font-semibold tracking-tight text-[#000000] leading-tight">
             Satu platform promosi,{' '}
             <span className="italic font-normal text-[#0075de]">dari ide pertama hingga siap posting</span>
@@ -163,7 +163,7 @@ export default async function HomePage() {
         {/* ========================================================= */}
         <section className="px-4 sm:px-8 space-y-16 sm:space-y-24 max-w-6xl mx-auto">
           {/* Feature 1: Left Copy, Right Visual */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center" data-aos="fade-up" data-aos-duration="700">
             <div className="lg:col-span-6 space-y-5 text-left">
               <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000] leading-snug">
                 Rancang materi promosi{' '}
@@ -209,7 +209,7 @@ export default async function HomePage() {
           </div>
 
           {/* Feature 2: Full Width / Centered Showcase */}
-          <div className="rounded-2xl border border-black/[0.1] bg-white p-6 sm:p-10 shadow-sm text-center max-w-5xl mx-auto space-y-6">
+          <div className="rounded-2xl border border-black/[0.1] bg-white p-6 sm:p-10 shadow-sm text-center max-w-5xl mx-auto space-y-6" data-aos="fade-up" data-aos-duration="700">
             <div className="max-w-2xl mx-auto space-y-3">
               <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000]">
                 Formula Prompt AI yang paham{' '}
@@ -241,7 +241,7 @@ export default async function HomePage() {
           </div>
 
           {/* Feature 3: Left Visual, Right Copy */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center" data-aos="fade-up" data-aos-duration="700">
             <div className="lg:col-span-6 order-2 lg:order-1 flex items-center justify-center">
               <Image
                 src="/mockup-section.png"
@@ -286,7 +286,7 @@ export default async function HomePage() {
         {/* ========================================================= */}
         {/* 7. ECOSYSTEM / CONNECTED TOOLS GRID                       */}
         {/* ========================================================= */}
-        <section className="px-4 sm:px-8 text-center max-w-5xl mx-auto space-y-10">
+        <section className="px-4 sm:px-8 text-center max-w-5xl mx-auto space-y-10" data-aos="fade-up" data-aos-duration="700">
           <div className="max-w-2xl mx-auto space-y-3">
             <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000]">
               Terhubung dengan semua tools{' '}
@@ -417,7 +417,7 @@ export default async function HomePage() {
         {/* ========================================================= */}
         {/* 8. ALUR TRANSAKSI E-COMMERCE                              */}
         {/* ========================================================= */}
-        <section id="alur-transaksi" className="px-4 sm:px-8 max-w-6xl mx-auto scroll-mt-20">
+        <section id="alur-transaksi" className="px-4 sm:px-8 max-w-6xl mx-auto scroll-mt-20" data-aos="fade-up" data-aos-duration="700">
           <div className="border-t border-black/[0.08] pt-16">
             <div className="max-w-2xl mb-10 text-left">
               <h2 className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-[#000000]">
@@ -484,7 +484,7 @@ export default async function HomePage() {
         {/* ========================================================= */}
         {/* 9. TESTIMONIAL WALL                                       */}
         {/* ========================================================= */}
-        <section className="px-4 sm:px-8 max-w-6xl mx-auto space-y-10">
+        <section className="px-4 sm:px-8 max-w-6xl mx-auto space-y-10" data-aos="fade-up" data-aos-duration="700">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000]">
               Disukai oleh ratusan admin &amp;{' '}
@@ -569,7 +569,7 @@ export default async function HomePage() {
         {/* ========================================================= */}
         {/* 10. FAQ ACCORDION SECTION                                 */}
         {/* ========================================================= */}
-        <section id="faq" className="px-4 sm:px-8 max-w-4xl mx-auto scroll-mt-20">
+        <section id="faq" className="px-4 sm:px-8 max-w-4xl mx-auto scroll-mt-20" data-aos="fade-up" data-aos-duration="700">
           <div className="border-t border-black/[0.08] pt-16 space-y-8">
             <div className="text-left">
               <h2 className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-[#000000]">
@@ -590,7 +590,7 @@ export default async function HomePage() {
         {/* ========================================================= */}
         {/* 11. CLOSING HIGH-IMPACT CTA BANNER                        */}
         {/* ========================================================= */}
-        <section className="px-4 sm:px-8 max-w-6xl mx-auto">
+        <section className="px-4 sm:px-8 max-w-6xl mx-auto" data-aos="fade-up" data-aos-duration="700">
           <div className="rounded-3xl bg-[#111111] p-8 sm:p-14 text-white text-center shadow-xl">
             <div className="max-w-2xl mx-auto space-y-4">
               <h2 className="font-serif text-2xl sm:text-4xl lg:text-[42px] font-semibold tracking-tight leading-tight text-white">

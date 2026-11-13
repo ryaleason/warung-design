@@ -4,6 +4,7 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AOSInit from '@/components/AOSInit';
+import SmoothScroll from '@/components/SmoothScroll';
 import { AuthProvider } from '@/components/AuthContext';
 import AuthModal from '@/components/AuthModal';
 
@@ -60,6 +61,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-[#ffffff] text-[#000000] selection:bg-[#e6f3fe] selection:text-[#0075de] font-sans">
         <AuthProvider>
+          <SmoothScroll />
           <AOSInit />
           <Navbar />
           <main className="flex-1">{children}</main>

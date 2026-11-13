@@ -89,3 +89,14 @@ p {
   outline-offset: 2px;
 }
 
+/* Smooth scroll reveal glide animation (silky 28px transition instead of clunky 100px leap) */
+[data-aos='fade-up'] {
+  transform: translate3d(0, 28px, 0);
+  transition-property: opacity, transform !important;
+}
+
+[data-aos='fade-up'].aos-animate {
+  transform: translate3d(0, 0, 0) !important;
+}
+
+
