@@ -28,7 +28,11 @@ export default async function HomePage() {
 
         <div className="max-w-4xl mx-auto space-y-6">
           {/* Top Announcement Bar with Blue Accent */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#0075de]/20 bg-[#0075de]/[0.04] px-4 py-1.5 text-[12.5px] font-medium text-[#111111] shadow-2xs hover:border-[#0075de]/35 transition-colors">
+          <div
+            data-aos="fade-down"
+            data-aos-duration="600"
+            className="inline-flex items-center gap-2 rounded-full border border-[#0075de]/20 bg-[#0075de]/[0.04] px-4 py-1.5 text-[12.5px] font-medium text-[#111111] shadow-2xs hover:border-[#0075de]/35 transition-colors"
+          >
             <span className="flex h-2 w-2 rounded-full bg-[#0075de] animate-pulse"></span>
             <span className="font-semibold text-[#0075de]">Warung Desain Studio</span>
             <span className="text-black/25">|</span>
@@ -40,7 +44,11 @@ export default async function HomePage() {
           </div>
 
           {/* Editorial Display Headline with Blue Accent Italic Serif */}
-          <h1 className="font-serif text-3xl sm:text-5xl lg:text-[62px] font-semibold tracking-tight text-[#000000] leading-[1.14]">
+          <h1
+            data-aos="fade-up"
+            data-aos-duration="700"
+            className="font-serif text-3xl sm:text-5xl lg:text-[62px] font-semibold tracking-tight text-[#000000] leading-[1.14]"
+          >
             Asisten AI &amp; Desain Promosi{' '}
             <span className="italic font-normal text-[#000000]">
               untuk Seluruh Toko Anda
@@ -48,12 +56,22 @@ export default async function HomePage() {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-[16px] sm:text-[19px] text-[#444444] leading-relaxed max-w-2xl mx-auto">
+          <p
+            data-aos="fade-up"
+            data-aos-delay="100"
+            data-aos-duration="700"
+            className="text-[16px] sm:text-[19px] text-[#444444] leading-relaxed max-w-2xl mx-auto"
+          >
             Ubah ide promo mendadak menjadi materi feed Instagram &amp; WhatsApp Story siap posting dalam hitungan menit. Pilih puluhan bundle desain jadi, atau racik variasi unik dengan panduan prompt AI.
           </p>
 
           {/* Hero CTAs */}
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5">
+          <div
+            data-aos="fade-up"
+            data-aos-delay="200"
+            data-aos-duration="700"
+            className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5"
+          >
             <a
               href="#katalog"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-xl bg-[#0075de] hover:bg-[#005bb5] px-7 py-4 text-[15px] font-semibold text-white transition-all shadow-md hover:shadow-lg cursor-pointer group"
@@ -71,25 +89,29 @@ export default async function HomePage() {
           </div>
 
           {/* Reassurance Micro-Copy */}
-          <p className="text-[12.5px] text-[#54504c] pt-1">
+          <p
+            data-aos="fade-in"
+            data-aos-delay="300"
+            className="text-[12.5px] text-[#54504c] pt-1"
+          >
             Mulai Rp 40 ribuan • Sekali bayar tanpa langganan • Siap buka di Canva HP • Lisensi Bebas Komersial
           </p>
 
           {/* 4-Item Social Proof Metrics Bar with Blue Numbers & Accent Borders */}
           <div className="pt-6 border-t border-black/[0.08] grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 text-left max-w-3xl mx-auto">
-            <div className="border-l-2 border-[#0075de] pl-3 py-1">
+            <div data-aos="fade-up" data-aos-delay="100" className="border-l-2 border-[#0075de] pl-3 py-1">
               <span className="block text-xl sm:text-2xl font-bold tracking-tight text-[#0075de]">500+</span>
               <span className="text-[12px] text-[#54504c]">UMKM Terbantu</span>
             </div>
-            <div className="border-l-2 border-[#0075de] pl-3 py-1">
+            <div data-aos="fade-up" data-aos-delay="180" className="border-l-2 border-[#0075de] pl-3 py-1">
               <span className="block text-xl sm:text-2xl font-bold tracking-tight text-[#0075de]">98%</span>
               <span className="text-[12px] text-[#54504c]">Kepuasan Pelanggan</span>
             </div>
-            <div className="border-l-2 border-[#0075de] pl-3 py-1">
+            <div data-aos="fade-up" data-aos-delay="260" className="border-l-2 border-[#0075de] pl-3 py-1">
               <span className="block text-xl sm:text-2xl font-bold tracking-tight text-[#0075de]">100+</span>
               <span className="text-[12px] text-[#54504c]">Desain Siap Pakai</span>
             </div>
-            <div className="border-l-2 border-[#0075de] pl-3 py-1">
+            <div data-aos="fade-up" data-aos-delay="340" className="border-l-2 border-[#0075de] pl-3 py-1">
               <span className="block text-xl sm:text-2xl font-bold tracking-tight text-[#0075de]">4.9 / 5.0</span>
               <span className="text-[12px] text-[#54504c]">Rating Ulasan UMKM</span>
             </div>
@@ -161,10 +183,10 @@ export default async function HomePage() {
         {/* ========================================================= */}
         {/* 5. FEATURE DEEP-DIVES (3 Sections)                        */}
         {/* ========================================================= */}
-        <section className="px-4 sm:px-8 space-y-16 sm:space-y-24 max-w-6xl mx-auto">
+        <section className="px-4 sm:px-8 space-y-16 sm:space-y-24 max-w-6xl mx-auto overflow-hidden">
           {/* Feature 1: Left Copy, Right Visual */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center" data-aos="fade-up" data-aos-duration="700">
-            <div className="lg:col-span-6 space-y-5 text-left">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div data-aos="fade-right" data-aos-duration="750" className="lg:col-span-6 space-y-5 text-left">
               <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000] leading-snug">
                 Rancang materi promosi{' '}
                 <span className="italic font-normal text-[#0075de]">dalam hitungan menit</span>, bukan berhari-hari
@@ -197,7 +219,7 @@ export default async function HomePage() {
               </div>
             </div>
 
-            <div className="lg:col-span-6 flex items-center justify-center">
+            <div data-aos="fade-left" data-aos-duration="750" className="lg:col-span-6 flex items-center justify-center">
               <Image
                 src="/glosy-app-promo.png"
                 alt="Materi Promosi Siap Pakai Warung Desain"
@@ -221,7 +243,7 @@ export default async function HomePage() {
             </div>
 
             {/* Prompt Card */}
-            <div className="rounded-xl border border-black/[0.08] bg-[#fbfaf9] p-5 sm:p-6 text-left max-w-3xl mx-auto space-y-4 shadow-2xs">
+            <div data-aos="zoom-in-up" data-aos-duration="750" className="rounded-xl border border-black/[0.08] bg-[#fbfaf9] p-5 sm:p-6 text-left max-w-3xl mx-auto space-y-4 shadow-2xs">
               <div className="flex items-center justify-between border-b border-black/[0.06] pb-3">
                 <span className="text-[12.5px] font-semibold text-[#111111]">
                   Contoh Formula Prompt Paket Kuliner &amp; Cafe:
@@ -241,8 +263,8 @@ export default async function HomePage() {
           </div>
 
           {/* Feature 3: Left Visual, Right Copy */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center" data-aos="fade-up" data-aos-duration="700">
-            <div className="lg:col-span-6 order-2 lg:order-1 flex items-center justify-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div data-aos="fade-right" data-aos-duration="750" className="lg:col-span-6 order-2 lg:order-1 flex items-center justify-center">
               <Image
                 src="/mockup-section.png"
                 alt="Mockup Canva Warung Desain"
@@ -252,7 +274,7 @@ export default async function HomePage() {
               />
             </div>
 
-            <div className="lg:col-span-6 order-1 lg:order-2 space-y-5 text-left">
+            <div data-aos="fade-left" data-aos-duration="750" className="lg:col-span-6 order-1 lg:order-2 space-y-5 text-left">
               <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000] leading-snug">
                 Buka langsung di Canva HP,{' '}
                 <span className="italic font-normal text-[#0075de]">edit teks &amp; logo tanpa ribet</span>
@@ -380,7 +402,10 @@ export default async function HomePage() {
             ).map((tool, idx) => (
               <div
                 key={idx}
-                className="rounded-xl border border-black/[0.08] hover:border-[#0075de]/35 bg-white p-4 sm:p-4.5 hover:shadow-xs transition-all group flex flex-col justify-between"
+                data-aos="fade-up"
+                data-aos-delay={String((idx % 4) * 75)}
+                data-aos-duration="600"
+                className="interactive-card rounded-xl border border-black/[0.08] hover:border-[#0075de]/35 bg-white p-4 sm:p-4.5 group flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center gap-1.5 mb-3 h-8">
@@ -430,7 +455,7 @@ export default async function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-left">
-              <div className="rounded-xl border border-black/[0.08] hover:border-[#0075de]/30 bg-white p-5 flex flex-col justify-between shadow-2xs transition-colors">
+              <div data-aos="fade-up" data-aos-delay="100" className="interactive-card rounded-xl border border-black/[0.08] hover:border-[#0075de]/30 bg-white p-5 flex flex-col justify-between">
                 <div>
                   <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#0075de]/10 text-[#0075de] font-bold text-[13px] mb-3 border border-[#0075de]/20 shadow-2xs">
                     1
@@ -442,7 +467,7 @@ export default async function HomePage() {
                 </div>
               </div>
 
-              <div className="rounded-xl border border-black/[0.08] hover:border-[#0075de]/30 bg-white p-5 flex flex-col justify-between shadow-2xs transition-colors">
+              <div data-aos="fade-up" data-aos-delay="200" className="interactive-card rounded-xl border border-black/[0.08] hover:border-[#0075de]/30 bg-white p-5 flex flex-col justify-between">
                 <div>
                   <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#0075de]/10 text-[#0075de] font-bold text-[13px] mb-3 border border-[#0075de]/20 shadow-2xs">
                     2
@@ -454,7 +479,7 @@ export default async function HomePage() {
                 </div>
               </div>
 
-              <div className="rounded-xl border border-black/[0.08] hover:border-[#0075de]/30 bg-white p-5 flex flex-col justify-between shadow-2xs transition-colors">
+              <div data-aos="fade-up" data-aos-delay="300" className="interactive-card rounded-xl border border-black/[0.08] hover:border-[#0075de]/30 bg-white p-5 flex flex-col justify-between">
                 <div>
                   <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#0075de]/10 text-[#0075de] font-bold text-[13px] mb-3 border border-[#0075de]/20 shadow-2xs">
                     3
@@ -466,7 +491,7 @@ export default async function HomePage() {
                 </div>
               </div>
 
-              <div className="rounded-xl border border-black/[0.08] hover:border-[#0075de]/30 bg-white p-5 flex flex-col justify-between shadow-2xs transition-colors">
+              <div data-aos="fade-up" data-aos-delay="400" className="interactive-card rounded-xl border border-black/[0.08] hover:border-[#0075de]/30 bg-white p-5 flex flex-col justify-between">
                 <div>
                   <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#0075de] text-white font-bold text-[13px] mb-3 shadow-xs">
                     4
@@ -498,7 +523,7 @@ export default async function HomePage() {
           {/* Featured Review Card + Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             {/* Featured Large Highlight Review (5 cols) */}
-            <div className="lg:col-span-5 rounded-2xl bg-white border border-black/[0.1] hover:border-[#0075de]/30 p-6 sm:p-8 flex flex-col justify-between text-left shadow-sm transition-colors">
+            <div data-aos="fade-right" data-aos-duration="750" className="interactive-card lg:col-span-5 rounded-2xl bg-white border border-black/[0.1] hover:border-[#0075de]/30 p-6 sm:p-8 flex flex-col justify-between text-left shadow-sm">
               <div>
                 <Quote className="h-8 w-8 text-[#0075de] mb-4 opacity-80" />
                 <p className="text-[16px] sm:text-[17px] font-medium text-[#111111] leading-relaxed">
@@ -517,7 +542,7 @@ export default async function HomePage() {
             </div>
 
             {/* Grid of 4 Supporting Reviews (7 cols) */}
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+            <div data-aos="fade-left" data-aos-duration="750" className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
               {[
                 {
                   text: 'Paket Promo Ramadhannya beneran ngebantu banget! Visualnya islami modern dan gak norak. Followers pada nanya siapa yang desainin.',
@@ -546,7 +571,7 @@ export default async function HomePage() {
               ].map((review, i) => (
                 <div
                   key={i}
-                  className="rounded-xl border border-black/[0.08] bg-white p-5 flex flex-col justify-between shadow-2xs hover:border-black/[0.18] transition-colors"
+                  className="interactive-card rounded-xl border border-black/[0.08] bg-white p-5 flex flex-col justify-between shadow-2xs hover:border-black/[0.18]"
                 >
                   <p className="text-[13.5px] text-[#54504c] leading-relaxed">
                     &ldquo;{review.text}&rdquo;
@@ -590,8 +615,8 @@ export default async function HomePage() {
         {/* ========================================================= */}
         {/* 11. CLOSING HIGH-IMPACT CTA BANNER                        */}
         {/* ========================================================= */}
-        <section className="px-4 sm:px-8 max-w-6xl mx-auto" data-aos="fade-up" data-aos-duration="700">
-          <div className="rounded-3xl bg-[#111111] p-8 sm:p-14 text-white text-center shadow-xl">
+        <section className="px-4 sm:px-8 max-w-6xl mx-auto">
+          <div data-aos="zoom-in-up" data-aos-duration="800" className="rounded-3xl bg-[#111111] p-8 sm:p-14 text-white text-center shadow-xl">
             <div className="max-w-2xl mx-auto space-y-4">
               <h2 className="font-serif text-2xl sm:text-4xl lg:text-[42px] font-semibold tracking-tight leading-tight text-white">
                 Bikin materi promosi tokomu{' '}

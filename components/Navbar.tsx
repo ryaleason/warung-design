@@ -4,25 +4,20 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { ShoppingBag, Menu, X, HelpCircle, MessageCircle, Search, User, LogOut, History, ChevronDown } from 'lucide-react';
-import SearchModal from '@/components/SearchModal';
+import { Menu, X, HelpCircle, MessageCircle, ShoppingBag, User, LogOut, History, ChevronDown } from 'lucide-react';
 import { useAuth } from './AuthContext';
 
 export default function Navbar() {
   const pathname = usePathname();
   const { user, openAuthModal, logout } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
-  // Close mobile menu on Escape key press, handle Cmd+K / Ctrl+K shortcut
+  // Close mobile menu on Escape key press
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setIsMobileMenuOpen(false);
-      } else if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        setIsSearchOpen((prev) => !prev);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -38,91 +33,75 @@ export default function Navbar() {
     <>
       <header className="sticky top-0 z-40 w-full border-b border-black/[0.08] bg-[#ffffff]/90 backdrop-blur-md notion-nav-shadow">
         <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-4 sm:px-8">
-          {/* Left Side: Burger Menu + Logo + Brand Name */}
-          <div className="flex items-center gap-2 sm:gap-4">
-            {/* Hamburger Menu Button (mobile only, min 44px tap target) */}
-            <button
-              type="button"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-[8px] text-[#111111] hover:bg-black/[0.05] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] focus-visible:ring-offset-2"
-              aria-label={isMobileMenuOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi'}
-              aria-expanded={isMobileMenuOpen}
-            >
-              {isMobileMenuOpen ? (
-                <X className="h-5 w-5 text-[#111111]" />
-              ) : (
-                <Menu className="h-5 w-5 text-[#111111]" />
-              )}
-            </button>
+          {/* Left Side: Burger Menu + Logo + Brand + Left Nav Links (Framer Style) */}
+          <div className="flex items-center gap-4 lg:gap-8">
+            <div className="flex items-center gap-2 sm:gap-4">
+              {/* Hamburger Menu Button (mobile only, min 44px tap target) */}
+              <button
+                type="button"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="md:hidden flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-[8px] text-[#111111] hover:bg-black/[0.05] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] focus-visible:ring-offset-2"
+                aria-label={isMobileMenuOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi'}
+                aria-expanded={isMobileMenuOpen}
+              >
+                {isMobileMenuOpen ? (
+                  <X className="h-5 w-5 text-[#111111]" />
+                ) : (
+                  <Menu className="h-5 w-5 text-[#111111]" />
+                )}
+              </button>
 
-            {/* Logo and Brand Link */}
-            <Link href="/" className="flex items-center gap-2.5 group rounded-[6px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de]">
-              <Image
-                src="/logo.svg"
-                alt="Warung Design"
-                width={36}
-                height={31}
-                className="h-8 w-auto object-contain transition-transform group-hover:scale-105"
-                priority
-                unoptimized
-              />
-              <span className="hidden sm:inline-block text-[17px] font-semibold tracking-[-0.015em] text-[#111111]">
-                Warung Design
-              </span>
-            </Link>
+              {/* Logo and Brand Link */}
+              <Link
+                href="/"
+                className="flex items-center gap-2.5 group rounded-[6px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de]"
+              >
+                <Image
+                  src="/logo.svg"
+                  alt="Warung Design"
+                  width={36}
+                  height={31}
+                  className="h-8 w-auto object-contain transition-transform group-hover:scale-105"
+                  priority
+                  unoptimized
+                />
+                <span className="text-[17px] font-semibold tracking-[-0.015em] text-[#111111]">
+                  Warung Design
+                </span>
+              </Link>
+            </div>
 
-            {/* Desktop Search Trigger Button */}
-            <button
-              type="button"
-              onClick={() => setIsSearchOpen(true)}
-              className="hidden lg:inline-flex items-center gap-2 rounded-[8px] bg-[#ffffff] hover:bg-black/[0.04] border border-black/[0.1] px-3 py-1.5 text-[13px] text-[#54504c] hover:text-[#111111] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] cursor-pointer"
-              aria-label="Cari paket desain (Cmd+K)"
-            >
-              <Search className="h-3.5 w-3.5 text-[#54504c]" />
-              <span>Cari paket desain...</span>
-              <kbd className="font-mono text-[10.5px] bg-[#f6f5f4] border border-black/[0.08] px-1.5 py-0.5 rounded text-[#54504c]">
-                ⌘K
-              </kbd>
-            </button>
+            {/* Desktop Navigation Links aligned to left right next to Logo (Framer Style) */}
+            <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
+              <Link
+                href="/#katalog"
+                className="rounded-lg px-3 py-1.5 text-[13.5px] font-medium text-[#54504c] hover:text-[#111111] hover:bg-black/[0.04] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de]"
+              >
+                Katalog Paket
+              </Link>
+              <Link
+                href="/#cara-pakai"
+                className="rounded-lg px-3 py-1.5 text-[13.5px] font-medium text-[#54504c] hover:text-[#111111] hover:bg-black/[0.04] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de]"
+              >
+                Cara Pakai
+              </Link>
+              <Link
+                href="/#faq"
+                className="rounded-lg px-3 py-1.5 text-[13.5px] font-medium text-[#54504c] hover:text-[#111111] hover:bg-black/[0.04] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de]"
+              >
+                FAQ
+              </Link>
+            </nav>
           </div>
 
-          {/* Right Side: Desktop Nav Links & Search */}
-          <nav className="hidden md:flex items-center gap-1 sm:gap-2">
-            {/* Search icon trigger for medium screens */}
-            <button
-              type="button"
-              onClick={() => setIsSearchOpen(true)}
-              className="lg:hidden flex h-10 w-10 items-center justify-center rounded-[8px] text-[#54504c] hover:text-[#111111] hover:bg-black/[0.04] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de]"
-              aria-label="Buka pencarian paket"
-            >
-              <Search className="h-4 w-4" />
-            </button>
-
-            <Link
-              href="/#katalog"
-              className="rounded-[8px] px-3 py-1.5 text-[14px] font-medium text-[#54504c] hover:text-[#000000] hover:bg-black/[0.04] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de]"
-            >
-              Katalog Paket
-            </Link>
-            <Link
-              href="/#cara-pakai"
-              className="rounded-[8px] px-3 py-1.5 text-[14px] font-medium text-[#54504c] hover:text-[#000000] hover:bg-black/[0.04] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de]"
-            >
-              Cara Pakai
-            </Link>
-            <Link
-              href="/#faq"
-              className="rounded-[8px] px-3 py-1.5 text-[14px] font-medium text-[#54504c] hover:text-[#000000] hover:bg-black/[0.04] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de]"
-            >
-              FAQ
-            </Link>
-
+          {/* Right Side: Framer Style Dual Buttons (Masuk + Daftar) or User Dropdown */}
+          <div className="flex items-center gap-2 sm:gap-3">
             {user ? (
-              <div className="relative ml-2">
+              <div className="relative">
                 <button
                   type="button"
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  className="flex items-center gap-2 rounded-[8px] border border-black/[0.1] bg-white px-3 py-1.5 text-[13px] font-medium text-[#111111] hover:bg-stone-50 transition-colors"
+                  className="flex items-center gap-2 rounded-full border border-black/[0.1] bg-white px-3.5 py-1.5 text-[13px] font-medium text-[#111111] hover:bg-stone-50 transition-colors cursor-pointer"
                 >
                   <div className="w-5 h-5 rounded-full bg-[#e6f3fe] text-[#0075de] flex items-center justify-center font-bold text-[11px]">
                     {user.name.charAt(0).toUpperCase()}
@@ -151,7 +130,7 @@ export default function Navbar() {
                         setIsUserMenuOpen(false);
                         logout();
                       }}
-                      className="flex items-center gap-2 w-full px-3 py-2 text-[13px] rounded-lg text-rose-600 hover:bg-rose-50 transition-colors"
+                      className="flex items-center gap-2 w-full px-3 py-2 text-[13px] rounded-lg text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
                     >
                       <LogOut className="w-4 h-4" />
                       <span>Keluar</span>
@@ -160,60 +139,43 @@ export default function Navbar() {
                 )}
               </div>
             ) : (
-              <button
-                type="button"
-                onClick={() => openAuthModal('login')}
-                className="ml-1 rounded-[8px] border border-black/[0.1] bg-white px-3 py-1.5 text-[13px] font-semibold text-[#111111] hover:bg-stone-50 transition-colors"
-              >
-                Masuk / Daftar
-              </button>
+              <div className="flex items-center gap-2 sm:gap-3">
+                <button
+                  type="button"
+                  onClick={() => openAuthModal('login')}
+                  className="rounded-lg px-3.5 py-1.5 text-[13.5px] font-medium text-[#111111] hover:text-[#0075de] hover:bg-black/[0.04] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] cursor-pointer"
+                >
+                  Masuk
+                </button>
+                <button
+                  type="button"
+                  onClick={() => openAuthModal('register')}
+                  className="rounded-full bg-[#111111] hover:bg-[#000000] text-white px-4 py-1.5 text-[13.5px] font-medium transition-all shadow-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] focus-visible:ring-offset-2 active:scale-[0.98] cursor-pointer"
+                >
+                  Daftar
+                </button>
+              </div>
             )}
-
-            <Link
-              href="/#katalog"
-              className="ml-1.5 inline-flex items-center gap-1.5 rounded-[8px] bg-[#0075de] px-3.5 py-2 text-[14px] font-medium text-white hover:bg-[#0060b8] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] focus-visible:ring-offset-2"
-            >
-              <ShoppingBag className="h-4 w-4" />
-              <span>Pilih Paket</span>
-            </Link>
-          </nav>
-
-          {/* Right Side: Mobile Fast Actions (Search + CTA, min 44px tap targets) */}
-          <div className="flex md:hidden items-center gap-1">
-            <button
-              type="button"
-              onClick={() => setIsSearchOpen(true)}
-              className="flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-[8px] text-[#111111] hover:bg-black/[0.05] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de]"
-              aria-label="Buka pencarian paket desain"
-            >
-              <Search className="h-4 w-4 text-[#111111]" />
-            </button>
-
-            <Link
-              href="/#katalog"
-              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-[8px] bg-[#0075de] px-3.5 py-2 text-[13px] font-medium text-white hover:bg-[#0060b8] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] focus-visible:ring-offset-2"
-            >
-              <ShoppingBag className="h-3.5 w-3.5" />
-              <span>Pilih Paket</span>
-            </Link>
           </div>
         </div>
 
-        {/* Mobile Drawer / Dropdown Navigation Menu */}
+        {/* Mobile Navigation Drawer */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-black/[0.08] bg-[#ffffff]/98 backdrop-blur-md px-4 py-4 space-y-1 shadow-lg transition-all animate-in fade-in duration-200">
+          <div className="md:hidden border-t border-black/[0.08] bg-[#ffffff] px-4 py-4 space-y-1 shadow-lg animate-in fade-in slide-in-from-top-2 duration-150">
             {user ? (
-              <div className="border-b border-black/[0.06] pb-3 mb-2 px-3.5 pt-1">
-                <div className="text-[14px] font-bold text-[#111111]">{user.name}</div>
-                <div className="text-[12px] text-stone-500">{user.email}</div>
-                <div className="flex items-center gap-2 mt-2.5">
+              <div className="px-3.5 py-2 mb-2 rounded-xl bg-stone-50 border border-black/[0.06] flex items-center justify-between">
+                <div>
+                  <p className="font-semibold text-[13px] text-stone-900">{user.name}</p>
+                  <p className="text-[11px] text-stone-500">{user.email}</p>
+                </div>
+                <div className="flex items-center gap-2">
                   <Link
                     href="/riwayat"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-white border border-black/10 text-[12.5px] font-medium text-stone-800"
+                    className="inline-flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-white border border-black/10 text-[12.5px] font-medium text-stone-800"
                   >
                     <History className="w-3.5 h-3.5 text-[#0075de]" />
-                    <span>Riwayat Pesanan</span>
+                    <span>Riwayat</span>
                   </Link>
                   <button
                     type="button"
@@ -221,43 +183,36 @@ export default function Navbar() {
                       setIsMobileMenuOpen(false);
                       logout();
                     }}
-                    className="py-1.5 px-3 rounded-lg border border-black/10 bg-white text-[12.5px] font-medium text-rose-600"
+                    className="py-1.5 px-3 rounded-lg border border-black/10 bg-white text-[12.5px] font-medium text-rose-600 cursor-pointer"
                   >
                     Keluar
                   </button>
                 </div>
               </div>
             ) : (
-              <div className="px-3.5 pb-2 mb-1 border-b border-black/[0.06]">
+              <div className="grid grid-cols-2 gap-2 pb-3 mb-2 border-b border-black/[0.06]">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    openAuthModal('login');
+                  }}
+                  className="flex items-center justify-center rounded-xl border border-black/10 bg-white py-2 text-[13px] font-medium text-[#111111] hover:bg-stone-50 transition-colors cursor-pointer"
+                >
+                  Masuk
+                </button>
                 <button
                   type="button"
                   onClick={() => {
                     setIsMobileMenuOpen(false);
                     openAuthModal('register');
                   }}
-                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-stone-900 text-white py-2 text-[13px] font-medium"
+                  className="flex items-center justify-center rounded-xl bg-[#111111] text-white py-2 text-[13px] font-medium hover:bg-black transition-colors cursor-pointer"
                 >
-                  <User className="w-4 h-4" />
-                  <span>Masuk atau Daftar Akun</span>
+                  Daftar
                 </button>
               </div>
             )}
-
-            {/* Quick Search trigger in drawer */}
-            <button
-              type="button"
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-                setIsSearchOpen(true);
-              }}
-              className="w-full flex items-center justify-between rounded-[8px] px-3.5 py-2.5 text-[15px] font-medium text-[#111111] hover:bg-black/[0.05] transition-colors text-left"
-            >
-              <div className="flex items-center gap-2.5">
-                <Search className="h-4 w-4 text-[#0075de]" />
-                <span>Cari Paket Desain</span>
-              </div>
-              <span className="text-[12px] text-[#54504c]">Pencarian</span>
-            </button>
 
             <Link
               href="/#katalog"
@@ -308,12 +263,6 @@ export default function Navbar() {
           </div>
         )}
       </header>
-
-      {/* Global Search Modal */}
-      <SearchModal
-        isOpen={isSearchOpen}
-        onClose={() => setIsSearchOpen(false)}
-      />
     </>
   );
 }

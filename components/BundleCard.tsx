@@ -12,7 +12,7 @@ export default function BundleCard({ bundle }: BundleCardProps) {
   const mainImage = bundle.preview_images[0] || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80';
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-[12px] border border-black/[0.08] hover:border-[#0075de]/40 bg-[#ffffff] transition-all hover:shadow-xs">
+    <div className="interactive-card group flex flex-col overflow-hidden rounded-[12px] border border-black/[0.08] hover:border-[#0075de]/40 bg-[#ffffff]">
       {/* Thumbnail Container */}
       <div className="relative aspect-square w-full overflow-hidden bg-[#f6f5f4] border-b border-black/[0.08]">
         <Image
