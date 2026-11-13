@@ -434,7 +434,7 @@ export default async function HomePage() {
             <div className="max-w-2xl mb-10 text-left">
               <h2 className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-[#000000]">
                 Cara Praktis Berbelanja{' '}
-                <span className="italic font-normal text-[#0075de]">di Warung Desain</span>
+                <span className="italic font-normal text-[#000000]">di Warung Desain</span>
               </h2>
               <p className="mt-2 text-[15px] sm:text-[16px] text-[#54504c]">
                 Tanpa perlu mendaftar akun atau berlangganan bulanan. Cukup beli putus paket yang sedang dibutuhkan.
