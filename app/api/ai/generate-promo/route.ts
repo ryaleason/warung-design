@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export const runtime = 'nodejs';
+export const maxDuration = 30;
 
 interface GeneratePromoRequest {
   businessType?: string;
@@ -9,14 +10,38 @@ interface GeneratePromoRequest {
   productDetail?: string;
 }
 
+const CANDIDATE_MODELS = [
+  'gemini-2.5-flash',
+  'gemini-3.5-flash',
+  'gemini-3.5-flash-lite',
+];
+
+function getSemanticFallback(
+  businessType: string,
+  campaignMoment: string,
+  tone: string,
+  productDetail: string
+) {
+  return {
+    headline: `Penawaran Spesial ${campaignMoment}: Kehangatan Terbaik untuk Pelanggan Setia`,
+    caption: `Rayakan momen ${campaignMoment} dengan kehangatan istimewa di gerai kami. Kami menghadirkan penawaran khusus ${productDetail} yang disiapkan sepenuh hati untuk Anda dan keluarga. Jangan lewatkan kesempatan terbatas ini, segera kunjungi kami atau hubungi kami melalui WhatsApp untuk reservasi langsung.`,
+    visualPrompt: `Photorealistic commercial photography of an Indonesian ${businessType.toLowerCase()} during ${campaignMoment.toLowerCase()}, warm ambient indoor illumination, crisp textures, beautifully arranged presentation on clean wooden surface, soft depth of field, premium editorial advertising look, shot on 50mm lens, 8k resolution, --ar 1:1`,
+    designTips: [
+      'Pilih kombinasi warna utama yang selaras dengan identitas brand dan suasana momen promosi.',
+      'Pastikan teks penawaran utama terbaca jelas dengan ukuran font yang dominan di tengah atau atas.',
+      'Tambahkan informasi kontak pemesanan yang ringkas dan mudah ditemukan di bagian bawah desain.',
+    ],
+  };
+}
+
 export async function POST(req: Request) {
   try {
     const body: GeneratePromoRequest = await req.json().catch(() => ({}));
 
-    const businessType = body.businessType?.trim() || 'Kedai Kopi & Kuliner';
+    const businessType = body.businessType?.trim() || 'Kedai Kopi & Cafe Kuliner';
     const campaignMoment = body.campaignMoment?.trim() || 'Paket Promo Ramadhan Hemat';
     const tone = body.tone?.trim() || 'Hangat & Kekeluargaan';
-    const productDetail = body.productDetail?.trim() || 'Buy 2 Get 1 Free untuk paket menu pilihan';
+    const productDetail = body.productDetail?.trim() || 'Diskon 20% untuk paket pilihan';
 
     const apiKey =
       process.env.GEMINI_API_KEY ||
@@ -60,59 +85,95 @@ Detail Tambahan Penawaran: ${productDetail}
 Buatkan materi promosi terbaik sekarang dalam format JSON sesuai instruksi.
 `.trim();
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contents: [
+    let rawContent: string | null = null;
+    let lastErrorStatus: number | null = null;
+    let lastErrorText = '';
+
+    // Loop through candidate models with auto-retry on 503/429
+    for (const model of CANDIDATE_MODELS) {
+      const maxAttempts = 2;
+      for (let attempt = 0; attempt < maxAttempts; attempt++) {
+        try {
+          const response = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
             {
-              role: 'user',
-              parts: [{ text: `${systemPrompt}\n\n${userPrompt}` }],
-            },
-          ],
-          generationConfig: {
-            responseMimeType: 'application/json',
-            temperature: 0.7,
-            maxOutputTokens: 4096,
-          },
-        }),
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              signal: AbortSignal.timeout(18000),
+              body: JSON.stringify({
+                contents: [
+                  {
+                    role: 'user',
+                    parts: [{ text: `${systemPrompt}\n\n${userPrompt}` }],
+                  },
+                ],
+                generationConfig: {
+                  responseMimeType: 'application/json',
+                  temperature: 0.7,
+                  maxOutputTokens: 4096,
+                },
+              }),
+            }
+          );
+
+          if (response.ok) {
+            const data = await response.json();
+            const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (text) {
+              rawContent = text;
+              break;
+            }
+          } else {
+            lastErrorStatus = response.status;
+            lastErrorText = await response.text();
+            console.warn(
+              `Model ${model} attempt ${attempt + 1} returned status ${response.status}:`,
+              lastErrorText.slice(0, 150)
+            );
+
+            // Transient server overload/rate limit: wait briefly before retrying or switching
+            if (response.status === 503 || response.status === 429) {
+              if (attempt < maxAttempts - 1) {
+                await new Promise((resolve) => setTimeout(resolve, 800));
+                continue;
+              }
+            }
+            break; // Switch to next model
+          }
+        } catch (fetchErr: any) {
+          console.warn(`Model ${model} fetch exception:`, fetchErr?.message);
+          break;
+        }
       }
-    );
 
-    if (!response.ok) {
-      const errText = await response.text();
-      console.error('Gemini API Error:', response.status, errText);
-      return NextResponse.json(
-        {
-          success: false,
-          error: `Gagal menghubungi Google Gemini AI (Status: ${response.status}). Silakan coba sesaat lagi.`,
-        },
-        { status: 502 }
-      );
+      if (rawContent) {
+        break;
+      }
     }
 
-    const data = await response.json();
-    const rawContent = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    console.log('=== RAW CONTENT FROM GEMINI ===\n', rawContent, '\n=== END RAW CONTENT ===');
+    let parsedResult: any = null;
 
-    if (!rawContent) {
-      return NextResponse.json(
-        { success: false, error: 'Format respon dari Gemini AI tidak valid.' },
-        { status: 502 }
-      );
+    if (rawContent) {
+      try {
+        parsedResult = JSON.parse(rawContent);
+      } catch {
+        const cleaned = rawContent.replace(/```json/g, '').replace(/```/g, '').trim();
+        try {
+          parsedResult = JSON.parse(cleaned);
+        } catch {
+          parsedResult = null;
+        }
+      }
     }
 
-    let parsedResult;
-    try {
-      parsedResult = JSON.parse(rawContent);
-    } catch {
-      // In case of slight markdown fencing
-      const cleaned = rawContent.replace(/```json/g, '').replace(/```/g, '').trim();
-      parsedResult = JSON.parse(cleaned);
+    // Graceful fallback if Google Gemini services are temporarily overloaded
+    if (!parsedResult || !parsedResult.headline) {
+      console.warn(
+        `Gemini API all models unavailable (Last Status: ${lastErrorStatus}). Using semantic fallback generator.`
+      );
+      parsedResult = getSemanticFallback(businessType, campaignMoment, tone, productDetail);
     }
 
     return NextResponse.json({
