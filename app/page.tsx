@@ -3,7 +3,6 @@ import HeroShowcaseWindow from '@/components/HeroShowcaseWindow';
 import HomeCatalogSection from '@/components/HomeCatalogSection';
 import FAQAccordion from '@/components/FAQAccordion';
 import Image from 'next/image';
-import Link from 'next/link';
 import {
   ShoppingBag,
   ArrowRight,
@@ -198,37 +197,14 @@ export default async function HomePage() {
               </div>
             </div>
 
-            <div className="lg:col-span-6">
-              <div className="relative rounded-2xl border border-black/[0.1] bg-white p-5 shadow-lg overflow-hidden">
-                <div className="relative aspect-square sm:aspect-4/3 w-full rounded-xl overflow-hidden bg-[#f6f5f4] border border-black/[0.06]">
-                  {featured && featured.preview_images[0] && (
-                    <Image
-                      src={featured.preview_images[0]}
-                      alt={featured.name}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 550px"
-                      className="object-cover"
-                    />
-                  )}
-                  <div className="absolute bottom-3 right-3">
-                    <span className="rounded-md bg-[#0075de] px-3.5 py-1 text-[12px] font-bold text-white shadow-xs">
-                      Rp 49.000 (Sekali Beli)
-                    </span>
-                  </div>
-                </div>
-                <div className="mt-4 flex items-center justify-between text-left">
-                  <div>
-                    <p className="font-semibold text-[15px] text-[#111111]">{featured?.name}</p>
-                    <p className="text-[12.5px] text-[#54504c]">25+ aset resolusi tinggi PNG &amp; JPG</p>
-                  </div>
-                  <Link
-                    href={`/bundles/${featured?.slug}`}
-                    className="rounded-lg bg-[#f6f5f4] border border-black/[0.08] px-3 py-1.5 text-[12.5px] font-semibold text-[#111111] hover:bg-black/[0.06]"
-                  >
-                    Buka Detail
-                  </Link>
-                </div>
-              </div>
+            <div className="lg:col-span-6 flex items-center justify-center">
+              <Image
+                src="/glosy-app-promo.png"
+                alt="Materi Promosi Siap Pakai Warung Desain"
+                width={1159}
+                height={1358}
+                className="w-full h-auto max-w-lg object-contain"
+              />
             </div>
           </div>
 
