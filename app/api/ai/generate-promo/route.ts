@@ -14,6 +14,7 @@ export interface DynamicQuestion {
   type: 'text' | 'choice';
   question: string;
   placeholder?: string;
+  required?: boolean;
   options?: DynamicQuestionOption[];
 }
 
@@ -47,14 +48,25 @@ const CANDIDATE_MODELS = [
 const DYNAMIC_QUESTIONS_PROMPT = `
 # PERAN: ART DIRECTOR & KONSULTAN DESAIN POSTER (AGENCY LEVEL)
 Pengguna adalah orang awam yang ingin membuat materi promosi / poster / feed Instagram. Pengguna telah memasukkan ide awal / brief singkat.
-Tugasmu: Menganalisis ide awal tersebut, lalu membuat 3 sampai 4 pertanyaan cerdas dan DINAMIS untuk melengkapi brief agar desain poster yang dihasilkan nantinya SANGAT ESTETIK, KAYA KEDALAMAN (DEPTH OF FIELD), DAN BERSTANDAR AGENSI.
+Tugasmu: Menganalisis ide awal tersebut, lalu membuat 4 sampai 5 pertanyaan cerdas dan DINAMIS untuk melengkapi brief agar desain poster yang dihasilkan nantinya SANGAT ESTETIK, KAYA KEDALAMAN (DEPTH OF FIELD), DAN BERSTANDAR AGENSI.
 
-# ATURAN PERTANYAAN:
-1. Pertanyaan 1 (khusus teks): Selalu tanyakan Nama Brand / Usaha jika belum disebutkan secara eksplisit di ide awal (tipe: "text").
-2. Pertanyaan 2 sampai 4: Buat pertanyaan pilihan ganda spesifik (tipe: "choice") yang relevan langsung dengan ide pengguna (misalnya: gaya visual/mood pencahayaan yang paling pas untuk tema tersebut, elemen fokus utama/foreground yang ingin ditonjolkan, atau format kanvas postingan).
-3. Setiap pertanyaan pilihan ganda HARUS memiliki 3 sampai 4 opsi tombol dengan label "A", "B", "C", dan "D".
-4. Pilihan jawaban harus spesifik terhadap topik pengguna dan terdengar estetik serta berkelas agensi (hindari opsi murahan/generik/flat).
-5. DILARANG menggunakan emoji atau emotikon pada teks pertanyaan maupun opsi jawaban.
+# ATURAN PERTANYAAN WAJIB:
+1. Pertanyaan 1 (Nama Brand / Usaha): Tipe "text", required: true. Tanyakan nama brand atau usaha pengguna jika belum jelas di ide awal.
+2. Pertanyaan 2 (Gaya Visual & Mood Pencahayaan): Tipe "choice", pilihan A, B, C, D yang dinamis dan spesifik untuk topik pengguna (misal: sinematik 3D, warm golden hour, dark moody artisan, modern clean editorial).
+3. Pertanyaan 3 (Fokus Elemen Utama / Hero Object): Tipe "choice", pilihan A, B, C, D yang spesifik terhadap topik (misal: produk hero, tipografi dominan, figur pahlawan & arsitektur kota, kolase foto dinamis).
+4. Pertanyaan 4 (Strip Kontak Footer Bar): Tipe "choice", tanyakan format informasi kontak apa yang ingin ditampilkan pada strip bawah (footer bar) poster. Opsi:
+   - A. Lengkap: Booking Hotline/WhatsApp, Website Resmi, dan Ikon Media Sosial (Instagram/TikTok/YouTube)
+   - B. Hotline WhatsApp dan Username Instagram saja
+   - C. Alamat Lokasi Fisik dan Nomor WhatsApp
+   - D. Hanya Username Media Sosial (@namabrand)
+   - E. Tanpa Footer Bar (Visual bersih murni tanpa strip kontak)
+5. Pertanyaan 5 (Detail Kontak Spesifik): Tipe "text", required: false (opsional). Tanyakan nomor WA, website, atau akun medsos jika pengguna ingin mencantumkan data aslinya (placeholder: "Contoh: +62 812-3456-7890 | www.traveldiana.id | @traveldiana").
+6. Pertanyaan 6 (Format & Rasio Kanvas): Tipe "choice", pilihan A (Feed Instagram 4:5), B (Feed Persegi 1:1), C (Story & Reels 9:16).
+
+# ATURAN FORMAT:
+- Setiap pertanyaan pilihan ganda HARUS memiliki opsi dengan label "A", "B", "C", "D" (dan "E" jika relevan).
+- DILARANG menggunakan emoji atau emotikon pada teks pertanyaan maupun opsi jawaban.
+- Pilihan jawaban harus terdengar estetik dan berkelas agensi.
 
 # FORMAT OUTPUT JSON WAJIB (Hanya JSON valid murni tanpa markdown fence):
 {
@@ -63,6 +75,7 @@ Tugasmu: Menganalisis ide awal tersebut, lalu membuat 3 sampai 4 pertanyaan cerd
     {
       "id": "brandName",
       "type": "text",
+      "required": true,
       "question": "Apa nama brand atau usaha Anda?",
       "placeholder": "Contoh: Nama Brand Resmi Anda..."
     },
@@ -88,6 +101,25 @@ Tugasmu: Menganalisis ide awal tersebut, lalu membuat 3 sampai 4 pertanyaan cerd
       ]
     },
     {
+      "id": "footerContact",
+      "type": "choice",
+      "question": "Informasi kontak apa yang ingin ditampilkan pada strip bawah (footer bar) poster?",
+      "options": [
+        { "letter": "A", "label": "Lengkap: Booking Hotline/WhatsApp, Website Resmi, dan Ikon Media Sosial (Instagram/TikTok/YouTube)", "value": "Lengkap: Booking Hotline, Website Resmi, dan Ikon Media Sosial" },
+        { "letter": "B", "label": "Hotline WhatsApp dan Username Instagram saja", "value": "Hotline WhatsApp dan Username Instagram" },
+        { "letter": "C", "label": "Alamat Lokasi Fisik dan Nomor WhatsApp", "value": "Alamat Lokasi Fisik dan Nomor WhatsApp" },
+        { "letter": "D", "label": "Hanya Username Media Sosial (@namabrand)", "value": "Hanya Username Media Sosial" },
+        { "letter": "E", "label": "Tanpa Footer Bar (Visual bersih murni tanpa strip kontak)", "value": "Tanpa Footer Bar" }
+      ]
+    },
+    {
+      "id": "contactDetails",
+      "type": "text",
+      "required": false,
+      "question": "Detail kontak Anda jika sudah ada (Opsional):",
+      "placeholder": "Contoh: +62 812-3456-7890 | www.traveldiana.id | @traveldiana"
+    },
+    {
       "id": "format",
       "type": "choice",
       "question": "Format dan rasio kanvas yang diinginkan?",
@@ -109,27 +141,31 @@ Tugasmu: Mengubah data brief dan jawaban kuesioner pengguna menjadi formula prom
 Bukan desain template AI murahan/flat/simple, melainkan karya visual yang memukau seperti poster profesional kelas atas:
 - Komposisi berlapis (multi-plane layering): Foreground dengan elemen melayang (daun terpaan angin, lentera, partikel cahaya, polaroid mengambang), midground objek megah (arsitektur masjid 3D agung, figur patung/pahlawan heroik, produk komersial premium), background atmosferik (langit dramatis, awan volumetrik, pita bendera berkibar dinamis).
 - Pencahayaan sinematik: Volumetric lighting, god rays, cinematic rim lights, soft ambient glow, bokeh kamera profesional.
-- Zona grafis profesional: Area atas untuk logo brand & kredensial, area tengah untuk display typography (kaligrafi artistik / serif editorial / display bold sans), area bawah untuk strip informasi kontak & media sosial.
+- Zona grafis profesional:
+  * Area atas (Top Zone): Tempat logo brand resmi & kredensial.
+  * Area tengah (Center Area): Display typography (kaligrafi artistik / serif editorial / display bold sans) untuk pesan utama.
+  * Area bawah (Bottom Strip / Footer Bar): Strip informasi kontak gaya frosted glass pill bar elegan dengan ikon telepon/hotline, ikon website globe, dan ikon media sosial (Instagram, TikTok, YouTube). Jika pengguna memberikan nomor telepon/website spesifik, cantumkan persis di dalam instruksi prompt!
 
 # ALUR PENGOLAHAN
 1. Analisis brief dan jawaban:
    - Nama Brand: Gunakan nama brand asli dari input (jangan diubah).
-   - Jawaban Pengguna: Integrasikan semua preferensi gaya, fokus visual, dan format yang dipilih pengguna.
+   - Jawaban Pengguna: Integrasikan semua preferensi gaya, fokus visual, detail kontak footer bar, dan format yang dipilih pengguna.
    - Format: 4:5 vertical (1080x1350), 1:1 square (1080x1080), atau 9:16 story (1080x1920).
 2. Tentukan keputusan desain agensi:
    - Focal Point utama yang kuat & megah.
    - Palet warna mewah & harmonis (sebutkan hex code spesifik, misal: Royal Sapphire Blue, Warm Desert Gold, Imperial White, Crimson Velvet).
    - Layout tipografi bertingkat dengan instruksi penempatan presisi.
+   - Strip kontak bawah: Deskripsikan floating frosted glass container dengan micro-labels (Booking Hotline, Book Online, Social Handles) dan ikon vector bersih.
    - Detil kamera: 8k resolution, shot on Hasselblad/50mm lens, f/1.8 shallow depth of field, photorealistic commercial graphic design poster.
 
 # FORMAT OUTPUT WAJIB (JSON Valid murni tanpa markdown fence):
 {
   "summary": "1-2 kalimat ringkasan konsep visual & arah estetik poster",
-  "promptFinal": "[FORMAT] <rasio, resolusi & jenis poster>\\n[AESTHETIC THEME] <konsep utama visual estetik agensi>\\n[MULTI-LAYER COMPOSITION & DEPTH] <Foreground elements with bokeh/motion blur, Midground hero subject, Background dynamic atmosphere>\\n[LIGHTING & CINEMATICS] <pencahayaan volumetrik, rim light, ambient illumination, particle atmosphere>\\n[COLOR GRADING & PALETTE] <kombinasi warna premium beserta hex code>\\n[GRAPHIC ZONES & TYPOGRAPHY] <Top zone for brand logo, Center area for artistic display typography, Bottom strip for social & contact details>\\n[CAMERA & RENDER SPECS] 8k resolution, commercial advertising masterpiece, ultra-sharp details, photorealistic 3D digital art rendering, master composition\\n[NEGATIVE PROMPT] flat boring layout, cartoonish amateur, low resolution, blurry text, distorted anatomy, messy composition, washed out lighting, generic clipart",
+  "promptFinal": "[FORMAT] <rasio, resolusi & jenis poster>\\n[AESTHETIC THEME] <konsep utama visual estetik agensi>\\n[MULTI-LAYER COMPOSITION & DEPTH] <Foreground elements with bokeh/motion blur, Midground hero subject, Background dynamic atmosphere>\\n[LIGHTING & CINEMATICS] <pencahayaan volumetrik, rim light, ambient illumination, particle atmosphere>\\n[COLOR GRADING & PALETTE] <kombinasi warna premium beserta hex code>\\n[GRAPHIC ZONES & TYPOGRAPHY] <Top zone for brand logo, Center area for artistic display typography, Bottom strip: sleek floating frosted glass footer bar with contact icons, Booking Hotline, Book Online URL, and social media handles>\\n[CAMERA & RENDER SPECS] 8k resolution, commercial advertising masterpiece, ultra-sharp details, photorealistic 3D digital art rendering, master composition\\n[NEGATIVE PROMPT] flat boring layout, cartoonish amateur, low resolution, blurry text, distorted anatomy, messy composition, washed out lighting, generic clipart",
   "assumptions": [
     "Asumsi tata letak: Zona atas dialokasikan untuk penempatan logo resmi brand.",
     "Asumsi tipografi: Teks judul utama menggunakan hierarki visual dominan dengan aksen display elegan.",
-    "Asumsi elemen: Detil kontak dan sosial media diletakkan di footer bar bersih."
+    "Asumsi elemen: Strip bawah (footer bar) menampilkan informasi kontak dan media sosial dengan tata letak frosted glass modern."
   ],
   "variations": [
     "Arah Alternatif 1: Eksplorasi sudut pandang kamera dramatis (low-angle hero shot) dengan kontras pencahayaan lebih tajam.",
@@ -163,6 +199,7 @@ function getDynamicQuestionsFallback(userPrompt: string) {
       {
         id: 'brandName',
         type: 'text' as const,
+        required: true,
         question: `Apa nama brand atau nama ${categoryHint} Anda?`,
         placeholder: 'Contoh: Nama Brand Resmi Anda...',
       },
@@ -216,6 +253,45 @@ function getDynamicQuestionsFallback(userPrompt: string) {
         ],
       },
       {
+        id: 'footerContact',
+        type: 'choice' as const,
+        question: 'Informasi kontak apa yang ingin ditampilkan di footer bar (strip bawah poster)?',
+        options: [
+          {
+            letter: 'A',
+            label: 'Lengkap: Booking Hotline/WhatsApp, Website Resmi, dan Ikon Media Sosial (Instagram/TikTok/YouTube)',
+            value: 'Lengkap: Booking Hotline, Website Resmi, dan Ikon Media Sosial',
+          },
+          {
+            letter: 'B',
+            label: 'Hotline WhatsApp & Username Instagram saja',
+            value: 'Hotline WhatsApp dan Username Instagram',
+          },
+          {
+            letter: 'C',
+            label: 'Alamat Lokasi Usaha & Nomor WhatsApp',
+            value: 'Alamat Lokasi Usaha dan Nomor WhatsApp',
+          },
+          {
+            letter: 'D',
+            label: 'Hanya Username Media Sosial (@namabrand)',
+            value: 'Hanya Username Media Sosial',
+          },
+          {
+            letter: 'E',
+            label: 'Tanpa Footer Bar (Visual bersih murni tanpa strip kontak)',
+            value: 'Tanpa Footer Bar',
+          },
+        ],
+      },
+      {
+        id: 'contactDetails',
+        type: 'text' as const,
+        required: false,
+        question: 'Detail nomor kontak atau media sosial Anda (Opsional):',
+        placeholder: 'Contoh: +62 812-3456-7890 | www.traveldiana.id | @traveldiana',
+      },
+      {
         id: 'format',
         type: 'choice' as const,
         question: 'Format dan rasio kanvas poster?',
@@ -247,10 +323,12 @@ function getSemanticFallback(
   goal: string,
   visualStyle: string,
   format: string,
-  extraDetail: string
+  contactText: string
 ) {
   const brand = brandName || 'Brand Anda';
   const targetFormat = format || '4:5 vertical (1080x1350)';
+  const contactInfo = contactText || `Booking Hotline: +62 812-3456-7890 | Book Online: www.${brand.toLowerCase().replace(/[^a-z0-9]/g, '')}.id | @${brand.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
+
   return {
     summary: `Konsep poster komersial estetik untuk ${brand} dengan tema ${goal || category} dan pendekatan visual ${visualStyle}.`,
     promptFinal: `[FORMAT] ${targetFormat}, commercial master advertising poster
@@ -258,13 +336,13 @@ function getSemanticFallback(
 [MULTI-LAYER COMPOSITION & DEPTH] Foreground: Delicate atmospheric floating particles and ambient elements with soft cinematic lens blur. Midground: Majestic central visual focal point representing ${goal || category}, rendered with stunning architectural/monumental precision. Background: Expansive dramatic sky with volumetric clouds, dynamic flowing ribbons and atmospheric depth
 [LIGHTING & CINEMATICS] Golden volumetric sunbeams, dramatic rim lighting accentuating edges, soft golden hour reflections, realistic soft shadows, studio-grade aesthetic
 [COLOR GRADING & PALETTE] Harmonious color grading with deep royal sapphire blue #0B2559, luminous warm gold #D4AF37, pure imperial white #FFFFFF, and deep obsidian #111111
-[GRAPHIC ZONES & TYPOGRAPHY] Top header reserved for clean ${brand} logo badge. Center visual zone reserved for headline display typography: "${extraDetail || goal || category}". Clean bottom footer bar reserved for address, WhatsApp contact, and social media handles
+[GRAPHIC ZONES & TYPOGRAPHY] Top header reserved for clean ${brand} logo badge. Center visual zone reserved for headline display typography: "${goal || category}". Bottom strip: sleek floating frosted-glass capsule bar containing phone icon "Booking Hotline", globe icon "Book Online", and social media icons with contact information: "${contactInfo}"
 [CAMERA & RENDER SPECS] 8k resolution, photorealistic commercial graphic design render, shot on 50mm f/1.4 lens, hyper-detailed textures, masterpiece visual advertising
 [NEGATIVE PROMPT] flat boring layout, amateur clipart, low resolution, oversaturated neon, distorted hands, blurry text, cluttered messy arrangement, washed out contrast`,
     assumptions: [
       `Nama brand "${brand}" ditempatkan di header bagian atas dengan tata letak agensi profesional.`,
-      `Detail penawaran "${extraDetail || goal || category}" menjadi fokus pesan utama dengan tipografi kontras tinggi.`,
-      `Footer bar dialokasikan khusus untuk informasi kontak dan media sosial resmi.`,
+      `Detail pesan "${goal || category}" menjadi fokus visual utama dengan tipografi kontras tinggi.`,
+      `Strip bawah (footer bar) menampilkan informasi kontak (${contactInfo}) dalam kontainer frosted glass modern.`,
     ],
     variations: [
       'Arah Alternatif 1: Pencahayaan malam celestial megah dengan aksen lentera bercahaya hangat dan bokeh bulat.',
@@ -275,7 +353,6 @@ function getSemanticFallback(
 
 async function callGemini(systemPrompt: string, userText: string, apiKey: string) {
   let rawContent: string | null = null;
-  let lastErrorStatus: number | null = null;
 
   for (const model of CANDIDATE_MODELS) {
     const maxAttempts = 2;
@@ -311,7 +388,6 @@ async function callGemini(systemPrompt: string, userText: string, apiKey: string
             break;
           }
         } else {
-          lastErrorStatus = response.status;
           if (response.status === 503 || response.status === 429) {
             if (attempt < maxAttempts - 1) {
               await new Promise((resolve) => setTimeout(resolve, 800));
@@ -414,12 +490,17 @@ export async function POST(req: Request) {
     let extractedGoal = body.goal?.trim() || initialPrompt || '';
     let extractedStyle = body.visualStyle?.trim() || '';
     let extractedFormat = body.format?.trim() || 'Feed Instagram 4:5 (1080x1350)';
+    let extractedContact = '';
 
     if (Array.isArray(body.answers)) {
       answersFormatted = body.answers
         .map((a, i) => {
-          if (a.question.toLowerCase().includes('brand') || a.question.toLowerCase().includes('nama')) {
+          const qLower = a.question.toLowerCase();
+          if (qLower.includes('brand') || qLower.includes('nama')) {
             extractedBrand = a.answer;
+          }
+          if (qLower.includes('kontak') || qLower.includes('footer') || qLower.includes('nomor')) {
+            extractedContact = (extractedContact ? `${extractedContact} | ` : '') + a.answer;
           }
           return `${i + 1}. Pertanyaan: ${a.question}\n   Jawaban Pengguna: ${a.answer}`;
         })
@@ -429,17 +510,12 @@ export async function POST(req: Request) {
       answersFormatted = entries
         .map(([k, v], i) => {
           if (k.toLowerCase().includes('brand')) extractedBrand = String(v);
+          if (k.toLowerCase().includes('contact') || k.toLowerCase().includes('footer')) {
+            extractedContact = (extractedContact ? `${extractedContact} | ` : '') + String(v);
+          }
           return `${i + 1}. ${k}: ${v}`;
         })
         .join('\n');
-    } else {
-      answersFormatted = `
-Nama Brand: ${extractedBrand || 'Brand Anda'}
-Kategori / Tema: ${body.category || initialPrompt}
-Gaya Visual: ${extractedStyle || 'Sinematik 3D'}
-Format: ${extractedFormat}
-Detail Khusus: ${body.extraDetail || 'Sesuai brief'}
-      `.trim();
     }
 
     const promptUserText = `
@@ -481,7 +557,7 @@ ${answersFormatted}
       extractedGoal || initialPrompt,
       extractedStyle || 'Sinematik 3D & Megah',
       extractedFormat,
-      body.extraDetail || ''
+      extractedContact || body.extraDetail || ''
     );
 
     return NextResponse.json({

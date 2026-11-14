@@ -106,11 +106,13 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
     if (e) e.preventDefault();
     if (isGenerating) return;
 
-    // Check if brandName or text questions are filled
-    const textQuestions = questions.filter((q) => q.type === 'text');
-    for (const tq of textQuestions) {
-      if (!answers[tq.id]?.trim()) {
-        setErrorMsg(`Silakan lengkapi jawaban untuk: "${tq.question}"`);
+    // Check if required text questions (like brandName) are filled
+    const requiredQuestions = questions.filter(
+      (q) => q.type === 'text' && q.required !== false && (q.id === 'brandName' || q.required === true)
+    );
+    for (const rq of requiredQuestions) {
+      if (!answers[rq.id]?.trim()) {
+        setErrorMsg(`Silakan lengkapi jawaban untuk: "${rq.question}"`);
         return;
       }
     }
@@ -296,19 +298,23 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
                 <div key={q.id || qIndex} className="space-y-2.5">
                   <label className="block text-[14px] font-semibold text-white/95 tracking-wide">
                     {qIndex + 1}. {q.question}
-                    {q.type === 'text' && <span className="text-[#0075de] ml-1 font-bold">*</span>}
+                    {q.type === 'text' && (q.required !== false && (q.id === 'brandName' || q.required === true)) ? (
+                      <span className="text-[#0075de] ml-1 font-bold">*</span>
+                    ) : q.type === 'text' ? (
+                      <span className="text-white/40 ml-1.5 text-[12px] font-normal">(Opsional)</span>
+                    ) : null}
                   </label>
 
-                  {/* Text Input (e.g., Nama Brand) */}
+                  {/* Text Input (e.g., Nama Brand, Detail Kontak) */}
                   {q.type === 'text' && (
                     <input
                       type="text"
-                      required
+                      required={q.required !== false && (q.id === 'brandName' || q.required === true)}
                       value={answers[q.id] || ''}
                       onChange={(e) =>
                         setAnswers({ ...answers, [q.id]: e.target.value })
                       }
-                      placeholder={q.placeholder || 'Ketik nama brand atau usaha Anda...'}
+                      placeholder={q.placeholder || 'Ketik jawaban Anda...'}
                       style={{
                         outline: 'none',
                         border: '1px solid rgba(255,255,255,0.18)',
