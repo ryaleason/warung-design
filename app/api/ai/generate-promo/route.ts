@@ -5,6 +5,13 @@ export const maxDuration = 30;
 
 interface GeneratePromoRequest {
   prompt?: string;
+  brandName?: string;
+  category?: string;
+  goal?: string;
+  visualStyle?: string;
+  format?: string;
+  extraDetail?: string;
+  // legacy compatibility
   businessType?: string;
   campaignMoment?: string;
   tone?: string;
@@ -17,109 +24,65 @@ const CANDIDATE_MODELS = [
   'gemini-3.5-flash-lite',
 ];
 
-const ART_DIRECTOR_SYSTEM_PROMPT = `
-# PERAN
-Kamu adalah Art Director + Prompt Engineer untuk generator desain Instagram feed dan poster.
-Tugasmu: mengubah permintaan singkat dari orang awam menjadi prompt desain yang lengkap,
-spesifik, dan siap dipakai model gambar (Midjourney, DALL-E 3, Flux, Stable Diffusion). User tidak perlu paham desain. Kamu yang mengambil
-keputusan desainnya.
+const AESTHETIC_ART_DIRECTOR_PROMPT = `
+# PERAN: MASTER ART DIRECTOR & COMMERCIAL PROMPT ENGINEER (AGENCY LEVEL)
+Kamu adalah Art Director senior dan Prompt Engineer kelas dunia untuk poster komersial, billboard digital, dan Instagram feed/story.
+Tugasmu: Mengubah data brief dari pengguna (brand, kategori, tujuan, gaya estetik, format, dan detail) menjadi formula prompt desain grafis yang SANGAT ESTETIK, SINEMATIK, KAYA KEDALAMAN (DEPTH OF FIELD), DAN BERSTANDAR AGENSI INTERNASIONAL.
 
-# ALUR KERJA (ikuti berurutan)
+Bukan desain template AI murahan/flat/simple, melainkan karya visual yang memukau seperti poster profesional kelas atas:
+- Komposisi berlapis (multi-plane layering): Foreground dengan elemen melayang (daun terpaan angin, lentera, partikel cahaya, polaroid mengambang), midground objek megah (arsitektur masjid 3D agung, figur patung/pahlawan heroik, produk komersial premium), background atmosferik (langit dramatis, awan volumetrik, pita bendera berkibar dinamis).
+- Pencahayaan sinematik: Volumetric lighting, god rays, cinematic rim lights, soft ambient glow, bokeh kamera profesional.
+- Zona grafis profesional: Area atas untuk logo brand & kredensial, area tengah untuk display typography (kaligrafi artistik / serif editorial / display bold sans), area bawah untuk strip informasi kontak & media sosial.
 
-## 1. Tangkap brief
-Dari input user, ekstrak:
-- Tujuan: jualan / promo / info / event / edukasi / quote / pengumuman
-- Subjek utama: produk, acara, orang, atau pesan inti
-- Teks wajib: judul, tanggal, harga, nama, kontak, CTA (salin persis, jangan diubah)
-- Audiens: siapa yang akan melihat
-- Format: feed 1:1, feed 4:5, story/reels 9:16, atau poster A-series
+# ALUR PENGOLAHAN
+1. Analisis brief:
+   - Nama Brand: Gunakan nama brand asli dari input (jangan diubah).
+   - Bidang Usaha & Tema: Sesuaikan simbolisme visual secara mendalam.
+   - Gaya Estetik: Wujudkan suasana sinematik, kedalaman ruang, dan tekstur pencahayaan nyata.
+   - Format: 4:5 vertical (1080x1350), 1:1 square (1080x1080), atau 9:16 story (1080x1920).
+2. Tentukan keputusan desain agensi:
+   - Focal Point utama yang kuat & megah.
+   - Palet warna mewah & harmonis (sebutkan hex code spesifik, misal: Royal Sapphire Blue, Warm Desert Gold, Imperial White, Crimson Velvet).
+   - Layout tipografi bertingkat dengan instruksi penempatan presisi.
+   - Detil kamera: 8k resolution, shot on Hasselblad/50mm lens, f/1.8 shallow depth of field, photorealistic commercial graphic design poster.
 
-## 2. Isi yang kosong dengan asumsi cerdas
-Jangan menginterogasi user.
-- Info HAMPIR LENGKAP -> langsung buat prompt, tulis asumsimu di bagian akhir.
-- Jangan pernah mengarang data faktual (harga, tanggal, nomor telepon, alamat). Beri placeholder seperti [HARGA], [TANGGAL], [NAMA BRAND].
-- Asumsi default bila tidak disebut:
-  * Format: 4:5 untuk feed IG, 9:16 untuk story, A3 portrait untuk poster
-  * Bahasa teks di desain: sama dengan bahasa user
-  * Gaya: bersih, modern, kontras tinggi, mudah dibaca di layar HP
-
-## 3. Tentukan keputusan desain
-Putuskan semuanya sendiri:
-a. Konsep visual (satu ide utama)
-b. Komposisi & layout (posisi subjek, area teks, grid)
-c. Hierarki teks (judul > sub > detail > CTA) dengan ukuran relatif
-d. Palet warna (maksimal 3 warna + 1 netral, sebutkan hex code, SEMUA SOLID)
-e. Tipografi (jenis huruf judul & isi, bobot, jarak)
-f. Gaya visual (flat illustration / foto produk / tipografi saja / 3D / collage)
-g. Pencahayaan & suasana (jika ada foto/3D)
-h. Ruang kosong (negative space) dan margin aman
-
-## 4. Tulis prompt final
-Wajib mematuhi aturan desain di bawah.
-
-# ATURAN DESAIN WAJIB
-## Warna
-- Gunakan warna SOLID. DILARANG gradient (termasuk gradient pada tombol, badge, latar, dan teks).
-- Maksimal 3 warna utama + 1 netral. Kontras teks terhadap latar minimal 4.5:1.
-- Hindari kombinasi ungu-biru neon yang generik.
-- Warna harus sesuai tujuan: promo makanan hangat (merah, oranye, kuning), edukasi tenang (biru, hijau tua), eksklusif (hitam, krem, emas solid).
-
-## Tipografi
-- Maksimal 2 jenis huruf. Satu untuk judul, satu untuk isi.
-- Judul harus terbaca dalam 2 detik dari ukuran thumbnail.
-- Teks panjang dibatasi. Feed IG: judul maksimal 8 kata, total teks maksimal ~30 kata.
-
-## Layout
-- Satu titik fokus. Jangan menumpuk banyak elemen yang bersaing.
-- Margin aman minimal 6% dari tiap sisi. Jangan taruh teks penting di tepi.
-- Untuk feed: 10-15% bagian bawah/atas jangan berisi teks penting (terpotong UI).
-- Untuk story 9:16: jaga zona aman atas ~14% dan bawah ~20%.
-- Gunakan grid yang jelas dan rata (align) secara konsisten.
-
-## Anti "AI slop" (dilarang keras)
-- DILARANG KERAS: Gradient mesh, glow neon, efek glassmorphism berlebihan
-- DILARANG KERAS: Badge / pill dengan gradient + outline
-- DILARANG KERAS: Ikon emoji sebagai dekorasi utama
-- DILARANG KERAS: Bentuk blob abstrak tanpa makna, teks bergaya "futuristik" tanpa alasan
-- DILARANG KERAS: Frasa klise ("Unlock your potential", "Elevate your...", "Next-level")
-- DILARANG KERAS: Tangan/jari aneh. Jika ada manusia, hindari close-up tangan.
-
-## Teks di dalam gambar
-- Semua teks yang harus muncul ditulis dalam tanda kutip dan dalam bahasa aslinya.
-- Tulis posisi, ukuran relatif, warna, dan bobot huruf tiap teks.
-- Tambahkan instruksi: "render text exactly as written, no extra words, no misspellings".
-
-# FORMAT OUTPUT WAJIB (JSON Valid)
-Balas HANYA dalam JSON valid tanpa markdown fence dengan struktur:
+# FORMAT OUTPUT WAJIB (JSON Valid murni tanpa markdown fence):
 {
-  "summary": "1-2 kalimat ringkasan pemahaman singkat",
-  "promptFinal": "[FORMAT] <rasio & ukuran>, <jenis desain>\\n[CONCEPT] <satu kalimat ide utama>\\n[STYLE] <gaya visual, referensi era/genre, flat/solid color, no gradients>\\n[COMPOSITION] <posisi tiap elemen, grid, margin, focal point>\\n[COLOR PALETTE] <warna + hex, semua solid>\\n[TYPOGRAPHY] <font style judul & isi, bobot, ukuran relatif, alignment>\\n[TEXT CONTENT] <setiap teks dalam kutip + posisi + warna>\\n[BACKGROUND & DETAILS] <latar, elemen dekoratif minimal>\\n[LIGHTING/MOOD] <bila ada foto/3D>\\n[QUALITY] high resolution, sharp text, clean edges, professional graphic design\\n[NEGATIVE] gradients, glow, neon, glassmorphism, blurry text, misspelled text, extra words, cluttered layout, distorted hands, watermark, low contrast",
-  "assumptions": ["asumsi 1", "asumsi 2"],
-  "variations": ["variasi arah 1 (misal lebih playful)", "variasi arah 2 (misal lebih premium)"]
+  "summary": "1-2 kalimat ringkasan konsep visual & arah estetik poster",
+  "promptFinal": "[FORMAT] <rasio, resolusi & jenis poster>\\n[AESTHETIC THEME] <konsep utama visual estetik agensi>\\n[MULTI-LAYER COMPOSITION & DEPTH] <Foreground elements with bokeh/motion blur, Midground hero subject, Background dynamic atmosphere>\\n[LIGHTING & CINEMATICS] <pencahayaan volumetrik, rim light, ambient illumination, particle atmosphere>\\n[COLOR GRADING & PALETTE] <kombinasi warna premium beserta hex code>\\n[GRAPHIC ZONES & TYPOGRAPHY] <Top zone for brand logo, Center area for artistic display typography, Bottom strip for social & contact details>\\n[CAMERA & RENDER SPECS] 8k resolution, commercial advertising masterpiece, ultra-sharp details, photorealistic 3D digital art rendering, master composition\\n[NEGATIVE PROMPT] flat boring layout, cartoonish amateur, low resolution, blurry text, distorted anatomy, messy composition, washed out lighting, generic clipart",
+  "assumptions": [
+    "Asumsi tata letak: Zona atas dialokasikan untuk penempatan logo resmi brand.",
+    "Asumsi tipografi: Teks judul utama menggunakan hierarki visual dominan dengan aksen display elegan.",
+    "Asumsi elemen: Detil kontak dan sosial media diletakkan di footer bar bersih."
+  ],
+  "variations": [
+    "Arah Alternatif 1: Eksplorasi sudut pandang kamera dramatis (low-angle hero shot) dengan kontras pencahayaan lebih tajam.",
+    "Arah Alternatif 2: Nuansa editorial minimalis mewah dengan fokus pada objek terisolasi dan tipografi bernafas longgar."
+  ]
 }
 `.trim();
 
-function getSemanticFallback(userPrompt: string) {
+function getSemanticFallback(brandName: string, category: string, goal: string, visualStyle: string, format: string, extraDetail: string) {
+  const brand = brandName || 'Brand Anda';
+  const targetFormat = format || '4:5 vertical (1080x1350)';
   return {
-    summary: `Poster promo feed Instagram untuk ide: "${userPrompt || 'Promosi Produk UMKM'}"`,
-    promptFinal: `[FORMAT] 4:5 vertical (1080x1350), Instagram feed promo poster
-[CONCEPT] A clean, high-impact commercial promo poster focusing on a single hero subject with bold promotional offer
-[STYLE] Modern graphic design, flat vector illustration or crisp product shot, solid colors only, strictly no gradients
-[COMPOSITION] Hero product centered taking 45% of canvas, bold headline in upper-left quadrant, discount/price tag prominent in mid-section, solid CTA bar at bottom, 6% safe margins
-[COLOR PALETTE] Background solid #F8FAFC crisp off-white, primary solid #0075DE royal blue, accent solid #E4572E warm vermillion, text solid #0F172A charcoal black
-[TYPOGRAPHY] Headline in bold geometric sans-serif uppercase, supporting body text in clean medium-weight sans-serif, strict typographic hierarchy
-[TEXT CONTENT] "PROMO SPESIAL" top-left in dark slate, "[DETAIL PENAWARAN]" prominent in primary accent color, "[NAMA TOKO/BRAND]" bottom solid bar in off-white text, "render text exactly as written, no extra words, no misspellings"
-[BACKGROUND & DETAILS] Solid flat background with subtle framing, minimal geometric accent, no drop shadows, no blobs
-[LIGHTING/MOOD] Bright clean daylight, high contrast, inviting commercial clarity
-[QUALITY] high resolution, sharp text, clean edges, professional graphic design
-[NEGATIVE] gradients, glow, neon, glassmorphism, blurry text, misspelled text, extra words, cluttered layout, distorted hands, watermark, low contrast`,
+    summary: `Konsep poster komersial estetik untuk ${brand} (${category}) dengan tema ${goal} dan pendekatan visual ${visualStyle}.`,
+    promptFinal: `[FORMAT] ${targetFormat}, commercial master advertising poster
+[AESTHETIC THEME] High-end agency graphic design with cinematic depth and grandeur for ${brand}
+[MULTI-LAYER COMPOSITION & DEPTH] Foreground: Delicate atmospheric floating particles and ambient elements with soft cinematic lens blur. Midground: Majestic central visual focal point representing ${category} and ${goal}, rendered with stunning architectural/monumental precision. Background: Expansive dramatic sky with volumetric clouds, dynamic flowing ribbons and atmospheric depth
+[LIGHTING & CINEMATICS] Golden volumetric sunbeams, dramatic rim lighting accentuating edges, soft golden hour reflections, realistic soft shadows, studio-grade aesthetic
+[COLOR GRADING & PALETTE] Harmonious color grading with deep royal sapphire blue #0B2559, luminous warm gold #D4AF37, pure imperial white #FFFFFF, and deep obsidian #111111
+[GRAPHIC ZONES & TYPOGRAPHY] Top header reserved for clean ${brand} logo badge. Center visual zone reserved for headline display typography: "${goal}". Clean bottom footer bar reserved for address, WhatsApp contact, and social media handles
+[CAMERA & RENDER SPECS] 8k resolution, photorealistic commercial graphic design render, shot on 50mm f/1.4 lens, hyper-detailed textures, masterpiece visual advertising
+[NEGATIVE PROMPT] flat boring layout, amateur clipart, low resolution, oversaturated neon, distorted hands, blurry text, cluttered messy arrangement, washed out contrast`,
     assumptions: [
-      'Format default menggunakan rasio 4:5 vertikal (1080x1350) optimal untuk feed Instagram.',
-      'Nama brand dan rincian harga menggunakan placeholder [NAMA BRAND] dan [HARGA] agar bisa disesuaikan.',
+      `Nama brand "${brand}" ditempatkan di header bagian atas dengan tata letak agensi profesional.`,
+      `Detail penawaran "${extraDetail || goal}" menjadi fokus pesan utama dengan tipografi kontras tinggi.`,
+      `Footer bar dialokasikan khusus untuk informasi kontak dan media sosial resmi.`,
     ],
     variations: [
-      'Arah Visual Playful: Menggunakan ilustrasi flat vector berwarna cerah dan tipografi ramah keluarga.',
-      'Arah Visual Premium: Menggunakan foto produk terisolasi di atas latar solid gelap dengan aksen emas.',
+      'Arah Alternatif 1: Pencahayaan malam celestial megah dengan aksen lentera bercahaya hangat dan bokeh bulat.',
+      'Arah Alternatif 2: Kolase foto dinamis dengan pita grafis berkibar tajam dan tipografi modern sans-serif tebal.',
     ],
   };
 }
@@ -128,18 +91,26 @@ export async function POST(req: Request) {
   try {
     const body: GeneratePromoRequest = await req.json().catch(() => ({}));
 
-    // Extract user request: either single prompt or synthesized legacy fields
-    let userPrompt = body.prompt?.trim();
-    if (!userPrompt) {
-      const parts = [
-        body.businessType,
-        body.campaignMoment,
-        body.productDetail,
-        body.tone ? `gaya ${body.tone}` : '',
-      ]
-        .filter(Boolean)
-        .join(', ');
-      userPrompt = parts || 'bikin poster promo kopi diskon 20% weekend';
+    const brandName = body.brandName?.trim() || 'Brand Unggulan';
+    const category = body.category?.trim() || body.businessType?.trim() || 'Kuliner & Cafe';
+    const goal = body.goal?.trim() || body.campaignMoment?.trim() || 'Promo Penjualan Spesial';
+    const visualStyle = body.visualStyle?.trim() || body.tone?.trim() || 'Cinematic & Majestic (Megah, dramatis, kedalaman 3D)';
+    const format = body.format?.trim() || 'Feed Instagram 4:5 (1080x1350)';
+    const extraDetail = body.extraDetail?.trim() || body.productDetail?.trim() || '';
+
+    // If freeform single prompt is passed, support it as well
+    let userPromptText = '';
+    if (body.prompt?.trim()) {
+      userPromptText = `Permintaan user bebas: "${body.prompt.trim()}"`;
+    } else {
+      userPromptText = `
+Nama Brand: ${brandName}
+Kategori Usaha: ${category}
+Tujuan / Tema Desain: ${goal}
+Gaya Visual yang Dipilih: ${visualStyle}
+Format Kanvas: ${format}
+Detail Tambahan Penawaran/Acara: ${extraDetail || 'Tidak ada detail khusus tambahan'}
+      `.trim();
     }
 
     const apiKey =
@@ -175,21 +146,21 @@ export async function POST(req: Request) {
               headers: {
                 'Content-Type': 'application/json',
               },
-              signal: AbortSignal.timeout(18000),
+              signal: AbortSignal.timeout(20000),
               body: JSON.stringify({
                 contents: [
                   {
                     role: 'user',
                     parts: [
                       {
-                        text: `${ART_DIRECTOR_SYSTEM_PROMPT}\n\nPermintaan user: "${userPrompt}"\nBuat prompt sekarang dalam format JSON.`,
+                        text: `${AESTHETIC_ART_DIRECTOR_PROMPT}\n\nBrief Pengguna:\n${userPromptText}\n\nBuat prompt desain estetik sekarang dalam format JSON valid.`,
                       },
                     ],
                   },
                 ],
                 generationConfig: {
                   responseMimeType: 'application/json',
-                  temperature: 0.6,
+                  temperature: 0.65,
                   maxOutputTokens: 3000,
                 },
               }),
@@ -249,13 +220,13 @@ export async function POST(req: Request) {
       console.warn(
         `Gemini API all models unavailable (Status: ${lastErrorStatus}). Using semantic fallback generator.`
       );
-      parsedResult = getSemanticFallback(userPrompt);
+      parsedResult = getSemanticFallback(brandName, category, goal, visualStyle, format, extraDetail);
     }
 
     return NextResponse.json({
       success: true,
       data: {
-        summary: parsedResult.summary || 'Ringkasan materi promosi desain.',
+        summary: parsedResult.summary || 'Konsep poster desain komersial estetik.',
         promptFinal: parsedResult.promptFinal || '',
         assumptions: parsedResult.assumptions || [],
         variations: parsedResult.variations || [],
