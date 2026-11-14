@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   Copy,
   Check,
@@ -11,7 +11,6 @@ import {
   ChevronLeft,
 } from 'lucide-react';
 import type { DynamicQuestion } from '@/app/api/ai/generate-promo/route';
-import Fan3DCarousel from '@/components/Fan3DCarousel';
 
 interface HeroShowcaseWindowProps {
   featuredBundle?: any;
@@ -49,6 +48,20 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
   } | null>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Listen for prompt selection from Fan3DCarousel or other external components
+  useEffect(() => {
+    const handleCustomPrompt = (e: any) => {
+      if (e.detail && typeof e.detail === 'string') {
+        const selectedText = e.detail.trim();
+        setInitialPrompt(selectedText);
+        setStep('input');
+        handleAnalyze(selectedText);
+      }
+    };
+    window.addEventListener('select-ai-prompt', handleCustomPrompt);
+    return () => window.removeEventListener('select-ai-prompt', handleCustomPrompt);
+  }, []);
 
   // 1. Analyze initial prompt & fetch dynamic AI questions
   const handleAnalyze = async (promptText?: string) => {
@@ -259,11 +272,6 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
               {errorMsg}
             </div>
           )}
-
-          {/* 3D Fan Carousel Showcase (Kipas 3D Inspirasi Desain) */}
-          <div className="pt-2 sm:pt-4">
-            <Fan3DCarousel onSelectPrompt={(p) => handleAnalyze(p)} />
-          </div>
         </div>
       )}
 

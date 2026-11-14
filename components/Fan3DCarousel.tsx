@@ -66,11 +66,13 @@ export const FAN_CAROUSEL_ITEMS: FanCarouselItem[] = [
 
 interface Fan3DCarouselProps {
   onSelectPrompt?: (prompt: string) => void;
+  theme?: 'light' | 'dark';
 }
 
-export default function Fan3DCarousel({ onSelectPrompt }: Fan3DCarouselProps) {
+export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3DCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const items = FAN_CAROUSEL_ITEMS;
+  const isLight = theme === 'light';
 
   const handlePrev = useCallback(() => {
     setActiveIndex((prev) => (prev - 1 + items.length) % items.length);
@@ -93,6 +95,18 @@ export default function Fan3DCarousel({ onSelectPrompt }: Fan3DCarouselProps) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handlePrev, handleNext]);
 
+  const handleActionClick = (prompt: string) => {
+    if (onSelectPrompt) {
+      onSelectPrompt(prompt);
+    } else {
+      const el = document.getElementById('ai-generator');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+        window.dispatchEvent(new CustomEvent('select-ai-prompt', { detail: prompt }));
+      }
+    }
+  };
+
   // Calculate circular offset relative to active card (-2, -1, 0, 1, 2, or outside)
   const getOffset = (index: number) => {
     let diff = (index - activeIndex) % items.length;
@@ -104,20 +118,12 @@ export default function Fan3DCarousel({ onSelectPrompt }: Fan3DCarouselProps) {
   const activeItem = items[activeIndex];
 
   return (
-    <div className="w-full pt-4 sm:pt-6 pb-2 select-none">
-      {/* Subheader / Inspiration Label */}
-      <div className="text-center mb-4 sm:mb-6">
-        <span className="text-[11.5px] sm:text-[12px] font-semibold uppercase tracking-wider text-white/60">
-          Inspirasi Desain Siap Racik
-        </span>
-      </div>
-
+    <div className="w-full pt-2 sm:pt-4 pb-2 select-none">
       {/* 3D Fan Carousel Stage */}
       <div className="relative mx-auto w-full max-w-3xl h-[260px] sm:h-[320px] md:h-[360px] flex items-center justify-center overflow-visible">
         {items.map((item, index) => {
           const offset = getOffset(index);
           const isCenter = offset === 0;
-          const isVisible = Math.abs(offset) <= 2;
 
           // Transform and positioning calculation based on fan offset
           let transformStyle = '';
@@ -136,28 +142,27 @@ export default function Fan3DCarousel({ onSelectPrompt }: Fan3DCarouselProps) {
             transformStyle = 'translateX(-65%) translateY(14px) rotate(-8deg) scale(0.9)';
             zIndex = 20;
             opacity = 0.88;
-            filter = 'brightness(0.9)';
+            filter = isLight ? 'brightness(0.95)' : 'brightness(0.9)';
             pointerEvents = 'auto';
           } else if (offset === -2) {
             transformStyle = 'translateX(-122%) translateY(40px) rotate(-16deg) scale(0.78)';
             zIndex = 10;
             opacity = 0.55;
-            filter = 'brightness(0.75)';
+            filter = isLight ? 'brightness(0.85)' : 'brightness(0.75)';
             pointerEvents = 'auto';
           } else if (offset === 1) {
             transformStyle = 'translateX(65%) translateY(14px) rotate(8deg) scale(0.9)';
             zIndex = 20;
             opacity = 0.88;
-            filter = 'brightness(0.9)';
+            filter = isLight ? 'brightness(0.95)' : 'brightness(0.9)';
             pointerEvents = 'auto';
           } else if (offset === 2) {
             transformStyle = 'translateX(122%) translateY(40px) rotate(16deg) scale(0.78)';
             zIndex = 10;
             opacity = 0.55;
-            filter = 'brightness(0.75)';
+            filter = isLight ? 'brightness(0.85)' : 'brightness(0.75)';
             pointerEvents = 'auto';
           } else {
-            // Hidden outside cards
             transformStyle = offset < 0
               ? 'translateX(-160%) translateY(60px) rotate(-22deg) scale(0.6)'
               : 'translateX(160%) translateY(60px) rotate(22deg) scale(0.6)';
@@ -171,7 +176,7 @@ export default function Fan3DCarousel({ onSelectPrompt }: Fan3DCarouselProps) {
               key={item.id}
               onClick={() => {
                 if (isCenter) {
-                  onSelectPrompt?.(item.prompt);
+                  handleActionClick(item.prompt);
                 } else {
                   setActiveIndex(index);
                 }
@@ -184,7 +189,9 @@ export default function Fan3DCarousel({ onSelectPrompt }: Fan3DCarouselProps) {
                 pointerEvents: pointerEvents as any,
                 transition: 'all 500ms cubic-bezier(0.25, 1, 0.5, 1)',
               }}
-              className={`absolute top-2 w-36 h-48 sm:w-48 sm:h-64 md:w-56 md:h-76 rounded-2xl overflow-hidden border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.65)] bg-[#161618] cursor-pointer group`}
+              className={`absolute top-2 w-36 h-48 sm:w-48 sm:h-64 md:w-56 md:h-76 rounded-2xl overflow-hidden border ${
+                isLight ? 'border-black/10 shadow-[0_16px_40px_rgba(0,0,0,0.18)] bg-slate-900' : 'border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.65)] bg-[#161618]'
+              } cursor-pointer group`}
             >
               {/* Poster Image */}
               <div className="relative w-full h-full">
@@ -199,7 +206,7 @@ export default function Fan3DCarousel({ onSelectPrompt }: Fan3DCarouselProps) {
                 />
 
                 {/* Subtle vignette & category label overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent flex flex-col justify-end p-3 sm:p-4 text-left">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent flex flex-col justify-end p-3 sm:p-4 text-left">
                   <span className="text-[10px] font-bold uppercase tracking-wider text-white/70 block">
                     {item.category}
                   </span>
@@ -220,17 +227,29 @@ export default function Fan3DCarousel({ onSelectPrompt }: Fan3DCarouselProps) {
           type="button"
           onClick={handlePrev}
           aria-label="Poster Sebelumnya"
-          className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-black/60 hover:bg-black/90 border border-white/20 text-white/80 hover:text-white transition-all shadow-md hover:scale-105 active:scale-95 cursor-pointer shrink-0"
+          className={`flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full transition-all shadow-md hover:scale-105 active:scale-95 cursor-pointer shrink-0 ${
+            isLight
+              ? 'bg-[#111111] hover:bg-[#0075de] text-white border border-black/10'
+              : 'bg-black/60 hover:bg-black/90 text-white/80 hover:text-white border border-white/20'
+          }`}
         >
           <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
         </button>
 
         {/* Center Title & Subtitle */}
         <div className="text-center min-w-[200px] sm:min-w-[320px] max-w-md px-2">
-          <h4 className="text-[15px] sm:text-[17px] font-semibold text-white tracking-tight leading-snug drop-shadow-sm">
+          <h4
+            className={`text-[15px] sm:text-[17px] font-semibold tracking-tight leading-snug ${
+              isLight ? 'text-[#111111]' : 'text-white drop-shadow-sm'
+            }`}
+          >
             {activeItem.title}
           </h4>
-          <p className="text-[12px] sm:text-[13px] text-white/75 mt-0.5 line-clamp-1 font-normal">
+          <p
+            className={`text-[12px] sm:text-[13px] mt-0.5 line-clamp-1 font-normal ${
+              isLight ? 'text-[#54504c]' : 'text-white/75'
+            }`}
+          >
             {activeItem.subtitle}
           </p>
         </div>
@@ -240,7 +259,11 @@ export default function Fan3DCarousel({ onSelectPrompt }: Fan3DCarouselProps) {
           type="button"
           onClick={handleNext}
           aria-label="Poster Selanjutnya"
-          className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-black/60 hover:bg-black/90 border border-white/20 text-white/80 hover:text-white transition-all shadow-md hover:scale-105 active:scale-95 cursor-pointer shrink-0"
+          className={`flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full transition-all shadow-md hover:scale-105 active:scale-95 cursor-pointer shrink-0 ${
+            isLight
+              ? 'bg-[#111111] hover:bg-[#0075de] text-white border border-black/10'
+              : 'bg-black/60 hover:bg-black/90 text-white/80 hover:text-white border border-white/20'
+          }`}
         >
           <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
         </button>
@@ -250,10 +273,14 @@ export default function Fan3DCarousel({ onSelectPrompt }: Fan3DCarouselProps) {
       <div className="mt-3.5 text-center">
         <button
           type="button"
-          onClick={() => onSelectPrompt?.(activeItem.prompt)}
-          className="inline-flex items-center gap-2 rounded-full bg-white/10 hover:bg-[#0075de] border border-white/20 hover:border-[#0075de] px-4 py-1.5 text-[12.5px] font-medium text-white transition-all shadow-xs cursor-pointer group"
+          onClick={() => handleActionClick(activeItem.prompt)}
+          className={`inline-flex items-center gap-2 rounded-full px-5 py-2 text-[13px] font-medium transition-all shadow-sm cursor-pointer group ${
+            isLight
+              ? 'bg-[#0075de] hover:bg-[#005bb5] text-white'
+              : 'bg-white/10 hover:bg-[#0075de] border border-white/20 hover:border-[#0075de] text-white'
+          }`}
         >
-          <span>Gunakan Ide Desain Ini</span>
+          <span>Gunakan Ide Desain Ini di AI Studio</span>
           <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
         </button>
       </div>

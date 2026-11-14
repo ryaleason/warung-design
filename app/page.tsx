@@ -1,6 +1,7 @@
 import { getBundles } from '@/lib/db';
 import HeroShowcaseWindow from '@/components/HeroShowcaseWindow';
 import HomeCatalogSection from '@/components/HomeCatalogSection';
+import Fan3DCarousel from '@/components/Fan3DCarousel';
 import FAQAccordion from '@/components/FAQAccordion';
 import WaveTextBanner from '@/components/WaveTextBanner';
 import Image from 'next/image';
@@ -230,23 +231,17 @@ export default async function HomePage() {
               </p>
             </div>
 
-            {/* Prompt Card */}
-            <div data-aos="zoom-in-up" data-aos-duration="750" className="rounded-xl border border-black/[0.08] bg-[#fbfaf9] p-5 sm:p-6 text-left max-w-3xl mx-auto space-y-4 shadow-2xs">
-              <div className="flex items-center justify-between border-b border-black/[0.06] pb-3">
-                <span className="text-[12.5px] font-semibold text-[#111111]">
-                  Contoh Formula Prompt Paket Kuliner &amp; Cafe:
-                </span>
-                <span className="text-[12px] font-medium text-[#54504c]">
-                  Midjourney v6.1 &amp; DALL-E 3
-                </span>
-              </div>
-              <p className="font-mono text-[12.5px] sm:text-[13px] text-[#111111] bg-white p-3.5 rounded-lg leading-relaxed border border-black/[0.06]">
-                &ldquo;professional appetizing food photography of Indonesian iced es kopi susu in clear cup with ice condensation, paired with golden crispy roti bakar, warm afternoon sunbeam lighting, cafe ambient background, 8k resolution, shot on 85mm lens --ar 1:1&rdquo;
-              </p>
-              <div className="flex flex-wrap items-center justify-between gap-3 text-[12px] text-[#54504c]">
-                <span>Hasil foto produk realistis tanpa sewa studio foto</span>
-                <span className="font-medium text-[#0075de]">Termasuk panduan modifikasi</span>
-              </div>
+            {/* 3D Fan Carousel Showcase */}
+            <div data-aos="zoom-in-up" data-aos-duration="750" className="pt-2">
+              <Fan3DCarousel theme="light" />
+            </div>
+
+            <div className="flex flex-wrap items-center justify-between gap-3 text-[12px] text-[#54504c] pt-3 border-t border-black/[0.06] max-w-3xl mx-auto">
+              <span>Hasil foto &amp; poster produk realistis tanpa sewa studio foto</span>
+              <a href="#ai-generator" className="font-medium text-[#0075de] hover:underline inline-flex items-center gap-1">
+                <span>Racik variasi unik di AI Studio</span>
+                <ArrowRight className="h-3.5 w-3.5" />
+              </a>
             </div>
           </div>
 
