@@ -329,6 +329,68 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
                       {q.options.map((opt) => {
                         const isSelected = answers[q.id] === opt.value;
+                        const isColorPalette = Array.isArray(opt.colors) && opt.colors.length === 3;
+
+                        if (isColorPalette) {
+                          return (
+                            <button
+                              key={opt.letter}
+                              type="button"
+                              onClick={() =>
+                                setAnswers({ ...answers, [q.id]: opt.value })
+                              }
+                              className={`flex flex-col text-left gap-2.5 p-3.5 rounded-xl border transition-all cursor-pointer ${
+                                isSelected
+                                  ? 'bg-[#0075de]/15 border-[#0075de] ring-1 ring-[#0075de] text-white shadow-lg'
+                                  : 'bg-black/35 hover:bg-black/55 border-white/15 text-white/80 hover:text-white'
+                              }`}
+                            >
+                              <div className="flex items-center justify-between w-full">
+                                <div className="flex items-center gap-2">
+                                  <span
+                                    className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-[11px] font-bold ${
+                                      isSelected
+                                        ? 'bg-[#0075de] text-white'
+                                        : 'bg-white/10 text-white/75'
+                                    }`}
+                                  >
+                                    {opt.letter}
+                                  </span>
+                                  <span className="text-[13px] font-medium leading-snug">
+                                    {opt.label}
+                                  </span>
+                                </div>
+                                {isSelected && (
+                                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#0075de] text-white shrink-0">
+                                    <Check className="h-3 w-3" />
+                                  </span>
+                                )}
+                              </div>
+
+                              {/* 3 Color Swatches Band */}
+                              <div className="w-full rounded-lg overflow-hidden border border-white/20 shadow-xs">
+                                <div className="grid grid-cols-3 h-8 w-full">
+                                  {opt.colors!.map((c, cIdx) => (
+                                    <div
+                                      key={cIdx}
+                                      style={{ backgroundColor: c }}
+                                      className="h-full w-full"
+                                      title={c}
+                                    />
+                                  ))}
+                                </div>
+                              </div>
+
+                              {/* Hex codes */}
+                              <div className="grid grid-cols-3 text-center text-[10.5px] font-mono text-white/60 tracking-tight">
+                                {opt.colors!.map((c, cIdx) => (
+                                  <span key={cIdx}>{c}</span>
+                                ))}
+                              </div>
+                            </button>
+                          );
+                        }
+
                         return (
                           <button
                             key={opt.letter}
