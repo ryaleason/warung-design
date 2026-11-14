@@ -11,6 +11,7 @@ import {
   CheckCircle2,
   Quote,
   MessageCircle,
+  CreditCard,
 } from 'lucide-react';
 
 export const revalidate = 60; // ISR 60 seconds
@@ -59,20 +60,21 @@ export default async function HomePage() {
             data-aos="fade-up"
             data-aos-delay="200"
             data-aos-duration="700"
-            className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5"
+            className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
           >
             <a
               href="#katalog"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-xl bg-[#0075de] hover:bg-[#005bb5] px-7 py-4 text-[15px] font-semibold text-white transition-all shadow-md hover:shadow-lg cursor-pointer group"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-full bg-gradient-to-b from-[#0084f7] via-[#0075de] to-[#0064c8] px-7 sm:px-8 py-3.5 text-[15px] font-semibold text-white transition-all duration-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_8px_20px_rgba(0,117,222,0.32)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.6),0_12px_28px_rgba(0,117,222,0.42)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer group"
             >
               <ShoppingBag className="h-4 w-4" />
               <span>Eksplor Katalog Paket</span>
-              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
             </a>
             <a
               href="#alur-transaksi"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-white border border-black/[0.12] hover:border-[#0075de]/30 px-6 py-4 text-[15px] font-semibold text-[#111111] hover:text-[#0075de] hover:bg-[#f6f5f4] transition-all cursor-pointer shadow-2xs"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-full bg-white/95 hover:bg-white px-7 sm:px-8 py-3.5 text-[15px] font-semibold text-[#111111] hover:text-[#000000] border border-black/[0.08] hover:border-black/[0.18] transition-all duration-200 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer group"
             >
+              <CreditCard className="h-4 w-4 text-[#54504c] group-hover:text-[#111111] transition-colors" />
               <span>Cara Kerja &amp; Pembayaran</span>
             </a>
           </div>
