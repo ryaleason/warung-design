@@ -459,12 +459,71 @@ export async function POST(req: Request) {
       );
 
       if (parsedQuestions && Array.isArray(parsedQuestions.questions) && parsedQuestions.questions.length > 0) {
+        let qList: DynamicQuestion[] = parsedQuestions.questions;
+
+        // Ensure footer bar question is ALWAYS present
+        const hasFooterQuestion = qList.some((q) =>
+          q.id?.toLowerCase().includes('footer') ||
+          q.question?.toLowerCase().includes('footer') ||
+          q.question?.toLowerCase().includes('kontak')
+        );
+
+        if (!hasFooterQuestion) {
+          const footerQuestion: DynamicQuestion = {
+            id: 'footerContact',
+            type: 'choice',
+            question: 'Informasi kontak apa yang ingin ditampilkan pada strip bawah (footer bar) poster?',
+            options: [
+              {
+                letter: 'A',
+                label: 'Lengkap: Booking Hotline/WhatsApp, Website Resmi, dan Ikon Media Sosial (Instagram/TikTok/YouTube)',
+                value: 'Lengkap: Booking Hotline, Website Resmi, dan Ikon Media Sosial',
+              },
+              {
+                letter: 'B',
+                label: 'Hotline WhatsApp dan Username Instagram saja',
+                value: 'Hotline WhatsApp dan Username Instagram',
+              },
+              {
+                letter: 'C',
+                label: 'Alamat Lokasi Fisik dan Nomor WhatsApp',
+                value: 'Alamat Lokasi Fisik dan Nomor WhatsApp',
+              },
+              {
+                letter: 'D',
+                label: 'Hanya Username Media Sosial (@namabrand)',
+                value: 'Hanya Username Media Sosial',
+              },
+              {
+                letter: 'E',
+                label: 'Tanpa Footer Bar (Visual bersih murni tanpa strip kontak)',
+                value: 'Tanpa Footer Bar',
+              },
+            ],
+          };
+
+          const contactDetailQuestion: DynamicQuestion = {
+            id: 'contactDetails',
+            type: 'text',
+            required: false,
+            question: 'Detail nomor kontak atau media sosial Anda (Opsional):',
+            placeholder: 'Contoh: +62 812-3456-7890 | www.traveldiana.id | @traveldiana',
+          };
+
+          const formatIndex = qList.findIndex((q) => q.id === 'format');
+          if (formatIndex !== -1) {
+            qList.splice(formatIndex, 0, footerQuestion, contactDetailQuestion);
+          } else {
+            qList.push(footerQuestion, contactDetailQuestion);
+          }
+        }
+
         return NextResponse.json({
           success: true,
           action: 'questions',
           data: {
             briefUnderstanding: parsedQuestions.briefUnderstanding || `Konsep desain untuk "${userPrompt}".`,
-            questions: parsedQuestions.questions,
+            questions: qList,
           },
         });
       }
