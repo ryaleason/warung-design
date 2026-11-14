@@ -25,7 +25,7 @@ interface HeroShowcaseWindowProps {
 }
 
 export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindowProps = {}) {
-  const [prompt, setPrompt] = useState('bikin poster promo kopi diskon 20% weekend');
+  const [prompt, setPrompt] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [copied, setCopied] = useState(false);
@@ -35,30 +35,7 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
     promptFinal: string;
     assumptions: string[];
     variations: string[];
-  }>({
-    summary:
-      'Poster promo kopi, diskon 20% khusus weekend, untuk feed Instagram (4:5).',
-    promptFinal: `[FORMAT] 4:5 vertical (1080x1350), Instagram feed promo poster
-[CONCEPT] A single large iced coffee cup as hero, bold "20%" as the dominant number
-[STYLE] Flat vector illustration, solid colors only, no gradients, warm cafe feel
-[COMPOSITION] Cup centered-right occupying 45% of canvas, headline top-left, discount number large in the middle-left, CTA bar at bottom, 6% safe margin
-[COLOR PALETTE] Background solid #F4E9DC cream, primary solid #4A2C1A dark brown, accent solid #E4572E orange, text solid #1A1A1A
-[TYPOGRAPHY] Headline in heavy geometric sans-serif, uppercase, tight leading; supporting text in clean medium-weight sans-serif; left-aligned
-[TEXT CONTENT] "WEEKEND COFFEE SALE" top-left, dark brown; "20%" huge, orange; "OFF" smaller next to it; "Sabtu - Minggu" medium size; "[NAMA CAFE]" bottom in solid brown bar, cream text, render text exactly as written, no extra words, no misspellings
-[BACKGROUND & DETAILS] Flat cream background, a few small solid coffee-bean shapes, no shadows
-[LIGHTING/MOOD] Bright clean lighting, inviting weekend atmosphere
-[QUALITY] high resolution, sharp crisp text, clean edges, professional graphic design
-[NEGATIVE] gradients, glow, neon, glassmorphism, blurry or misspelled text, extra words, clutter, watermark`,
-    assumptions: [
-      'Format default menggunakan feed 4:5 vertikal (1080x1350) optimal untuk layar smartphone.',
-      'Nama cafe menggunakan placeholder [NAMA CAFE] agar bisa disesuaikan dengan usaha Anda.',
-      'Gaya visual flat vector solid tanpa gradasi untuk keterbacaan maksimal.',
-    ],
-    variations: [
-      'Arah Visual Playful: Karakter cangkir kopi kartun minimalis dengan tipografi santai.',
-      'Arah Visual Premium: Foto produk kopi terisolasi di atas latar solid gelap dengan sentuhan warna emas.',
-    ],
-  });
+  } | null>(null);
 
   const handleGenerate = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
