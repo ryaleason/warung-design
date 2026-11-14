@@ -174,7 +174,7 @@ export default async function HomePage() {
         {/* ========================================================= */}
         {/* 5. FEATURE DEEP-DIVES (3 Sections)                        */}
         {/* ========================================================= */}
-        <section className="px-4 sm:px-8 space-y-16 sm:space-y-24 max-w-6xl mx-auto overflow-hidden">
+        <section className="px-4 sm:px-8 space-y-16 sm:space-y-24 max-w-6xl mx-auto overflow-visible">
           {/* Feature 1: Left Copy, Right Visual */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             <div data-aos="fade-right" data-aos-duration="750" className="lg:col-span-6 space-y-5 text-left">
@@ -221,23 +221,8 @@ export default async function HomePage() {
             </div>
           </div>
 
-          {/* Feature 2: Full Width / Centered Showcase */}
-          <div className="rounded-3xl bg-white p-6 sm:p-10 md:p-12 lg:px-8 shadow-xs text-center max-w-6xl mx-auto space-y-8 sm:space-y-10 overflow-visible" data-aos="fade-up" data-aos-duration="700">
-            <div className="max-w-2xl mx-auto space-y-3">
-              <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000]">
-                Formula Prompt AI yang paham{' '}
-                <span className="italic font-normal text-[#0075de]">pasar &amp; budaya UMKM Indonesia</span>
-              </h3>
-              <p className="text-[15px] sm:text-[16px] text-[#54504c] leading-relaxed">
-                Lupakan tutorial prompt bahasa Inggris yang rumit dan tidak sesuai selera lokal. Setiap paket menyertakan teks prompt Midjourney &amp; DALL-E v3 yang siap kamu salin-tempel untuk eksplorasi tanpa batas.
-              </p>
-            </div>
-
-            {/* 3D Fan Carousel Showcase */}
-            <div data-aos="zoom-in-up" data-aos-duration="750" className="pt-2">
-              <Fan3DCarousel theme="light" />
-            </div>
-          </div>
+          {/* Feature 2: Full Width Scrollytelling Showcase */}
+          <Fan3DCarousel theme="light" />
 
           {/* Feature 3: Left Visual, Right Copy */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
