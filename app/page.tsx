@@ -382,34 +382,38 @@ export default async function HomePage() {
                 data-aos="fade-up"
                 data-aos-delay={String((idx % 4) * 75)}
                 data-aos-duration="600"
-                className="interactive-card rounded-xl border border-black/[0.08] hover:border-[#0075de]/35 bg-white p-4 sm:p-4.5 group flex flex-col justify-between"
+                className="interactive-card rounded-2xl border border-black/[0.08] hover:border-[#0075de]/35 bg-white p-5 sm:p-5.5 group flex flex-col justify-between hover:shadow-sm transition-all"
               >
                 <div>
-                  <div className="flex items-center gap-1.5 mb-3 h-8">
+                  <div className="flex items-center gap-2.5 mb-4 h-12">
                     {tool.logos.map((lg, lIdx) => (
                       <div
                         key={lIdx}
-                        className={`h-10 rounded-lg bg-white  flex items-center justify-center p-1.5 shrink-0 ${
-                          lg.wide ? 'px-2 min-w-8' : 'w-8'
-                        }`}
+                        className="flex items-center justify-center shrink-0"
                       >
                         <img
                           src={lg.src}
                           alt={lg.alt}
-                          className={`object-contain ${
+                          className={`object-contain transition-transform duration-300 group-hover:scale-105 ${
                             lg.wide
-                              ? 'h-10 w-10'
+                              ? 'h-7 sm:h-8 w-auto max-w-[70px]'
                               : lg.isSwatch
-                              ? 'h-4.5 w-10 rounded-[3px]'
-                              : 'h-10 w-10'
+                              ? 'h-10 w-10 sm:h-11 sm:w-11 rounded-xl shadow-xs'
+                              : tool.logos.length > 1
+                              ? 'h-9 w-9 sm:h-10 sm:w-10'
+                              : 'h-11 w-11 sm:h-12 sm:w-12'
                           }`}
                           loading="lazy"
                         />
                       </div>
                     ))}
                   </div>
-                  <h4 className="font-bold text-[14px] text-[#111111] tracking-tight">{tool.name}</h4>
-                  <p className="text-[12.5px] text-[#54504c] leading-snug mt-1">{tool.desc}</p>
+                  <h4 className="font-bold text-[14.5px] sm:text-[15.5px] text-[#111111] tracking-tight group-hover:text-[#0075de] transition-colors">
+                    {tool.name}
+                  </h4>
+                  <p className="text-[12.5px] sm:text-[13px] text-[#54504c] leading-snug mt-1">
+                    {tool.desc}
+                  </p>
                 </div>
               </div>
             ))}
