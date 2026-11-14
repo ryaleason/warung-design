@@ -52,13 +52,10 @@ const ROTATION_INTERVAL = 4500; // 4.5 detik per pertanyaan
 
 export default function FAQAccordion() {
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [isPaused, setIsPaused] = useState<boolean>(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Auto rotation timer: berputar gantian dari atas ke bawah, lalu ulang lagi dari atas
+  // Auto rotation timer: berputar terus tanpa berhenti saat di-hover
   useEffect(() => {
-    if (isPaused) return;
-
     timerRef.current = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % FAQ_ITEMS.length);
     }, ROTATION_INTERVAL);
@@ -66,20 +63,14 @@ export default function FAQAccordion() {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [isPaused, activeIndex]);
+  }, [activeIndex]);
 
   const handleSelect = (index: number) => {
     setActiveIndex(index);
   };
 
   return (
-    <div
-      className="space-y-3 max-w-4xl"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-      onFocus={() => setIsPaused(true)}
-      onBlur={() => setIsPaused(false)}
-    >
+    <div className="space-y-3 max-w-4xl">
       {FAQ_ITEMS.map((item, index) => {
         const isOpen = activeIndex === index;
 
@@ -92,8 +83,8 @@ export default function FAQAccordion() {
                 : 'border-black/[0.08] hover:border-black/[0.16]'
             }`}
           >
-            {/* Subtle top indicator bar saat item sedang aktif dan auto-cycling berjalan */}
-            {isOpen && !isPaused && (
+            {/* Subtle top indicator bar yang selalu berjalan konsisten */}
+            {isOpen && (
               <div
                 key={`progress-${index}`}
                 className="absolute top-0 left-0 h-[2px] bg-[#0075de] w-full animate-faq-progress"
