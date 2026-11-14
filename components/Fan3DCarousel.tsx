@@ -118,9 +118,9 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
   const activeItem = items[activeIndex];
 
   return (
-    <div className="w-full pt-2 sm:pt-4 pb-2 select-none">
-      {/* 3D Fan Carousel Stage */}
-      <div className="relative mx-auto w-full max-w-3xl h-[260px] sm:h-[320px] md:h-[360px] flex items-center justify-center overflow-visible">
+    <div className="w-full pt-4 sm:pt-6 pb-4 select-none">
+      {/* 3D Fan Carousel Stage - Grand / Large Display */}
+      <div className="relative mx-auto w-full max-w-5xl h-[330px] sm:h-[420px] md:h-[480px] lg:h-[530px] flex items-center justify-center overflow-visible">
         {items.map((item, index) => {
           const offset = getOffset(index);
           const isCenter = offset === 0;
@@ -139,33 +139,33 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
             filter = 'brightness(1)';
             pointerEvents = 'auto';
           } else if (offset === -1) {
-            transformStyle = 'translateX(-65%) translateY(14px) rotate(-8deg) scale(0.9)';
+            transformStyle = 'translateX(-62%) translateY(16px) rotate(-7.5deg) scale(0.91)';
             zIndex = 20;
             opacity = 0.88;
             filter = isLight ? 'brightness(0.95)' : 'brightness(0.9)';
             pointerEvents = 'auto';
           } else if (offset === -2) {
-            transformStyle = 'translateX(-122%) translateY(40px) rotate(-16deg) scale(0.78)';
+            transformStyle = 'translateX(-118%) translateY(42px) rotate(-15deg) scale(0.8)';
             zIndex = 10;
             opacity = 0.55;
             filter = isLight ? 'brightness(0.85)' : 'brightness(0.75)';
             pointerEvents = 'auto';
           } else if (offset === 1) {
-            transformStyle = 'translateX(65%) translateY(14px) rotate(8deg) scale(0.9)';
+            transformStyle = 'translateX(62%) translateY(16px) rotate(7.5deg) scale(0.91)';
             zIndex = 20;
             opacity = 0.88;
             filter = isLight ? 'brightness(0.95)' : 'brightness(0.9)';
             pointerEvents = 'auto';
           } else if (offset === 2) {
-            transformStyle = 'translateX(122%) translateY(40px) rotate(16deg) scale(0.78)';
+            transformStyle = 'translateX(118%) translateY(42px) rotate(15deg) scale(0.8)';
             zIndex = 10;
             opacity = 0.55;
             filter = isLight ? 'brightness(0.85)' : 'brightness(0.75)';
             pointerEvents = 'auto';
           } else {
             transformStyle = offset < 0
-              ? 'translateX(-160%) translateY(60px) rotate(-22deg) scale(0.6)'
-              : 'translateX(160%) translateY(60px) rotate(22deg) scale(0.6)';
+              ? 'translateX(-160%) translateY(65px) rotate(-22deg) scale(0.65)'
+              : 'translateX(160%) translateY(65px) rotate(22deg) scale(0.65)';
             zIndex = 5;
             opacity = 0;
             pointerEvents = 'none';
@@ -189,8 +189,8 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
                 pointerEvents: pointerEvents as any,
                 transition: 'all 500ms cubic-bezier(0.25, 1, 0.5, 1)',
               }}
-              className={`absolute top-2 w-36 h-48 sm:w-48 sm:h-64 md:w-56 md:h-76 rounded-2xl overflow-hidden ${
-                isLight ? 'shadow-[0_16px_40px_rgba(0,0,0,0.18)] bg-slate-900' : 'shadow-[0_20px_50px_rgba(0,0,0,0.65)] bg-[#161618]'
+              className={`absolute top-2 w-[200px] h-[280px] sm:w-[260px] sm:h-[360px] md:w-[310px] md:h-[430px] lg:w-[340px] lg:h-[470px] rounded-2xl sm:rounded-3xl overflow-hidden ${
+                isLight ? 'shadow-[0_22px_55px_rgba(0,0,0,0.22)] bg-slate-900' : 'shadow-[0_24px_60px_rgba(0,0,0,0.7)] bg-[#161618]'
               } cursor-pointer group`}
             >
               {/* Poster Image */}
@@ -201,16 +201,16 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
                   fill
                   quality={90}
                   className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 640px) 150px, (max-width: 768px) 200px, 240px"
+                  sizes="(max-width: 640px) 220px, (max-width: 768px) 300px, 380px"
                   priority={isCenter}
                 />
 
                 {/* Subtle vignette & category label overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent flex flex-col justify-end p-3 sm:p-4 text-left">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-white/70 block">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent flex flex-col justify-end p-4 sm:p-5 text-left">
+                  <span className="text-[11px] sm:text-[12px] font-bold uppercase tracking-wider text-white/75 block">
                     {item.category}
                   </span>
-                  <span className="text-[12.5px] sm:text-[14px] font-semibold text-white tracking-tight leading-tight line-clamp-1">
+                  <span className="text-[13.5px] sm:text-[16px] md:text-[17px] font-semibold text-white tracking-tight leading-tight line-clamp-1">
                     {item.title}
                   </span>
                 </div>
@@ -221,32 +221,32 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
       </div>
 
       {/* Navigation Controls (Arrows & Title) */}
-      <div className="flex items-center justify-center gap-4 sm:gap-6 mt-4 sm:mt-6">
+      <div className="flex items-center justify-center gap-4 sm:gap-6 mt-6 sm:mt-8">
         {/* Left Arrow Button */}
         <button
           type="button"
           onClick={handlePrev}
           aria-label="Poster Sebelumnya"
-          className={`flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full transition-all shadow-md hover:scale-105 active:scale-95 cursor-pointer shrink-0 ${
+          className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full transition-all shadow-md hover:scale-105 active:scale-95 cursor-pointer shrink-0 ${
             isLight
               ? 'bg-[#111111] hover:bg-[#0075de] text-white'
               : 'bg-black/60 hover:bg-black/90 text-white/80 hover:text-white'
           }`}
         >
-          <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+          <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
         </button>
 
         {/* Center Title & Subtitle */}
-        <div className="text-center min-w-[200px] sm:min-w-[320px] max-w-md px-2">
+        <div className="text-center min-w-[220px] sm:min-w-[360px] max-w-lg px-2">
           <h4
-            className={`text-[15px] sm:text-[17px] font-semibold tracking-tight leading-snug ${
+            className={`text-[17px] sm:text-[21px] md:text-[23px] font-semibold tracking-tight leading-snug ${
               isLight ? 'text-[#111111]' : 'text-white drop-shadow-sm'
             }`}
           >
             {activeItem.title}
           </h4>
           <p
-            className={`text-[12px] sm:text-[13px] mt-0.5 line-clamp-1 font-normal ${
+            className={`text-[13px] sm:text-[14.5px] mt-1 line-clamp-1 font-normal ${
               isLight ? 'text-[#54504c]' : 'text-white/75'
             }`}
           >
@@ -259,13 +259,13 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
           type="button"
           onClick={handleNext}
           aria-label="Poster Selanjutnya"
-          className={`flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full transition-all shadow-md hover:scale-105 active:scale-95 cursor-pointer shrink-0 ${
+          className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full transition-all shadow-md hover:scale-105 active:scale-95 cursor-pointer shrink-0 ${
             isLight
               ? 'bg-[#111111] hover:bg-[#0075de] text-white'
               : 'bg-black/60 hover:bg-black/90 text-white/80 hover:text-white'
           }`}
         >
-          <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
+          <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
         </button>
       </div>
     </div>
