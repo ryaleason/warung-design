@@ -146,20 +146,18 @@ export default function Navbar() {
               </div>
             ) : (
               <div className="flex items-center gap-2 sm:gap-3">
-                <button
-                  type="button"
-                  onClick={() => openAuthModal('login')}
+                <Link
+                  href="/login"
                   className="rounded-lg px-3.5 py-1.5 text-[13.5px] font-medium text-[#111111] hover:text-[#0075de] hover:bg-black/[0.04] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] cursor-pointer"
                 >
                   Masuk
-                </button>
-                <button
-                  type="button"
-                  onClick={() => openAuthModal('register')}
+                </Link>
+                <Link
+                  href="/register"
                   className="rounded-full bg-[#111111] hover:bg-[#000000] text-white px-4 py-1.5 text-[13.5px] font-medium transition-all shadow-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] focus-visible:ring-offset-2 active:scale-[0.98] cursor-pointer"
                 >
                   Daftar
-                </button>
+                </Link>
               </div>
             )}
           </div>
@@ -197,26 +195,20 @@ export default function Navbar() {
               </div>
             ) : (
               <div className="grid grid-cols-2 gap-2 pb-3 mb-2 border-b border-black/[0.06]">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    openAuthModal('login');
-                  }}
+                <Link
+                  href="/login"
+                  onClick={() => setIsMobileMenuOpen(false)}
                   className="flex items-center justify-center rounded-xl border border-black/10 bg-white py-2 text-[13px] font-medium text-[#111111] hover:bg-stone-50 transition-colors cursor-pointer"
                 >
                   Masuk
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    openAuthModal('register');
-                  }}
+                </Link>
+                <Link
+                  href="/register"
+                  onClick={() => setIsMobileMenuOpen(false)}
                   className="flex items-center justify-center rounded-xl bg-[#111111] text-white py-2 text-[13px] font-medium hover:bg-black transition-colors cursor-pointer"
                 >
                   Daftar
-                </button>
+                </Link>
               </div>
             )}
 

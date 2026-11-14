@@ -178,18 +178,18 @@ export default function RiwayatPesananPage() {
               </p>
             </div>
             <div className="flex justify-center gap-2.5 pt-2">
-              <button
-                onClick={() => openAuthModal('login')}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0075de] hover:bg-[#005bb5] text-white text-[13.5px] font-semibold transition-colors shadow-xs"
+              <Link
+                href="/login?redirect=/riwayat"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0075de] hover:bg-[#005bb5] text-white text-[13.5px] font-semibold transition-colors shadow-xs"
               >
                 <span>Masuk Akun</span>
-              </button>
-              <button
-                onClick={() => openAuthModal('register')}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-black/10 bg-white hover:bg-stone-50 text-stone-800 text-[13.5px] font-medium transition-colors"
+              </Link>
+              <Link
+                href="/register?redirect=/riwayat"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-black/10 bg-white hover:bg-stone-50 text-stone-800 text-[13.5px] font-medium transition-colors"
               >
                 <span>Daftar Akun Baru</span>
-              </button>
+              </Link>
             </div>
           </div>
         )}
