@@ -108,7 +108,8 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Ask ChatGPT / Ketik ide desain poster..."
-            className="flex-1 bg-transparent px-2 text-[14.5px] sm:text-[15.5px] text-white placeholder:text-white/40 focus:outline-none"
+            style={{ outline: 'none', outlineOffset: 0, border: 'none', boxShadow: 'none' }}
+            className="flex-1 bg-transparent px-2 text-[14.5px] sm:text-[15.5px] text-white placeholder:text-white/40 border-0 outline-none ring-0 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 shadow-none"
           />
 
           {/* Think Pill Button */}

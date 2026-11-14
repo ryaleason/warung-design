@@ -89,6 +89,15 @@ p {
   outline-offset: 2px;
 }
 
+/* Eliminate outline on chatgpt-style capsule prompt input */
+#ai-generator input:focus,
+#ai-generator input:focus-visible {
+  outline: none !important;
+  outline-offset: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
 /* ========================================================= */
 /* PREMIUM SILKY SCROLL ANIMATIONS (Framer / Apple Quality)  */
 /* ========================================================= */
