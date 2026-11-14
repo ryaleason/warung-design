@@ -1,6 +1,7 @@
 import { getOrderById } from '@/lib/db';
 import CheckoutFlow from '@/components/CheckoutFlow';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft, FileQuestion } from 'lucide-react';
 
 interface PageProps {
@@ -13,45 +14,59 @@ export default async function CheckoutPage({ params }: PageProps) {
 
   if (!order) {
     return (
-      <div className="mx-auto max-w-[1440px] px-4 sm:px-8 py-16 text-center">
-        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-[12px] bg-[#ffffff] border border-black/[0.08] text-[#757575] mb-5">
-          <FileQuestion className="h-7 w-7 text-[#0075de]" />
-        </div>
+      <div className="relative min-h-[calc(100vh-140px)] flex flex-col justify-center py-16 px-4 sm:px-8 text-center">
+        {/* Ambient Glow */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -z-10 w-full max-w-3xl h-[380px] bg-[radial-gradient(ellipse_at_center,rgba(0,117,222,0.07),transparent_70%)] pointer-events-none" />
 
-        <span className="rounded-full bg-[#f6d5b8] px-3 py-1 text-[11px] font-semibold text-[#000000]">
-          Pesanan Tidak Ditemukan
-        </span>
+        <div className="w-full max-w-md mx-auto bg-white rounded-3xl border border-black/[0.08] shadow-[0_20px_60px_rgba(0,0,0,0.06)] p-8 sm:p-10 text-center">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-stone-100 text-[#757575] mb-5">
+            <FileQuestion className="h-7 w-7 text-[#0075de]" />
+          </div>
 
-        <h1 className="mt-3 text-2xl font-bold tracking-tight text-[#000000]">
-          Data Pesanan Tidak Ditemukan
-        </h1>
+          <span className="rounded-full bg-stone-100 px-3 py-1 text-[11.5px] font-semibold text-[#54504c]">
+            Pesanan Tidak Ditemukan
+          </span>
 
-        <p className="mx-auto mt-2 max-w-md text-[15.5px] text-[#615d59] leading-relaxed">
-          ID pesanan <code className="rounded bg-black/[0.05] px-1.5 py-0.5 text-[12px] font-mono">{orderId}</code> tidak ditemukan di database. Jika Anda baru saja me-restart server atau mencoba link lama, silakan buat pesanan baru langsung dari katalog.
-        </p>
+          <h1 className="mt-4 font-serif text-2xl font-semibold tracking-tight text-[#111111]">
+            Data Pesanan Tidak Ditemukan
+          </h1>
 
-        <div className="mt-6">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-1.5 rounded-[8px] bg-[#0075de] px-4 py-2 text-[14px] font-medium text-white hover:bg-[#0060b8] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] focus-visible:ring-offset-2"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Kembali ke Katalog Paket
-          </Link>
+          <p className="mt-2 text-[14px] text-[#54504c] leading-relaxed">
+            ID pesanan <code className="rounded bg-black/[0.05] px-1.5 py-0.5 text-[12px] font-mono">{orderId}</code> tidak ditemukan di database. Silakan buat pesanan baru langsung dari katalog paket.
+          </p>
+
+          <div className="mt-6">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 rounded-full bg-[#111111] hover:bg-[#000000] px-6 py-3 text-[14px] font-semibold text-white transition-all shadow-xs cursor-pointer"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span>Kembali ke Katalog Paket</span>
+            </Link>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-[1440px] px-4 sm:px-8 py-8 sm:py-12">
-      <div className="mb-6">
+    <div className="relative min-h-[calc(100vh-140px)] py-8 sm:py-12 px-4 sm:px-6">
+      {/* Ambient Blue Background Glow */}
+      <div className="absolute top-10 left-1/2 -translate-x-1/2 -z-10 w-full max-w-4xl h-[420px] bg-[radial-gradient(ellipse_at_center,rgba(0,117,222,0.07),transparent_70%)] pointer-events-none" />
+
+      {/* Top Header Bar */}
+      <div className="mx-auto max-w-4xl mb-6 flex items-center justify-between">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[#54504c] hover:text-[#000000] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0075de] rounded"
+          className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[#54504c] hover:text-[#111111] transition-colors group"
         >
-          <ArrowLeft className="h-3.5 w-3.5" />
-          Batal &amp; Kembali ke Beranda
+          <ArrowLeft className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform" />
+          <span>Batal &amp; Kembali ke Beranda</span>
+        </Link>
+
+        <Link href="/" className="inline-flex items-center gap-2">
+          <Image src="/logo.svg" alt="Warung Design" width={24} height={24} className="h-6 w-auto" />
+          <span className="font-semibold text-[15px] tracking-tight text-[#111111]">Warung Design</span>
         </Link>
       </div>
 
