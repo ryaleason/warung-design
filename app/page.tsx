@@ -220,7 +220,7 @@ export default async function HomePage() {
           </div>
 
           {/* Feature 2: Full Width / Centered Showcase */}
-          <div className="rounded-2xl border border-black/[0.1] bg-white p-6 sm:p-10 shadow-sm text-center max-w-5xl mx-auto space-y-6" data-aos="fade-up" data-aos-duration="700">
+          <div className="rounded-3xl bg-white p-6 sm:p-10 shadow-xs text-center max-w-5xl mx-auto space-y-6" data-aos="fade-up" data-aos-duration="700">
             <div className="max-w-2xl mx-auto space-y-3">
               <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000]">
                 Formula Prompt AI yang paham{' '}
@@ -234,14 +234,6 @@ export default async function HomePage() {
             {/* 3D Fan Carousel Showcase */}
             <div data-aos="zoom-in-up" data-aos-duration="750" className="pt-2">
               <Fan3DCarousel theme="light" />
-            </div>
-
-            <div className="flex flex-wrap items-center justify-between gap-3 text-[12px] text-[#54504c] pt-3 border-t border-black/[0.06] max-w-3xl mx-auto">
-              <span>Hasil foto &amp; poster produk realistis tanpa sewa studio foto</span>
-              <a href="#ai-generator" className="font-medium text-[#0075de] hover:underline inline-flex items-center gap-1">
-                <span>Racik variasi unik di AI Studio</span>
-                <ArrowRight className="h-3.5 w-3.5" />
-              </a>
             </div>
           </div>
 

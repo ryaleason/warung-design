@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export interface FanCarouselItem {
   id: string;
@@ -189,8 +189,8 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
                 pointerEvents: pointerEvents as any,
                 transition: 'all 500ms cubic-bezier(0.25, 1, 0.5, 1)',
               }}
-              className={`absolute top-2 w-36 h-48 sm:w-48 sm:h-64 md:w-56 md:h-76 rounded-2xl overflow-hidden border ${
-                isLight ? 'border-black/10 shadow-[0_16px_40px_rgba(0,0,0,0.18)] bg-slate-900' : 'border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.65)] bg-[#161618]'
+              className={`absolute top-2 w-36 h-48 sm:w-48 sm:h-64 md:w-56 md:h-76 rounded-2xl overflow-hidden ${
+                isLight ? 'shadow-[0_16px_40px_rgba(0,0,0,0.18)] bg-slate-900' : 'shadow-[0_20px_50px_rgba(0,0,0,0.65)] bg-[#161618]'
               } cursor-pointer group`}
             >
               {/* Poster Image */}
@@ -229,8 +229,8 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
           aria-label="Poster Sebelumnya"
           className={`flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full transition-all shadow-md hover:scale-105 active:scale-95 cursor-pointer shrink-0 ${
             isLight
-              ? 'bg-[#111111] hover:bg-[#0075de] text-white border border-black/10'
-              : 'bg-black/60 hover:bg-black/90 text-white/80 hover:text-white border border-white/20'
+              ? 'bg-[#111111] hover:bg-[#0075de] text-white'
+              : 'bg-black/60 hover:bg-black/90 text-white/80 hover:text-white'
           }`}
         >
           <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -261,27 +261,11 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
           aria-label="Poster Selanjutnya"
           className={`flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full transition-all shadow-md hover:scale-105 active:scale-95 cursor-pointer shrink-0 ${
             isLight
-              ? 'bg-[#111111] hover:bg-[#0075de] text-white border border-black/10'
-              : 'bg-black/60 hover:bg-black/90 text-white/80 hover:text-white border border-white/20'
+              ? 'bg-[#111111] hover:bg-[#0075de] text-white'
+              : 'bg-black/60 hover:bg-black/90 text-white/80 hover:text-white'
           }`}
         >
           <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
-        </button>
-      </div>
-
-      {/* Action Button: Use This Design Idea */}
-      <div className="mt-3.5 text-center">
-        <button
-          type="button"
-          onClick={() => handleActionClick(activeItem.prompt)}
-          className={`inline-flex items-center gap-2 rounded-full px-5 py-2 text-[13px] font-medium transition-all shadow-sm cursor-pointer group ${
-            isLight
-              ? 'bg-[#0075de] hover:bg-[#005bb5] text-white'
-              : 'bg-white/10 hover:bg-[#0075de] border border-white/20 hover:border-[#0075de] text-white'
-          }`}
-        >
-          <span>Gunakan Ide Desain Ini di AI Studio</span>
-          <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
         </button>
       </div>
     </div>
