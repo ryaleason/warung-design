@@ -119,8 +119,8 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
 
   return (
     <div className="w-full pt-4 sm:pt-6 pb-4 select-none">
-      {/* 3D Fan Carousel Stage - Grand / Large Display */}
-      <div className="relative mx-auto w-full max-w-5xl h-[330px] sm:h-[420px] md:h-[480px] lg:h-[530px] flex items-center justify-center overflow-visible">
+      {/* 3D Fan Carousel Stage - Grand & Unclipped Display */}
+      <div className="relative mx-auto w-full max-w-4xl h-[310px] sm:h-[390px] md:h-[440px] lg:h-[480px] flex items-center justify-center overflow-visible">
         {items.map((item, index) => {
           const offset = getOffset(index);
           const isCenter = offset === 0;
@@ -139,33 +139,33 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
             filter = 'brightness(1)';
             pointerEvents = 'auto';
           } else if (offset === -1) {
-            transformStyle = 'translateX(-62%) translateY(16px) rotate(-7.5deg) scale(0.91)';
+            transformStyle = 'translateX(-56%) translateY(14px) rotate(-7deg) scale(0.92)';
             zIndex = 20;
             opacity = 0.88;
             filter = isLight ? 'brightness(0.95)' : 'brightness(0.9)';
             pointerEvents = 'auto';
           } else if (offset === -2) {
-            transformStyle = 'translateX(-118%) translateY(42px) rotate(-15deg) scale(0.8)';
+            transformStyle = 'translateX(-104%) translateY(36px) rotate(-14deg) scale(0.82)';
             zIndex = 10;
             opacity = 0.55;
             filter = isLight ? 'brightness(0.85)' : 'brightness(0.75)';
             pointerEvents = 'auto';
           } else if (offset === 1) {
-            transformStyle = 'translateX(62%) translateY(16px) rotate(7.5deg) scale(0.91)';
+            transformStyle = 'translateX(56%) translateY(14px) rotate(7deg) scale(0.92)';
             zIndex = 20;
             opacity = 0.88;
             filter = isLight ? 'brightness(0.95)' : 'brightness(0.9)';
             pointerEvents = 'auto';
           } else if (offset === 2) {
-            transformStyle = 'translateX(118%) translateY(42px) rotate(15deg) scale(0.8)';
+            transformStyle = 'translateX(104%) translateY(36px) rotate(14deg) scale(0.82)';
             zIndex = 10;
             opacity = 0.55;
             filter = isLight ? 'brightness(0.85)' : 'brightness(0.75)';
             pointerEvents = 'auto';
           } else {
             transformStyle = offset < 0
-              ? 'translateX(-160%) translateY(65px) rotate(-22deg) scale(0.65)'
-              : 'translateX(160%) translateY(65px) rotate(22deg) scale(0.65)';
+              ? 'translateX(-145%) translateY(55px) rotate(-20deg) scale(0.68)'
+              : 'translateX(145%) translateY(55px) rotate(20deg) scale(0.68)';
             zIndex = 5;
             opacity = 0;
             pointerEvents = 'none';
@@ -189,8 +189,8 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
                 pointerEvents: pointerEvents as any,
                 transition: 'all 500ms cubic-bezier(0.25, 1, 0.5, 1)',
               }}
-              className={`absolute top-2 w-[200px] h-[280px] sm:w-[260px] sm:h-[360px] md:w-[310px] md:h-[430px] lg:w-[340px] lg:h-[470px] rounded-2xl sm:rounded-3xl overflow-hidden ${
-                isLight ? 'shadow-[0_22px_55px_rgba(0,0,0,0.22)] bg-slate-900' : 'shadow-[0_24px_60px_rgba(0,0,0,0.7)] bg-[#161618]'
+              className={`absolute top-2 w-[190px] h-[265px] sm:w-[240px] sm:h-[335px] md:w-[275px] md:h-[385px] lg:w-[295px] lg:h-[415px] rounded-2xl sm:rounded-3xl overflow-hidden ${
+                isLight ? 'shadow-[0_20px_50px_rgba(0,0,0,0.2)] bg-slate-900' : 'shadow-[0_24px_60px_rgba(0,0,0,0.7)] bg-[#161618]'
               } cursor-pointer group`}
             >
               {/* Poster Image */}

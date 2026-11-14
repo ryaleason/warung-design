@@ -222,7 +222,7 @@ export default async function HomePage() {
           </div>
 
           {/* Feature 2: Full Width / Centered Showcase */}
-          <div className="rounded-3xl bg-white p-6 sm:p-12 md:p-16 shadow-xs text-center max-w-6xl mx-auto space-y-8 sm:space-y-10 overflow-hidden" data-aos="fade-up" data-aos-duration="700">
+          <div className="rounded-3xl bg-white p-6 sm:p-10 md:p-12 lg:px-8 shadow-xs text-center max-w-6xl mx-auto space-y-8 sm:space-y-10 overflow-visible" data-aos="fade-up" data-aos-duration="700">
             <div className="max-w-2xl mx-auto space-y-3">
               <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000]">
                 Formula Prompt AI yang paham{' '}
