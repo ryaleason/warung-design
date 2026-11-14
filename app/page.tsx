@@ -21,7 +21,7 @@ export default async function HomePage() {
   const featured = bundles[0];
 
   return (
-    <div className="space-y-20 sm:space-y-28 pb-24 w-full overflow-hidden">
+    <div className="space-y-20 sm:space-y-28 pb-24 w-full overflow-x-clip">
       {/* ========================================================= */}
       {/* 1. HERO TOP SECTION (Heading, Subtitle, Actions, Stats)  */}
       {/* ========================================================= */}

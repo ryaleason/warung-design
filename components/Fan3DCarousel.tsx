@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export interface FanCarouselItem {
   id: string;
@@ -84,7 +84,7 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
     }
     const rect = trackRef.current.getBoundingClientRect();
     const windowHeight = window.innerHeight;
-    const stickyTop = 72;
+    const stickyTop = 64;
     const totalScrollable = rect.height - windowHeight;
 
     if (totalScrollable <= 0) {
@@ -127,12 +127,12 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
         if (!trackRef.current) return;
         const rect = trackRef.current.getBoundingClientRect();
         const windowHeight = window.innerHeight;
-        const stickyTop = 72; // offset dari navbar
+        const stickyTop = 64; // offset dari sticky navbar
         const totalScrollable = rect.height - windowHeight;
 
         if (totalScrollable <= 0) return;
 
-        // Seberapa jauh pengguna menggulir ke dalam section sticky ini
+        // Seberapa jauh pengguna menggulir ke dalam lintasan section sticky ini
         const scrolled = stickyTop - rect.top;
         const rawProgress = scrolled / totalScrollable;
         const progress = Math.max(0, Math.min(1, rawProgress));
@@ -209,26 +209,26 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
   return (
     <div
       ref={trackRef}
-      className="relative w-full h-[260vh] -my-4 sm:-my-8"
+      className="relative w-full h-[190vh] sm:h-[210vh]"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Sticky Viewport Container - Tertahan di tengah saat user melakukan scroll */}
-      <div className="sticky top-16 md:top-20 z-10 flex min-h-[calc(100vh-4rem)] md:min-h-[calc(100vh-5rem)] flex-col justify-center items-center py-4 sm:py-6 overflow-visible select-none">
-        <div className="rounded-3xl bg-white p-5 sm:p-8 md:p-10 lg:px-8 shadow-xs text-center max-w-6xl w-full mx-auto space-y-6 sm:space-y-8 overflow-visible border border-black/[0.04]">
+      {/* Sticky Viewport Container - Terkunci presisi di tengah layar selama scroll */}
+      <div className="sticky top-16 md:top-20 z-10 flex min-h-[calc(100vh-4rem)] md:min-h-[calc(100vh-5rem)] flex-col justify-center items-center py-2 sm:py-4 overflow-visible select-none">
+        <div className="rounded-3xl bg-white p-5 sm:p-7 md:p-8 lg:px-9 shadow-xs text-center max-w-5xl w-full mx-auto space-y-4 sm:space-y-6 overflow-visible border border-black/[0.04]">
           {/* Section Heading & Subtitle */}
-          <div className="max-w-2xl mx-auto space-y-2.5">
-            <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000]">
+          <div className="max-w-2xl mx-auto space-y-1.5">
+            <h3 className="font-serif text-xl sm:text-2xl lg:text-3xl font-semibold tracking-tight text-[#000000]">
               Formula Prompt AI yang paham{' '}
               <span className="italic font-normal text-[#0075de]">pasar &amp; budaya UMKM Indonesia</span>
             </h3>
-            <p className="text-[14px] sm:text-[15.5px] text-[#54504c] leading-relaxed">
-              Lupakan tutorial prompt bahasa Inggris yang rumit dan tidak sesuai selera lokal. Setiap paket menyertakan teks prompt Midjourney &amp; DALL-E v3 yang siap kamu salin-tempel untuk eksplorasi tanpa batas.
+            <p className="text-[13px] sm:text-[14.5px] text-[#54504c] leading-relaxed max-w-xl mx-auto">
+              Lupakan tutorial prompt bahasa Inggris yang rumit dan tidak sesuai selera lokal. Setiap paket menyertakan teks prompt Midjourney &amp; DALL-E v3 siap pakai untuk eksplorasi tanpa batas.
             </p>
           </div>
 
           {/* 3D Fan Carousel Stage - Grand & Unclipped Display */}
-          <div className="relative mx-auto w-full max-w-4xl h-[280px] sm:h-[350px] md:h-[400px] lg:h-[435px] flex items-center justify-center overflow-visible">
+          <div className="relative mx-auto w-full max-w-3xl h-[260px] sm:h-[310px] md:h-[350px] lg:h-[380px] flex items-center justify-center overflow-visible">
             {items.map((item, index) => {
               const offset = getOffset(index);
               const isCenter = offset === 0;
@@ -247,33 +247,33 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
                 filter = 'brightness(1)';
                 pointerEvents = 'auto';
               } else if (offset === -1) {
-                transformStyle = 'translateX(-56%) translateY(14px) rotate(-7deg) scale(0.92)';
+                transformStyle = 'translateX(-56%) translateY(12px) rotate(-7deg) scale(0.92)';
                 zIndex = 20;
                 opacity = 0.88;
                 filter = isLight ? 'brightness(0.95)' : 'brightness(0.9)';
                 pointerEvents = 'auto';
               } else if (offset === -2) {
-                transformStyle = 'translateX(-104%) translateY(36px) rotate(-14deg) scale(0.82)';
+                transformStyle = 'translateX(-104%) translateY(30px) rotate(-14deg) scale(0.82)';
                 zIndex = 10;
                 opacity = 0.55;
                 filter = isLight ? 'brightness(0.85)' : 'brightness(0.75)';
                 pointerEvents = 'auto';
               } else if (offset === 1) {
-                transformStyle = 'translateX(56%) translateY(14px) rotate(7deg) scale(0.92)';
+                transformStyle = 'translateX(56%) translateY(12px) rotate(7deg) scale(0.92)';
                 zIndex = 20;
                 opacity = 0.88;
                 filter = isLight ? 'brightness(0.95)' : 'brightness(0.9)';
                 pointerEvents = 'auto';
               } else if (offset === 2) {
-                transformStyle = 'translateX(104%) translateY(36px) rotate(14deg) scale(0.82)';
+                transformStyle = 'translateX(104%) translateY(30px) rotate(14deg) scale(0.82)';
                 zIndex = 10;
                 opacity = 0.55;
                 filter = isLight ? 'brightness(0.85)' : 'brightness(0.75)';
                 pointerEvents = 'auto';
               } else {
                 transformStyle = offset < 0
-                  ? 'translateX(-145%) translateY(55px) rotate(-20deg) scale(0.68)'
-                  : 'translateX(145%) translateY(55px) rotate(20deg) scale(0.68)';
+                  ? 'translateX(-145%) translateY(45px) rotate(-20deg) scale(0.68)'
+                  : 'translateX(145%) translateY(45px) rotate(20deg) scale(0.68)';
                 zIndex = 5;
                 opacity = 0;
                 pointerEvents = 'none';
@@ -297,7 +297,7 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
                     pointerEvents: pointerEvents as any,
                     transition: 'all 500ms cubic-bezier(0.25, 1, 0.5, 1)',
                   }}
-                  className={`absolute top-2 w-[180px] h-[255px] sm:w-[230px] sm:h-[325px] md:w-[265px] md:h-[375px] lg:w-[290px] lg:h-[410px] rounded-2xl sm:rounded-3xl overflow-hidden ${
+                  className={`absolute top-1 w-[165px] h-[235px] sm:w-[205px] sm:h-[290px] md:w-[240px] md:h-[340px] lg:w-[265px] lg:h-[370px] rounded-2xl sm:rounded-3xl overflow-hidden ${
                     isLight ? 'shadow-[0_20px_50px_rgba(0,0,0,0.2)] bg-slate-900' : 'shadow-[0_24px_60px_rgba(0,0,0,0.7)] bg-[#161618]'
                   } cursor-pointer group`}
                 >
@@ -309,16 +309,16 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
                       fill
                       quality={90}
                       className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                      sizes="(max-width: 640px) 220px, (max-width: 768px) 300px, 380px"
+                      sizes="(max-width: 640px) 200px, (max-width: 768px) 260px, 320px"
                       priority={isCenter}
                     />
 
                     {/* Subtle vignette & category label overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent flex flex-col justify-end p-4 sm:p-5 text-left">
-                      <span className="text-[11px] sm:text-[12px] font-bold uppercase tracking-wider text-white/75 block">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent flex flex-col justify-end p-3.5 sm:p-4 text-left">
+                      <span className="text-[10.5px] sm:text-[11.5px] font-bold uppercase tracking-wider text-white/75 block">
                         {item.category}
                       </span>
-                      <span className="text-[13.5px] sm:text-[16px] md:text-[17px] font-semibold text-white tracking-tight leading-tight line-clamp-1">
+                      <span className="text-[13px] sm:text-[15px] md:text-[16px] font-semibold text-white tracking-tight leading-tight line-clamp-1">
                         {item.title}
                       </span>
                     </div>
@@ -329,13 +329,13 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
           </div>
 
           {/* Navigation Controls (Arrows & Title) */}
-          <div className="flex items-center justify-center gap-3 sm:gap-6 mt-4 sm:mt-6">
+          <div className="flex items-center justify-center gap-3 sm:gap-5 mt-3 sm:mt-4">
             {/* Left Arrow Button */}
             <button
               type="button"
               onClick={handlePrev}
               aria-label="Poster Sebelumnya"
-              className={`flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full transition-all shadow-md hover:scale-105 active:scale-95 cursor-pointer shrink-0 ${
+              className={`flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full transition-all shadow-md hover:scale-105 active:scale-95 cursor-pointer shrink-0 ${
                 isLight
                   ? 'bg-[#111111] hover:bg-[#0075de] text-white'
                   : 'bg-black/60 hover:bg-black/90 text-white/80 hover:text-white'
@@ -345,16 +345,16 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
             </button>
 
             {/* Center Title & Subtitle */}
-            <div className="text-center min-w-[200px] sm:min-w-[360px] max-w-lg px-2">
+            <div className="text-center min-w-[200px] sm:min-w-[340px] max-w-lg px-2">
               <h4
-                className={`text-[16px] sm:text-[20px] md:text-[22px] font-semibold tracking-tight leading-snug ${
+                className={`text-[15.5px] sm:text-[19px] md:text-[20px] font-semibold tracking-tight leading-snug ${
                   isLight ? 'text-[#111111]' : 'text-white drop-shadow-sm'
                 }`}
               >
                 {activeItem.title}
               </h4>
               <p
-                className={`text-[12.5px] sm:text-[14px] mt-1 line-clamp-1 font-normal ${
+                className={`text-[12px] sm:text-[13.5px] mt-0.5 line-clamp-1 font-normal ${
                   isLight ? 'text-[#54504c]' : 'text-white/75'
                 }`}
               >
@@ -367,7 +367,7 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
               type="button"
               onClick={handleNext}
               aria-label="Poster Selanjutnya"
-              className={`flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full transition-all shadow-md hover:scale-105 active:scale-95 cursor-pointer shrink-0 ${
+              className={`flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full transition-all shadow-md hover:scale-105 active:scale-95 cursor-pointer shrink-0 ${
                 isLight
                   ? 'bg-[#111111] hover:bg-[#0075de] text-white'
                   : 'bg-black/60 hover:bg-black/90 text-white/80 hover:text-white'
@@ -384,7 +384,7 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
                 key={item.id}
                 type="button"
                 onClick={() => scrollToCard(idx)}
-                className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] sm:text-[12px] font-medium transition-all duration-300 cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] sm:text-[11.5px] font-medium transition-all duration-300 cursor-pointer ${
                   activeIndex === idx
                     ? 'bg-[#111111] text-white shadow-xs scale-105'
                     : 'bg-black/[0.04] hover:bg-black/[0.08] text-[#55524e]'
@@ -399,7 +399,7 @@ export default function Fan3DCarousel({ onSelectPrompt, theme = 'light' }: Fan3D
           </div>
 
           {/* Subtle Scrollytelling Cue */}
-          <p className="text-[11px] sm:text-[11.5px] text-[#888580] pt-0.5">
+          <p className="text-[11px] text-[#888580] pt-0.5">
             Gulir layar untuk memutar karya • atau klik panah
           </p>
         </div>
