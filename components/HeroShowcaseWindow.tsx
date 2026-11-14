@@ -9,6 +9,9 @@ import {
   RotateCcw,
   SlidersHorizontal,
   ChevronLeft,
+  ImagePlus,
+  X,
+  ExternalLink,
 } from 'lucide-react';
 import type { DynamicQuestion } from '@/app/api/ai/generate-promo/route';
 
@@ -34,6 +37,15 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
   const [errorMsg, setErrorMsg] = useState('');
   const [copied, setCopied] = useState(false);
 
+  // Uploaded Photo State
+  const [uploadedImage, setUploadedImage] = useState<{
+    base64: string;
+    mimeType: string;
+    previewUrl: string;
+    name: string;
+  } | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   // Dynamic Questions from AI
   const [briefUnderstanding, setBriefUnderstanding] = useState('');
   const [questions, setQuestions] = useState<DynamicQuestion[]>([]);
@@ -48,6 +60,59 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
   } | null>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Client-side image compression & base64 conversion
+  const processImageFile = (file: File) => {
+    if (!file.type.startsWith('image/')) {
+      setErrorMsg('File yang dipilih harus berupa format gambar (JPG, PNG, atau WebP).');
+      return;
+    }
+    setErrorMsg('');
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new window.Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+        const maxDim = 1200;
+
+        if (width > maxDim || height > maxDim) {
+          if (width > height) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(img, 0, 0, width, height);
+
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+        const base64 = dataUrl.split(',')[1];
+
+        setUploadedImage({
+          base64,
+          mimeType: 'image/jpeg',
+          previewUrl: dataUrl,
+          name: file.name,
+        });
+      };
+      img.onerror = () => {
+        setErrorMsg('Gagal memuat gambar. Silakan coba file lain.');
+      };
+      img.src = e.target?.result as string;
+    };
+    reader.onerror = () => {
+      setErrorMsg('Gagal membaca file.');
+    };
+    reader.readAsDataURL(file);
+  };
 
   // Listen for prompt selection from Fan3DCarousel or other external components
   useEffect(() => {
@@ -66,7 +131,7 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
   // 1. Analyze initial prompt & fetch dynamic AI questions
   const handleAnalyze = async (promptText?: string) => {
     const textToSubmit = (promptText || initialPrompt).trim();
-    if (!textToSubmit || isAnalyzing) return;
+    if ((!textToSubmit && !uploadedImage) || isAnalyzing) return;
 
     if (promptText) {
       setInitialPrompt(promptText);
@@ -81,17 +146,26 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'questions',
-          initialPrompt: textToSubmit,
+          initialPrompt: textToSubmit || (uploadedImage ? 'Desain poster promosi produk dari foto terlampir' : ''),
+          image: uploadedImage ? {
+            mimeType: uploadedImage.mimeType,
+            data: uploadedImage.base64,
+          } : undefined,
         }),
       });
 
       const json = await res.json();
       if (!res.ok || !json.success) {
-        throw new Error(json.error || 'Gagal menganalisis ide awal.');
+        throw new Error(json.error || 'Gagal menganalisis brief.');
       }
 
       const qList: DynamicQuestion[] = json.data.questions || [];
-      setBriefUnderstanding(json.data.briefUnderstanding || `Konsep desain untuk "${textToSubmit}"`);
+      setBriefUnderstanding(
+        json.data.briefUnderstanding ||
+        (uploadedImage
+          ? `Konsep desain promosi berdasarkan foto produk terlampir ${textToSubmit ? `("${textToSubmit}")` : ''}`
+          : `Konsep desain untuk "${textToSubmit}"`)
+      );
       setQuestions(qList);
 
       // Pre-fill default answers for choice questions
@@ -109,7 +183,7 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
         containerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 100);
     } catch (err: any) {
-      setErrorMsg(err.message || 'Terjadi kendala saat menganalisis ide.');
+      setErrorMsg(err.message || 'Terjadi kendala saat menganalisis brief.');
     } finally {
       setIsAnalyzing(false);
     }
@@ -146,9 +220,13 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'prompt',
-          initialPrompt: initialPrompt.trim(),
+          initialPrompt: initialPrompt.trim() || 'Desain Poster Produk Estetik',
           briefUnderstanding,
           answers: answersPayload,
+          image: uploadedImage ? {
+            mimeType: uploadedImage.mimeType,
+            data: uploadedImage.base64,
+          } : undefined,
         }),
       });
 
@@ -188,13 +266,15 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleResetAll = () => {
-    setInitialPrompt('');
-    setQuestions([]);
-    setAnswers({});
-    setOutput(null);
-    setErrorMsg('');
-    setStep('input');
+  const handleOpenChatGPT = () => {
+    if (!output?.promptFinal) return;
+    navigator.clipboard.writeText(output.promptFinal);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+
+    const fullInstruction = `Buatkan gambar desain promosi resolusi tinggi menggunakan DALL-E 3 dengan formula visual berikut:\n\n${output.promptFinal}`;
+    const chatGptUrl = `https://chatgpt.com/?q=${encodeURIComponent(fullInstruction)}`;
+    window.open(chatGptUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -204,7 +284,7 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
       id="ai-generator"
     >
       {/* ========================================================= */}
-      {/* STEP 1: INITIAL PROMPT INPUT                              */}
+      {/* STEP 1: INITIAL PROMPT & PHOTO INPUT                      */}
       {/* ========================================================= */}
       {step === 'input' && (
         <div className="space-y-6 sm:space-y-8">
@@ -213,7 +293,7 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
               Mau buat poster atau postingan apa hari ini?
             </h2>
             <p className="text-white/80 text-[14px] sm:text-[15.5px] font-normal leading-relaxed drop-shadow-sm">
-              Ketik ide poster atau feed Instagram Anda dalam bahasa santai sehari-hari. AI Art Director kami akan menganalisis brief dan memberikan pertanyaan penuntun otomatis.
+              Ketik ide promo atau lampirkan foto produk toko Anda. AI Art Director kami akan menganalisis foto dan brief untuk menghasilkan formula prompt berkualitas agensi.
             </p>
           </div>
 
@@ -224,24 +304,105 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
             }}
             className="max-w-2xl sm:max-w-3xl mx-auto"
           >
+            {/* Attached Photo Preview */}
+            {uploadedImage && (
+              <div className="mb-3.5 flex items-center justify-between gap-3 rounded-2xl border border-white/20 bg-[#1e1e24]/90 backdrop-blur-md p-2.5 max-w-md mx-auto text-left shadow-lg animate-in fade-in zoom-in-95 duration-150">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-white/20 bg-black/50">
+                    <img
+                      src={uploadedImage.previewUrl}
+                      alt="Pratinjau Foto"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[12.5px] font-semibold text-white truncate max-w-[170px] sm:max-w-[220px]">
+                        {uploadedImage.name}
+                      </span>
+                      <span className="rounded bg-[#0075de]/30 border border-[#0075de]/40 px-1.5 py-0.5 text-[9.5px] font-bold text-[#60b5ff] uppercase tracking-wide">
+                        Foto Terlampir
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-white/60">
+                      Foto produk siap dianalisis oleh AI
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setUploadedImage(null)}
+                  className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/10 hover:bg-rose-500/80 text-white/80 hover:text-white transition-colors cursor-pointer shrink-0"
+                  title="Hapus foto"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+            )}
+
+            {/* Input Capsule Box */}
             <div className="relative flex items-center gap-2 rounded-2xl bg-[#161618]/92 backdrop-blur-xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-2 sm:p-2.5 transition-all">
+              {/* Photo Upload Button */}
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className={`flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-xl transition-all cursor-pointer shrink-0 ${
+                  uploadedImage
+                    ? 'bg-[#0075de] text-white shadow-xs ring-2 ring-[#0075de]/40'
+                    : 'bg-white/10 hover:bg-white/18 text-white/80 hover:text-white'
+                }`}
+                title={uploadedImage ? 'Ganti foto produk' : 'Upload foto produk atau referensi desain'}
+              >
+                <ImagePlus className="h-5 w-5" />
+              </button>
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) processImageFile(file);
+                }}
+              />
+
               <input
                 type="text"
                 value={initialPrompt}
                 onChange={(e) => setInitialPrompt(e.target.value)}
-                placeholder="Contoh: bikin poster promo kopi diskon 20% weekend..."
+                onPaste={(e) => {
+                  const items = e.clipboardData?.items;
+                  if (items) {
+                    for (let i = 0; i < items.length; i++) {
+                      if (items[i].type.indexOf('image') !== -1) {
+                        const file = items[i].getAsFile();
+                        if (file) {
+                          processImageFile(file);
+                          break;
+                        }
+                      }
+                    }
+                  }
+                }}
+                placeholder={
+                  uploadedImage
+                    ? 'Ketik detail promo (opsional jika sudah upload foto)...'
+                    : 'Ketik ide poster atau klik ikon foto di samping...'
+                }
                 style={{ outline: 'none', border: 'none', boxShadow: 'none' }}
-                className="flex-1 bg-transparent px-3 sm:px-4 py-2 text-[14.5px] sm:text-[16px] text-white placeholder:text-white/40 border-0 outline-none ring-0 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 shadow-none"
+                className="flex-1 bg-transparent px-2 sm:px-3 py-2 text-[14px] sm:text-[15.5px] text-white placeholder:text-white/40 border-0 outline-none ring-0 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 shadow-none min-w-0"
               />
+
               <button
                 type="submit"
-                disabled={isAnalyzing || !initialPrompt.trim()}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#0075de] hover:bg-[#0060b8] disabled:opacity-40 disabled:hover:bg-[#0075de] text-white font-semibold px-5 sm:px-6 py-3 text-[14px] sm:text-[14.5px] transition-all shadow-md shrink-0 cursor-pointer"
+                disabled={isAnalyzing || (!initialPrompt.trim() && !uploadedImage)}
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#0075de] hover:bg-[#0060b8] disabled:opacity-40 disabled:hover:bg-[#0075de] text-white font-semibold px-4.5 sm:px-6 py-2.5 sm:py-3 text-[13.5px] sm:text-[14.5px] transition-all shadow-md shrink-0 cursor-pointer"
               >
                 {isAnalyzing ? (
                   <>
                     <RefreshCw className="h-4 w-4 animate-spin text-white" />
-                    <span>Menganalisis Brief...</span>
+                    <span>Menganalisis...</span>
                   </>
                 ) : (
                   <>
@@ -282,24 +443,36 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
         <div className="space-y-6 sm:space-y-8 text-left">
           {/* Header & Brief Recall */}
           <div className="rounded-2xl border border-white/15 bg-[#161618]/92 backdrop-blur-xl p-5 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10">
-              <div>
-                <span className="text-[11px] font-bold uppercase tracking-wider text-white/50 block">
-                  Ide Awal Anda:
-                </span>
-                <p className="text-[16px] sm:text-[17px] font-semibold text-white mt-0.5">
-                  &ldquo;{initialPrompt}&rdquo;
-                </p>
-                {briefUnderstanding && (
-                  <p className="text-[13px] text-white/70 mt-1">
-                    {briefUnderstanding}
-                  </p>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
+              <div className="flex items-start gap-3.5">
+                {uploadedImage && (
+                  <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border border-white/20 bg-black/40">
+                    <img
+                      src={uploadedImage.previewUrl}
+                      alt="Foto Terlampir"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
                 )}
+                <div>
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-white/50 block">
+                    Ide Awal Anda:
+                  </span>
+                  <p className="text-[16px] sm:text-[17px] font-semibold text-white mt-0.5">
+                    &ldquo;{initialPrompt || 'Desain Poster Produk Estetik'}&rdquo;
+                  </p>
+                  {briefUnderstanding && (
+                    <p className="text-[13px] text-white/70 mt-1">
+                      {briefUnderstanding}
+                    </p>
+                  )}
+                </div>
               </div>
+
               <button
                 type="button"
                 onClick={() => setStep('input')}
-                className="self-start sm:self-center inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/5 hover:bg-white/10 px-3 py-1.5 text-[12.5px] text-white/80 hover:text-white transition-colors cursor-pointer"
+                className="self-start sm:self-center inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/5 hover:bg-white/10 px-3 py-1.5 text-[12.5px] text-white/80 hover:text-white transition-colors cursor-pointer shrink-0"
               >
                 <ChevronLeft className="h-3.5 w-3.5" />
                 <span>Ganti Ide Awal</span>
@@ -350,55 +523,37 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
                             <button
                               key={opt.letter}
                               type="button"
-                              onClick={() =>
-                                setAnswers({ ...answers, [q.id]: opt.value })
-                              }
-                              className={`flex flex-col text-left gap-2.5 p-3.5 rounded-xl border transition-all cursor-pointer ${
+                              onClick={() => setAnswers({ ...answers, [q.id]: opt.value })}
+                              className={`flex items-center justify-between gap-3 p-3.5 rounded-xl border text-left transition-all cursor-pointer ${
                                 isSelected
-                                  ? 'bg-[#0075de]/15 border-[#0075de] ring-1 ring-[#0075de] text-white shadow-lg'
-                                  : 'bg-black/35 hover:bg-black/55 border-white/15 text-white/80 hover:text-white'
+                                  ? 'border-[#0075de] bg-[#0075de]/15 shadow-sm'
+                                  : 'border-white/15 bg-black/35 hover:bg-black/55 hover:border-white/25'
                               }`}
                             >
-                              <div className="flex items-center justify-between w-full">
-                                <div className="flex items-center gap-2">
+                              <div className="flex items-center gap-2.5 min-w-0">
+                                <span
+                                  className={`flex h-6 w-6 items-center justify-center rounded-md font-bold text-[12px] shrink-0 ${
+                                    isSelected
+                                      ? 'bg-[#0075de] text-white'
+                                      : 'bg-white/10 text-white/60'
+                                  }`}
+                                >
+                                  {opt.letter}
+                                </span>
+                                <span className="text-[13px] sm:text-[13.5px] font-medium text-white/90 truncate">
+                                  {opt.label}
+                                </span>
+                              </div>
+
+                              {/* 3 Color Circles */}
+                              <div className="flex items-center -space-x-1 shrink-0">
+                                {opt.colors!.map((c, ci) => (
                                   <span
-                                    className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-[11px] font-bold ${
-                                      isSelected
-                                        ? 'bg-[#0075de] text-white'
-                                        : 'bg-white/10 text-white/75'
-                                    }`}
-                                  >
-                                    {opt.letter}
-                                  </span>
-                                  <span className="text-[13px] font-medium leading-snug">
-                                    {opt.label}
-                                  </span>
-                                </div>
-                                {isSelected && (
-                                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#0075de] text-white shrink-0">
-                                    <Check className="h-3 w-3" />
-                                  </span>
-                                )}
-                              </div>
-
-                              {/* 3 Color Swatches Band */}
-                              <div className="w-full rounded-lg overflow-hidden border border-white/20 shadow-xs">
-                                <div className="grid grid-cols-3 h-8 w-full">
-                                  {opt.colors!.map((c, cIdx) => (
-                                    <div
-                                      key={cIdx}
-                                      style={{ backgroundColor: c }}
-                                      className="h-full w-full"
-                                      title={c}
-                                    />
-                                  ))}
-                                </div>
-                              </div>
-
-                              {/* Hex codes */}
-                              <div className="grid grid-cols-3 text-center text-[10.5px] font-mono text-white/60 tracking-tight">
-                                {opt.colors!.map((c, cIdx) => (
-                                  <span key={cIdx}>{c}</span>
+                                    key={ci}
+                                    style={{ backgroundColor: c }}
+                                    className="h-5 w-5 rounded-full border border-black/40 shadow-xs"
+                                    title={c}
+                                  />
                                 ))}
                               </div>
                             </button>
@@ -409,25 +564,23 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
                           <button
                             key={opt.letter}
                             type="button"
-                            onClick={() =>
-                              setAnswers({ ...answers, [q.id]: opt.value })
-                            }
-                            className={`flex items-start text-left gap-2.5 p-3 rounded-xl border transition-all cursor-pointer ${
+                            onClick={() => setAnswers({ ...answers, [q.id]: opt.value })}
+                            className={`flex items-center gap-3 p-3.5 rounded-xl border text-left transition-all cursor-pointer ${
                               isSelected
-                                ? 'bg-[#0075de] border-[#0075de] text-white shadow-md'
-                                : 'bg-black/35 hover:bg-black/55 border-white/15 text-white/80 hover:text-white'
+                                ? 'border-[#0075de] bg-[#0075de]/15 shadow-sm'
+                                : 'border-white/15 bg-black/35 hover:bg-black/55 hover:border-white/25'
                             }`}
                           >
                             <span
-                              className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-[11px] font-bold mt-0.5 ${
+                              className={`flex h-6 w-6 items-center justify-center rounded-md font-bold text-[12px] shrink-0 ${
                                 isSelected
-                                  ? 'bg-white text-[#0075de]'
-                                  : 'bg-white/10 text-white/75'
+                                  ? 'bg-[#0075de] text-white'
+                                  : 'bg-white/10 text-white/60'
                               }`}
                             >
                               {opt.letter}
                             </span>
-                            <span className="text-[13px] font-medium leading-snug">
+                            <span className="text-[13px] sm:text-[13.5px] font-medium text-white/90">
                               {opt.label}
                             </span>
                           </button>
@@ -444,33 +597,30 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
                 </div>
               )}
 
-              {/* Action Buttons */}
-              <div className="pt-3 flex flex-col sm:flex-row items-center gap-3">
+              <div className="flex items-center justify-between pt-4 border-t border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setStep('input')}
+                  className="px-4 py-2.5 rounded-xl border border-white/15 text-[13.5px] text-white/80 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+                >
+                  Kembali
+                </button>
                 <button
                   type="submit"
                   disabled={isGenerating}
-                  className="w-full sm:flex-1 flex items-center justify-center gap-2.5 rounded-xl bg-[#0075de] hover:bg-[#0060b8] disabled:opacity-40 text-white font-semibold py-3.5 px-6 text-[15px] shadow-lg transition-all cursor-pointer"
+                  className="inline-flex items-center gap-2 rounded-xl bg-[#0075de] hover:bg-[#0060b8] disabled:opacity-40 text-white font-semibold px-6 py-3 text-[14px] transition-all shadow-md cursor-pointer"
                 >
                   {isGenerating ? (
                     <>
-                      <RefreshCw className="h-4 w-4 animate-spin text-white" />
-                      <span>Meracik Formula Desain Estetik...</span>
+                      <RefreshCw className="h-4 w-4 animate-spin" />
+                      <span>Meracik Formula Desain...</span>
                     </>
                   ) : (
                     <>
-                      <span>Racik Formula Prompt Desain Estetik</span>
+                      <span>Racik Formula Prompt</span>
                       <ArrowRight className="h-4 w-4" />
                     </>
                   )}
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleResetAll}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 px-4 py-3.5 text-[14px] text-white/70 hover:text-white transition-colors cursor-pointer"
-                >
-                  <RotateCcw className="h-4 w-4" />
-                  <span>Mulai Ulang</span>
                 </button>
               </div>
             </form>
@@ -479,72 +629,98 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
       )}
 
       {/* ========================================================= */}
-      {/* STEP 3: RESULT OUTPUT CARD                                */}
+      {/* STEP 3: RESULT OUTPUT (Prompt, Asumsi, Variasi, Action)    */}
       {/* ========================================================= */}
       {step === 'result' && output && (
-        <div className="space-y-6 sm:space-y-8 text-left">
-          <div className="rounded-2xl border border-white/15 bg-[#161618]/95 backdrop-blur-xl shadow-[0_24px_60px_rgba(0,0,0,0.6)] p-6 sm:p-8 space-y-6">
-            {/* Top Navigation Bar */}
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <button
-                type="button"
-                onClick={() => setStep('questionnaire')}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/5 hover:bg-white/10 px-3 py-1.5 text-[12.5px] text-white/80 hover:text-white transition-colors cursor-pointer"
-              >
-                <SlidersHorizontal className="h-3.5 w-3.5" />
-                <span>Ubah Jawaban Kuesioner</span>
-              </button>
+        <div className="space-y-6 text-left">
+          <div className="rounded-2xl border border-white/15 bg-[#161618]/95 backdrop-blur-xl p-5 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-6">
+            {/* Header Result */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10">
+              <div className="flex items-center gap-2.5">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-400">
+                  <Check className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="text-[17px] font-semibold text-white">
+                    Formula Prompt AI Siap Pakai
+                  </h3>
+                  <p className="text-[12.5px] text-white/60">
+                    Dirancang dengan komposisi multi-layer, depth of field, dan lighting agensi.
+                  </p>
+                </div>
+              </div>
 
-              <button
-                type="button"
-                onClick={handleResetAll}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/5 hover:bg-white/10 px-3 py-1.5 text-[12.5px] text-white/80 hover:text-white transition-colors cursor-pointer"
-              >
-                <RotateCcw className="h-3.5 w-3.5" />
-                <span>Buat Poster Baru</span>
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setStep('questionnaire')}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/5 hover:bg-white/10 px-3 py-1.5 text-[12px] text-white/80 hover:text-white transition-colors cursor-pointer"
+                >
+                  <SlidersHorizontal className="h-3.5 w-3.5" />
+                  <span>Ubah Kuesioner</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setStep('input');
+                    setInitialPrompt('');
+                    setUploadedImage(null);
+                    setAnswers({});
+                  }}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/5 hover:bg-white/10 px-3 py-1.5 text-[12px] text-white/80 hover:text-white transition-colors cursor-pointer"
+                >
+                  <RotateCcw className="h-3.5 w-3.5" />
+                  <span>Buat Baru</span>
+                </button>
+              </div>
             </div>
 
-            {/* 1. Ringkasan Konsep Visual */}
-            <div className="space-y-1.5">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-white/50 block">
-                1. Ringkasan Konsep Desain Estetik
-              </span>
-              <p className="text-[15px] font-medium text-white leading-relaxed">
-                {output.summary}
-              </p>
+            {/* 1. Brief Summary */}
+            <div className="rounded-xl bg-white/5 p-4 border border-white/10 text-[13px] text-white/85">
+              <span className="font-semibold text-white">Ringkasan Konsep:</span> {output.summary}
             </div>
 
-            {/* 2. Formula Prompt Siap Pakai Code Box */}
+            {/* 2. Main Final Prompt Box */}
             <div className="space-y-2.5">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-white/60">
                   2. Formula Prompt Siap Pakai (English)
                 </span>
-                <button
-                  type="button"
-                  onClick={handleCopy}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-[#0075de] hover:bg-[#0060b8] px-3.5 py-1.5 text-[12px] font-medium text-white transition-colors cursor-pointer shadow-xs"
-                >
-                  {copied ? (
-                    <>
-                      <Check className="h-3.5 w-3.5 text-white" />
-                      <span>Prompt Tersalin!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="h-3.5 w-3.5 text-white" />
-                      <span>Salin Prompt</span>
-                    </>
-                  )}
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handleOpenChatGPT}
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 px-3.5 py-1.5 text-[12px] font-semibold text-white transition-all cursor-pointer shadow-xs hover:shadow-md"
+                    title="Buka langsung di ChatGPT dengan prompt yang sudah terisi otomatis"
+                  >
+                    <ExternalLink className="h-3.5 w-3.5 text-white" />
+                    <span>Buka di ChatGPT</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleCopy}
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-[#0075de] hover:bg-[#0060b8] px-3.5 py-1.5 text-[12px] font-medium text-white transition-colors cursor-pointer shadow-xs"
+                  >
+                    {copied ? (
+                      <>
+                        <Check className="h-3.5 w-3.5 text-white" />
+                        <span>Prompt Tersalin!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="h-3.5 w-3.5 text-white" />
+                        <span>Salin Prompt</span>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
 
               <div className="rounded-xl border border-white/10 bg-[#0d0d0f] p-4 sm:p-5 font-mono text-[12px] sm:text-[12.5px] text-slate-200 leading-relaxed whitespace-pre-wrap break-words shadow-inner max-h-[420px] overflow-y-auto select-all">
                 {output.promptFinal}
               </div>
               <p className="text-[11.5px] text-white/50">
-                Salin dan tempel prompt di atas ke Midjourney, DALL-E 3, atau generator gambar AI pilihan Anda.
+                Salin dan tempel prompt di atas ke Midjourney, DALL-E 3, atau klik tombol &quot;Buka di ChatGPT&quot; untuk langsung membuat gambarnya.
               </p>
             </div>
 

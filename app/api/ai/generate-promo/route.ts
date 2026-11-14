@@ -31,6 +31,10 @@ interface GeneratePromoRequest {
   initialPrompt?: string;
   briefUnderstanding?: string;
   answers?: AnswerItem[] | Record<string, string>;
+  image?: {
+    mimeType: string;
+    data: string; // base64 without data: prefix
+  };
   // Legacy / fallback parameters
   brandName?: string;
   category?: string;
@@ -48,8 +52,13 @@ const CANDIDATE_MODELS = [
 
 const DYNAMIC_QUESTIONS_PROMPT = `
 # PERAN: ART DIRECTOR & KONSULTAN DESAIN POSTER (AGENCY LEVEL)
-Pengguna adalah orang awam yang ingin membuat materi promosi / poster / feed Instagram. Pengguna telah memasukkan ide awal / brief singkat.
-Tugasmu: Menganalisis ide awal tersebut, lalu membuat 4 sampai 6 pertanyaan cerdas dan DINAMIS untuk melengkapi brief agar desain poster yang dihasilkan nantinya SANGAT ESTETIK, KAYA KEDALAMAN (DEPTH OF FIELD), DAN BERSTANDAR AGENSI.
+Pengguna adalah orang awam atau pemilik usaha yang ingin membuat materi promosi / poster / feed Instagram. Pengguna telah memasukkan ide awal / brief singkat DAN/ATAU mengunggah foto produk atau referensi visual.
+Tugasmu: Menganalisis ide awal serta meneliti foto produk/referensi yang diunggah (jika ada), lalu membuat 4 sampai 6 pertanyaan cerdas dan DINAMIS untuk melengkapi brief agar desain poster yang dihasilkan nantinya SANGAT ESTETIK, KAYA KEDALAMAN (DEPTH OF FIELD), DAN BERSTANDAR AGENSI.
+
+# JIKA PENGGUNA MENYERTAKAN FOTO / GAMBAR:
+- Teliti produk, kemasan, warna dominan, bahan, tekstur, dan konteks dalam foto.
+- Dalam "briefUnderstanding", jelaskan secara detail produk apa yang kamu lihat dalam foto serta kaitannya dengan konsep poster yang ingin dibuat.
+- Pada pertanyaan Color Palette dan Hero Object, sesuaikan secara spesifik agar merefleksikan dan melengkapi produk pada foto tersebut.
 
 # ATURAN PERTANYAAN WAJIB:
 1. Pertanyaan 1 (Nama Brand / Usaha): Tipe "text", required: true. Tanyakan nama brand atau usaha pengguna jika belum jelas di ide awal.
@@ -497,26 +506,39 @@ function getSemanticFallback(
   };
 }
 
-async function callGemini(systemPrompt: string, userText: string, apiKey: string) {
+async function callGemini(
+  systemPrompt: string,
+  userText: string,
+  apiKey: string,
+  image?: { mimeType: string; data: string } | null
+) {
   let rawContent: string | null = null;
 
   for (const model of CANDIDATE_MODELS) {
     const maxAttempts = 2;
     for (let attempt = 0; attempt < maxAttempts; attempt++) {
       try {
+        const parts: any[] = [
+          { text: `${systemPrompt}\n\nInput Pengguna:\n${userText}\n\nBuat respons dalam JSON valid sekarang.` },
+        ];
+
+        if (image && image.data && image.mimeType) {
+          parts.push({
+            inlineData: {
+              mimeType: image.mimeType,
+              data: image.data,
+            },
+          });
+        }
+
         const response = await fetch(
           `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            signal: AbortSignal.timeout(20000),
+            signal: AbortSignal.timeout(25000),
             body: JSON.stringify({
-              contents: [
-                {
-                  role: 'user',
-                  parts: [{ text: `${systemPrompt}\n\nInput Pengguna:\n${userText}\n\nBuat respons dalam JSON valid sekarang.` }],
-                },
-              ],
+              contents: [{ role: 'user', parts }],
               generationConfig: {
                 responseMimeType: 'application/json',
                 temperature: 0.65,
@@ -590,18 +612,19 @@ export async function POST(req: Request) {
     // MODE 1: GENERATE DYNAMIC QUESTIONS FROM INITIAL PROMPT
     // =========================================================================
     if (action === 'questions') {
-      const userPrompt = body.initialPrompt?.trim() || body.prompt?.trim() || '';
-      if (!userPrompt) {
+      const userPrompt = body.initialPrompt?.trim() || body.prompt?.trim() || (body.image ? 'Buatkan desain poster promo estetik untuk foto produk ini.' : '');
+      if (!userPrompt && !body.image) {
         return NextResponse.json(
-          { success: false, error: 'Silakan masukkan ide awal desain poster Anda terlebih dahulu.' },
+          { success: false, error: 'Silakan masukkan ide awal atau lampirkan foto produk Anda terlebih dahulu.' },
           { status: 400 }
         );
       }
 
       const parsedQuestions = await callGemini(
         DYNAMIC_QUESTIONS_PROMPT,
-        `Ide Awal Pengguna: "${userPrompt}"`,
-        apiKey
+        `Ide Awal Pengguna: "${userPrompt}"${body.image ? '\n(Catatan: Pengguna juga melampirkan foto produk/referensi visual)' : ''}`,
+        apiKey,
+        body.image
       );
 
       if (parsedQuestions && Array.isArray(parsedQuestions.questions) && parsedQuestions.questions.length > 0) {
@@ -776,7 +799,8 @@ ${answersFormatted}
     const parsedResult = await callGemini(
       AESTHETIC_ART_DIRECTOR_PROMPT,
       promptUserText,
-      apiKey
+      apiKey,
+      body.image
     );
 
     if (parsedResult && parsedResult.promptFinal) {
