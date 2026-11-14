@@ -11,6 +11,7 @@ import {
   ChevronLeft,
 } from 'lucide-react';
 import type { DynamicQuestion } from '@/app/api/ai/generate-promo/route';
+import Fan3DCarousel from '@/components/Fan3DCarousel';
 
 interface HeroShowcaseWindowProps {
   featuredBundle?: any;
@@ -258,6 +259,11 @@ export default function HeroShowcaseWindow({ featuredBundle }: HeroShowcaseWindo
               {errorMsg}
             </div>
           )}
+
+          {/* 3D Fan Carousel Showcase (Kipas 3D Inspirasi Desain) */}
+          <div className="pt-2 sm:pt-4">
+            <Fan3DCarousel onSelectPrompt={(p) => handleAnalyze(p)} />
+          </div>
         </div>
       )}
 
