@@ -72,36 +72,39 @@ export async function GET(
     const downloadFileName = `${bundleNameClean}-${order.order_code}.txt`;
     const downloadContent = 
 `=============================================================
-WARUNG DESAIN - BUNDLE AKSES RESMI
+WARUNG DESAIN - AKSES FORMULA PROMPT AI RESMI
 =============================================================
 Order ID: ${order.order_code}
-Bundle: ${bundle?.name || 'Paket Desain'}
+Paket Prompt: ${bundle?.name || 'Paket Prompt AI'}
 Pembeli: ${order.buyer_name} (${order.buyer_email})
 Status: Terverifikasi
 Waktu Verifikasi: ${order.verified_at || new Date().toISOString()}
 
 -------------------------------------------------------------
-DAFTAR ASSET DESAIN & LINK AKSES CLOUD
+DAFTAR FORMULA PROMPT AI SIAP SALIN (COPUS)
 -------------------------------------------------------------
-1. Folder Koleksi Desain Resolusi Tinggi (PNG & JPG):
-   ${bundle?.preview_images?.join('\n   ')}
+1. Prompt Utama Feed Promosi (Rasio 1:1):
+   "A professional modern promotional social media post for Indonesian SME, vibrant high contrast aesthetic, clean typography space, photorealistic studio lighting --ar 1:1 --v 6.0"
 
-2. BONUS PROMPT AI GENERATIF (Midjourney & DALL-E v3):
-   - Prompt Utama:
-     "A professional modern promotional social media post for Indonesian SME, vibrant high contrast aesthetic, clean typography space, photorealistic studio lighting --ar 1:1 --v 6.0"
-   - Prompt Variasi Story (9:16):
-     "Minimalist editorial instagram story background, warm pastel tones, subtle Islamic pattern accents, premium luxury feel --ar 9:16 --v 6.0"
-   - Prompt Food/F&B:
-     "Delicious Indonesian culinary dish, close up shot, steam rising, shallow depth of field, appetizing warm lighting, food photography award winner --ar 1:1"
+2. Prompt Variasi Story (Rasio 9:16):
+   "Minimalist editorial instagram story background, warm pastel tones, subtle local pattern accents, premium luxury feel --ar 9:16 --v 6.0"
+
+3. Prompt Visual Kuliner & Produk:
+   "Delicious Indonesian culinary dish, close up shot, steam rising, shallow depth of field, appetizing warm lighting, food photography award winner --ar 1:1"
 
 -------------------------------------------------------------
-PANDUAN PENGGUNAAN CEPAT UNTUK ADMIN UMKM:
+CONTOH HASIL VISUAL DARI FORMULA PROMPT INI:
 -------------------------------------------------------------
-1. Buka aplikasi Canva (bisa lewat HP atau Laptop).
-2. Buat kanvas ukuran 1080x1080 pixel (Feed) atau 1080x1920 pixel (Story).
-3. Upload gambar desain dari folder ini ke Canva.
-4. Tambahkan logo toko Anda dan teks promosi (diskon, harga, nomor WA).
-5. Download hasil jadi dan langsung posting ke Instagram / WhatsApp Story!
+${bundle?.preview_images?.join('\n')}
+
+-------------------------------------------------------------
+PANDUAN CEPAT MEMAKAI PROMPT UNTUK ADMIN & PEMILIK UMKM:
+-------------------------------------------------------------
+1. Buka ChatGPT (fitur generate gambar DALL-E 3) atau Midjourney di HP / Laptop.
+2. Salin teks prompt di atas, lalu tempelkan ke kolom pesan AI.
+3. Anda dapat mengganti nama menu / objek produk sesuai barang dagangan tokomu.
+4. Tekan Kirim / Enter, dan poster visual promosi memukau akan langsung terbuat!
+5. Simpan gambar, tambahkan logo tokomu jika perlu, dan siap posting ke Instagram / WhatsApp Story!
 
 Terima kasih telah mempercayai Warung Desain untuk mendukung promosi bisnis Anda!
 =============================================================`;

@@ -71,7 +71,7 @@ export default function GuestCheckoutConfirmModal({
             </div>
             <div className="flex items-start gap-2.5">
               <ShieldCheck className="w-4 h-4 text-[#0075de] shrink-0 mt-0.5" />
-              <span><strong>Akses Fleksibel:</strong> Akses dan unduh template kapan saja dari HP, Tablet, atau Laptop mana pun.</span>
+              <span><strong>Akses Fleksibel:</strong> Akses dan unduh formula prompt kapan saja dari HP, Tablet, atau Laptop mana pun.</span>
             </div>
           </div>
         </div>

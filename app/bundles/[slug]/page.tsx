@@ -106,20 +106,20 @@ export default async function BundleDetailPage({ params }: PageProps) {
           <div className="rounded-[12px] border border-black/[0.08] bg-[#ffffff] p-6">
             <h2 className="text-[16px] font-semibold text-[#000000] mb-3 flex items-center gap-2">
               <BookOpen className="h-4 w-4 text-[#0075de]" />
-              Cara Memakai File Setelah Pembelian
+              Cara Memakai Formula Prompt Setelah Pembelian
             </h2>
             <ol className="list-decimal list-inside space-y-2 text-[13px] text-[#615d59] leading-relaxed">
               <li>
-                Download file ZIP paket melalui halaman sukses atau link yang dikirim ke email Anda.
+                Download file dokumen paket melalui halaman sukses atau link yang dikirim ke email Anda.
               </li>
               <li>
-                Ekstrak file di HP atau komputer. Anda akan menemukan gambar desain PNG transparan &amp; JPG resolusi tinggi.
+                Buka file panduan. Anda akan menemukan puluhan formula prompt AI siap pakai lengkap dengan contoh kata kuncinya.
               </li>
               <li>
-                Buka Canva atau aplikasi edit favorit Anda, pasang gambar sebagai background, lalu tambahkan logo toko dan teks promo Anda.
+                Salin teks prompt yang diinginkan, lalu tempelkan ke ChatGPT (DALL-E 3), Midjourney, atau Bing Image Creator.
               </li>
               <li>
-                Selesai! Desain siap diposting ke Instagram, WhatsApp Story, atau etalase olshop.
+                Sesuaikan nama produk toko Anda jika diinginkan, dan visual promosi memukau siap dihasilkan seketika!
               </li>
             </ol>
           </div>

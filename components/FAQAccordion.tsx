@@ -12,19 +12,19 @@ interface FAQItem {
 const FAQ_ITEMS: FAQItem[] = [
   {
     id: 'faq-1',
-    question: 'Apakah saya harus mahir tools AI seperti Midjourney atau DALL-E?',
+    question: 'Apakah saya harus mahir teknik prompt engineering atau bahasa Inggris?',
     answer: (
       <>
-        <strong>Tidak sama sekali.</strong> Yang Anda beli adalah gambar hasil jadi (PNG transparan &amp; JPG resolusi tinggi). Teks prompt hanya bonus pelengkap bagi Anda yang ingin membuat variasi tambahan.
+        <strong>Tidak sama sekali.</strong> Setiap paket sudah menyediakan formula prompt teks siap pakai yang teruji. Anda cukup menyalin (copy-paste) teks prompt yang ada ke ChatGPT (DALL-E 3) atau Midjourney, dan visual promosi toko Anda akan langsung ter-generate secara otomatis.
       </>
     ),
   },
   {
     id: 'faq-2',
-    question: 'Bagaimana cara menambahkan logo dan teks diskon toko saya?',
+    question: 'Bagaimana cara menggunakan formula prompt yang saya beli?',
     answer: (
       <>
-        Buka aplikasi <strong>Canva</strong> di HP atau laptop, unggah gambar dari paket Warung Desain sebagai background, lalu tempel logo toko dan ketik teks promo toko Anda. Hanya butuh waktu 2 menit.
+        Cukup buka file dokumen paket yang Anda unduh, salin formula teks prompt yang diinginkan, lalu tempelkan ke kolom input AI seperti <strong>ChatGPT (DALL-E 3)</strong> atau <strong>Midjourney</strong>. Anda bisa mengganti nama produk, warna, atau detail promo sesuai kebutuhan tokomu.
       </>
     ),
   },
@@ -39,10 +39,10 @@ const FAQ_ITEMS: FAQItem[] = [
   },
   {
     id: 'faq-4',
-    question: 'Apakah gambar desain ini bebas dipakai untuk kebutuhan komersial toko?',
+    question: 'Apakah hasil gambar dari formula prompt ini bebas dipakai untuk komersial?',
     answer: (
       <>
-        <strong>Ya, 100% bebas royalti komersial.</strong> Anda bebas menggunakannya untuk feed Instagram, WhatsApp Story, etalase Shopee/Tokopedia, dan banner promosi bisnis Anda selamanya.
+        <strong>Ya, 100% bebas royalti komersial.</strong> Seluruh visual promosi yang Anda hasilkan dari formula prompt ini bebas digunakan untuk feed Instagram, WhatsApp Story, etalase Shopee/Tokopedia, dan banner promosi bisnis Anda selamanya.
       </>
     ),
   },

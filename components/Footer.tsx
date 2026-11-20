@@ -30,8 +30,8 @@ export default function Footer() {
               <span className="text-[16px] font-semibold text-[#111111]">Warung Design</span>
             </div>
             <p className="mt-3 max-w-sm text-[14.5px] text-[#615d59] leading-relaxed">
-              Koleksi template visual promosi siap pakai untuk pemilik toko dan admin media sosial UMKM Indonesia.
-              Gambar resolusi tinggi siap pakai, tinggal pasang teks promo di Canva dan langsung posting.
+              Koleksi formula prompt AI visual promosi untuk pemilik toko dan admin media sosial UMKM Indonesia.
+              Tinggal salin teks prompt ke ChatGPT atau Midjourney untuk menghasilkan materi promo berkualitas tinggi seketika.
             </p>
           </div>
 

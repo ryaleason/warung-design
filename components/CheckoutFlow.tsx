@@ -192,7 +192,7 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
               </button>
             </div>
             <h1 className="mt-1.5 font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-[#111111]">
-              {order.bundle?.name || 'Paket Bundle Desain'}
+              {order.bundle?.name || 'Paket Formula Prompt AI'}
             </h1>
             <p className="mt-1 text-[13.5px] text-[#54504c]">
               Atas nama: <strong className="text-[#111111] font-medium">{order.buyer_name}</strong> • Email: <strong className="text-[#111111] font-medium">{order.buyer_email}</strong>
@@ -332,9 +332,20 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
               {/* Form Input Sender Name */}
               <form onSubmit={handleCheckPayment} className="mt-6 space-y-4">
                 <div className="space-y-1.5">
-                  <label className="block text-[12.5px] font-semibold text-[#111111]">
-                    Nama Pemilik Rekening / Akun Pengirim <span className="text-[#0075de] font-bold">*</span>
-                  </label>
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <label className="block text-[12.5px] font-semibold text-[#111111]">
+                      Nama Pemilik Rekening / Akun Pengirim <span className="text-[#0075de] font-bold">*</span>
+                    </label>
+                    {order.buyer_name && (
+                      <button
+                        type="button"
+                        onClick={() => setSenderName(order.buyer_name)}
+                        className="text-[12px] font-medium text-[#0075de] hover:text-[#005fb8] hover:underline transition-colors cursor-pointer"
+                      >
+                        Samakan dengan nama lengkap
+                      </button>
+                    )}
+                  </div>
                   <div className="relative">
                     <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#8c8884]" />
                     <input
@@ -346,9 +357,34 @@ export default function CheckoutFlow({ initialOrder }: CheckoutFlowProps) {
                       className="w-full pl-10 pr-4 py-3 rounded-2xl border border-black/[0.12] bg-[#fbfaf9] focus:bg-white text-[14px] text-[#111111] placeholder:text-[#a8a29e] focus:outline-none focus:border-[#0075de] focus:ring-4 focus:ring-[#0075de]/10 transition-all"
                     />
                   </div>
-                  <p className="text-[12px] text-[#54504c]">
-                    Diperlukan untuk mencocokkan mutasi masuk di rekening owner.
-                  </p>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-0.5">
+                    <p className="text-[12px] text-[#54504c]">
+                      Diperlukan untuk mencocokkan mutasi masuk di rekening owner.
+                    </p>
+                    {order.buyer_name && (
+                      <button
+                        type="button"
+                        onClick={() => setSenderName(order.buyer_name)}
+                        className={`self-start sm:self-auto inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11.5px] font-medium transition-all active:scale-95 cursor-pointer border ${
+                          senderName.trim().toLowerCase() === order.buyer_name.trim().toLowerCase()
+                            ? 'border-emerald-200 bg-emerald-50 text-emerald-800'
+                            : 'border-black/[0.1] bg-[#f4f3f0] hover:bg-[#eae8e4] text-[#111111] hover:border-black/[0.2]'
+                        }`}
+                      >
+                        {senderName.trim().toLowerCase() === order.buyer_name.trim().toLowerCase() ? (
+                          <>
+                            <Check className="h-3.5 w-3.5 text-emerald-600" />
+                            <span>Nama sesuai ({order.buyer_name})</span>
+                          </>
+                        ) : (
+                          <>
+                            <User className="h-3.5 w-3.5 text-[#0075de]" />
+                            <span>Isi otomatis: <strong>{order.buyer_name}</strong></span>
+                          </>
+                        )}
+                      </button>
+                    )}
+                  </div>
                 </div>
 
                 {errorMessage && (

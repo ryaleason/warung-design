@@ -39,7 +39,7 @@ export default async function HomePage() {
             data-aos-duration="700"
             className="font-serif text-3xl sm:text-5xl lg:text-[62px] font-semibold tracking-tight text-[#000000] leading-[1.14]"
           >
-            Asisten AI &amp; Desain Promosi{' '}
+            Formula Prompt AI Promosi{' '}
             <span className="italic font-normal text-[#000000]">
               untuk Seluruh Toko Anda
             </span>
@@ -52,7 +52,7 @@ export default async function HomePage() {
             data-aos-duration="700"
             className="text-[16px] sm:text-[19px] text-[#444444] leading-relaxed max-w-2xl mx-auto"
           >
-            Ubah ide promo mendadak menjadi materi feed Instagram &amp; WhatsApp Story siap posting dalam hitungan menit. Pilih puluhan bundle desain jadi, atau racik variasi unik dengan panduan prompt AI.
+            Dapatkan kumpulan formula prompt AI teruji untuk menghasilkan visual promosi memukau dalam hitungan menit. Cukup salin dan tempel ke ChatGPT, Midjourney, atau DALL-E untuk membuat materi jualan tokomu.
           </p>
 
           {/* Hero CTAs */}
@@ -67,7 +67,7 @@ export default async function HomePage() {
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-full bg-gradient-to-b from-[#0084f7] via-[#0075de] to-[#0064c8] px-7 sm:px-8 py-3.5 text-[15px] font-semibold text-white transition-all duration-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_8px_20px_rgba(0,117,222,0.32)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.6),0_12px_28px_rgba(0,117,222,0.42)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer group"
             >
               <ShoppingBag className="h-4 w-4" />
-              <span>Eksplor Katalog Paket</span>
+              <span>Eksplor Paket Prompt</span>
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
             </a>
             <a
@@ -85,7 +85,7 @@ export default async function HomePage() {
             data-aos-delay="300"
             className="text-[12.5px] text-[#54504c] pt-1"
           >
-            Mulai Rp 40 ribuan • Sekali bayar tanpa langganan • Siap buka di Canva HP • Lisensi Bebas Komersial
+            Mulai Rp 40 ribuan • Sekali bayar tanpa langganan • Siap copas ke ChatGPT &amp; Midjourney • Lisensi Bebas Komersial
           </p>
 
           {/* 4-Item Social Proof Metrics Bar with Blue Numbers & Accent Borders */}
@@ -100,7 +100,7 @@ export default async function HomePage() {
             </div>
             <div data-aos="fade-up" data-aos-delay="260" className="border-l-2 border-[#0075de] pl-3 py-1">
               <span className="block text-xl sm:text-2xl font-bold tracking-tight text-[#0075de]">100+</span>
-              <span className="text-[12px] text-[#54504c]">Desain Siap Pakai</span>
+              <span className="text-[12px] text-[#54504c]">Formula Prompt AI</span>
             </div>
             <div data-aos="fade-up" data-aos-delay="340" className="border-l-2 border-[#0075de] pl-3 py-1">
               <span className="block text-xl sm:text-2xl font-bold tracking-tight text-[#0075de]">4.9 / 5.0</span>
@@ -179,24 +179,24 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             <div data-aos="fade-right" data-aos-duration="750" className="lg:col-span-6 space-y-5 text-left">
               <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000] leading-snug">
-                Rancang materi promosi{' '}
-                <span className="italic font-normal text-[#0075de]">dalam hitungan menit</span>, bukan berhari-hari
+                Racik visual promosi{' '}
+                <span className="italic font-normal text-[#0075de]">dalam hitungan menit</span>, tanpa perlu keahlian desain
               </h3>
               <p className="text-[15px] sm:text-[16px] text-[#54504c] leading-relaxed">
-                Tak perlu membuka kanvas kosong dan bingung mau bikin apa saat toko butuh promo mendadak. Setiap bundle menyajikan puluhan desain beresolusi tinggi dengan tipografi dan komposisi matang yang siap menarik pembeli.
+                Tak perlu bingung merangkai kata atau stres meraba prompt bahasa Inggris yang rumit. Setiap paket menyajikan puluhan formula prompt teruji yang dirancang khusus untuk menghasilkan visual promosi memukau sesuai selera pasar Indonesia.
               </p>
               <ul className="space-y-3 pt-2">
                 <li className="flex items-start gap-2.5 text-[14px] text-[#111111]">
                   <CheckCircle2 className="h-5 w-5 text-[#0075de] shrink-0 mt-0.5" />
-                  <span>Format PNG transparan &amp; JPG HD siap posting ke feed (1:1) dan WhatsApp Story (9:16).</span>
+                  <span>Formula prompt siap salin ke ChatGPT (DALL-E 3), Midjourney, dan Bing Image Creator.</span>
                 </li>
                 <li className="flex items-start gap-2.5 text-[14px] text-[#111111]">
                   <CheckCircle2 className="h-5 w-5 text-[#0075de] shrink-0 mt-0.5" />
-                  <span>Didesain khusus untuk momen promosi toko (diskon, promo gajian, buka puasa, flash sale).</span>
+                  <span>Disesuaikan untuk momen promosi toko (diskon gajian, flash sale, menu kuliner, event musiman).</span>
                 </li>
                 <li className="flex items-start gap-2.5 text-[14px] text-[#111111]">
                   <CheckCircle2 className="h-5 w-5 text-[#0075de] shrink-0 mt-0.5" />
-                  <span>Bebas royalti komersial untuk kebutuhan jualan tokomu selamanya.</span>
+                  <span>Bebas royalti komersial untuk kebutuhan materi jualan tokomu selamanya.</span>
                 </li>
               </ul>
               <div className="pt-2">
@@ -204,7 +204,7 @@ export default async function HomePage() {
                   href="#katalog"
                   className="inline-flex items-center gap-2 text-[14px] font-semibold text-[#0075de] hover:underline"
                 >
-                  <span>Lihat paket desain di katalog</span>
+                  <span>Lihat paket prompt di katalog</span>
                   <ArrowRight className="h-4 w-4" />
                 </a>
               </div>
@@ -213,7 +213,7 @@ export default async function HomePage() {
             <div data-aos="fade-left" data-aos-duration="750" className="lg:col-span-6 flex items-center justify-center">
               <Image
                 src="/glosy-app-promo.png"
-                alt="Materi Promosi Siap Pakai Warung Desain"
+                alt="Formula Prompt Visual Warung Desain"
                 width={1159}
                 height={1358}
                 className="w-full h-auto max-w-lg object-contain"
@@ -229,7 +229,7 @@ export default async function HomePage() {
             <div data-aos="fade-right" data-aos-duration="750" className="lg:col-span-6 order-2 lg:order-1 flex items-center justify-center">
               <Image
                 src="/mockup-section.png"
-                alt="Mockup Canva Warung Desain"
+                alt="Ilustrasi Copas Prompt AI Warung Desain"
                 width={1159}
                 height={1358}
                 className="w-full h-auto max-w-lg object-contain"
@@ -238,24 +238,24 @@ export default async function HomePage() {
 
             <div data-aos="fade-left" data-aos-duration="750" className="lg:col-span-6 order-1 lg:order-2 space-y-5 text-left">
               <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#000000] leading-snug">
-                Buka langsung di Canva HP,{' '}
-                <span className="italic font-normal text-[#0075de]">edit teks &amp; logo tanpa ribet</span>
+                Tinggal salin ke AI,{' '}
+                <span className="italic font-normal text-[#0075de]">langsung jadi poster promo tanpa ribet</span>
               </h3>
               <p className="text-[15px] sm:text-[16px] text-[#54504c] leading-relaxed">
-                Didesain khusus untuk admin media sosial dan pemilik toko yang sering bekerja hanya bermodalkan smartphone. Tak perlu instal software berat seperti Photoshop atau laptop spek dewa.
+                Didesain khusus untuk pemilik toko dan admin yang ingin visual berkelas tanpa harus pusing belajar prompt engineering. Cukup salin teks prompt dari paket, tempel ke ChatGPT atau Midjourney dari HP atau laptop.
               </p>
               <ul className="space-y-3 pt-2">
                 <li className="flex items-start gap-2.5 text-[14px] text-[#111111]">
                   <CheckCircle2 className="h-5 w-5 text-[#0075de] shrink-0 mt-0.5" />
-                  <span>Drag &amp; drop foto produk tokomu langsung ke dalam frame template.</span>
+                  <span>Formula prompt siap pakai dengan komposisi, pencahayaan, dan detail visual matang.</span>
                 </li>
                 <li className="flex items-start gap-2.5 text-[14px] text-[#111111]">
                   <CheckCircle2 className="h-5 w-5 text-[#0075de] shrink-0 mt-0.5" />
-                  <span>Ubah nominal harga diskon dan alamat toko dalam 3 ketukan jari.</span>
+                  <span>Cukup ganti nama produk atau variasi warna tokomu untuk hasil variasi tanpa batas.</span>
                 </li>
                 <li className="flex items-start gap-2.5 text-[14px] text-[#111111]">
                   <CheckCircle2 className="h-5 w-5 text-[#0075de] shrink-0 mt-0.5" />
-                  <span>Disertai panduan singkat berbahasa Indonesia yang ramah pemula.</span>
+                  <span>Disertai panduan langkah demi langkah cara generate gambar AI yang ramah pemula.</span>
                 </li>
               </ul>
             </div>
@@ -286,8 +286,21 @@ export default async function HomePage() {
             {(
               [
                 {
+                  name: 'ChatGPT & DALL-E 3',
+                  desc: 'Generate poster visual instan',
+                  logos: [
+                    { src: '/logos/openai.svg', alt: 'ChatGPT' },
+                    { src: '/logos/dalle.svg', alt: 'DALL-E 3', isSwatch: true },
+                  ],
+                },
+                {
+                  name: 'Midjourney',
+                  desc: 'Generate visual AI realistis',
+                  logos: [{ src: '/logos/midjourney.svg', alt: 'Midjourney' }],
+                },
+                {
                   name: 'Canva',
-                  desc: 'Edit teks & logo di HP',
+                  desc: 'Finishing teks & logo opsional',
                   logos: [{ src: '/logos/canva.svg', alt: 'Canva' }],
                 },
                 {
@@ -326,11 +339,6 @@ export default async function HomePage() {
                   logos: [{ src: '/logos/meta.svg', alt: 'Meta' }],
                 },
                 {
-                  name: 'Midjourney',
-                  desc: 'Generasi visual AI',
-                  logos: [{ src: '/logos/midjourney.svg', alt: 'Midjourney' }],
-                },
-                {
                   name: 'Shopee & Tokopedia',
                   desc: 'Banner etalase toko',
                   logos: [
@@ -340,21 +348,15 @@ export default async function HomePage() {
                 },
                 {
                   name: 'Figma',
-                  desc: 'Kustomisasi file desainer',
+                  desc: 'Kustomisasi layout desainer',
                   logos: [{ src: '/logos/figma.svg', alt: 'Figma' }],
                 },
                 {
-                  name: 'ChatGPT & Claude',
+                  name: 'Claude AI',
                   desc: 'Racikan caption & copy promo',
                   logos: [
-                    { src: '/logos/openai.svg', alt: 'ChatGPT' },
                     { src: '/logos/claude.svg', alt: 'Claude' },
                   ],
-                },
-                {
-                  name: 'DALL-E 3',
-                  desc: 'Formula prompt visual',
-                  logos: [{ src: '/logos/dalle.svg', alt: 'DALL-E 3', isSwatch: true }],
                 },
               ] as Array<{
                 name: string;
@@ -426,9 +428,9 @@ export default async function HomePage() {
                   <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#0075de]/10 text-[#0075de] font-bold text-[13px] mb-3 border border-[#0075de]/20 shadow-2xs">
                     1
                   </div>
-                  <h3 className="font-semibold text-[15px] text-[#111111] mb-1.5">Pilih Paket Desain</h3>
+                  <h3 className="font-semibold text-[15px] text-[#111111] mb-1.5">Pilih Paket Prompt</h3>
                   <p className="text-[13.5px] text-[#54504c] leading-relaxed">
-                    Buka detail paket untuk melihat preview gambar resolusi tinggi yang pas dengan tema tokomu.
+                    Buka detail paket untuk melihat kumpulan formula prompt dan contoh hasil visual AI yang pas dengan tema tokomu.
                   </p>
                 </div>
               </div>
@@ -452,7 +454,7 @@ export default async function HomePage() {
                   </div>
                   <h3 className="font-semibold text-[15px] text-[#111111] mb-1.5">Konfirmasi Nama</h3>
                   <p className="text-[13.5px] text-[#54504c] leading-relaxed">
-                    Ketik nama pengirim lalu klik &ldquo;Cek Pembayaran&rdquo; agar mutasi langsung dicocokkan owner via Telegram.
+                    Ketik nama pengirim lalu klik &ldquo;Cek Pembayaran&rdquo; agar mutasi langsung dicocokkan otomatis.
                   </p>
                 </div>
               </div>
@@ -462,9 +464,9 @@ export default async function HomePage() {
                   <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#0075de] text-white font-bold text-[13px] mb-3 shadow-xs">
                     4
                   </div>
-                  <h3 className="font-semibold text-[15px] text-[#111111] mb-1.5">Unduh &amp; Langsung Edit</h3>
+                  <h3 className="font-semibold text-[15px] text-[#111111] mb-1.5">Unduh &amp; Langsung Copas</h3>
                   <p className="text-[13.5px] text-[#54504c] leading-relaxed">
-                    Link file ZIP langsung aktif di layar dan cadangan dikirim ke email. Siap posting ke medsos!
+                    Link file dokumen formula prompt langsung aktif di layar dan cadangan dikirim ke email. Siap langsung digenerate ke AI!
                   </p>
                 </div>
               </div>
@@ -475,7 +477,7 @@ export default async function HomePage() {
         {/* ========================================================= */}
         {/* WAVE TEXT EFFECT BANNER (ChatPRD / Framer Style)          */}
         {/* ========================================================= */}
-        <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-hidden my-6">
+        <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-hidden my-4 sm:my-8 [contain:paint_layout]">
           <WaveTextBanner />
         </div>
 
@@ -500,7 +502,7 @@ export default async function HomePage() {
               <div>
                 <Quote className="h-8 w-8 text-[#0075de] mb-4 opacity-80" />
                 <p className="text-[16px] sm:text-[17px] font-medium text-[#111111] leading-relaxed">
-                  &ldquo;Dulu kalau owner minta promo mendadak pas weekend, saya bisa stres begadang cuma buat cari ide di Canva dari kanvas kosong. Sejak pakai bundle Warung Desain, tinggal ganti nominal promo dan pasang foto produk, 5 menit udah tayang di feed dan story WhatsApp!&rdquo;
+                  &ldquo;Dulu kalau disuruh bikin poster promo mendadak pas weekend, saya bingung mau ketik prompt apa di AI biar hasilnya estetik dan gak norak. Sejak pakai formula prompt Warung Desain, tinggal copas teksnya, ganti nama menu toko, hasilnya langsung keluar mewah dan siap pakai!&rdquo;
                 </p>
               </div>
               <div className="pt-6 mt-6 border-t border-black/[0.08] flex items-center gap-3">
@@ -518,19 +520,19 @@ export default async function HomePage() {
             <div data-aos="fade-left" data-aos-duration="750" className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
               {[
                 {
-                  text: 'Paket Promo Ramadhannya beneran ngebantu banget! Visualnya islami modern dan gak norak. Followers pada nanya siapa yang desainin.',
+                  text: 'Formula prompt Ramadhannya beneran ngebantu banget! Hasil generate di ChatGPT visualnya islami modern dan gak norak. Followers pada nanya siapa yang desainin.',
                   name: 'Dimas Prasetyo',
                   role: 'Owner Katering Harian, Surabaya',
                   initial: 'DP',
                 },
                 {
-                  text: 'Harganya murah banget cuma 40 ribuan sekali beli dapet puluhan file HD. Dibanding sewa freelancer 500rb per poster, ini jauh lebih hemat buat UMKM pemula.',
+                  text: 'Harganya murah banget cuma 40 ribuan dapet puluhan formula prompt AI. Dibanding sewa freelancer 500rb per poster, ini jauh lebih hemat buat UMKM pemula.',
                   name: 'Siti Sarah',
                   role: 'Owner Olshop Hijab, Solo',
                   initial: 'SS',
                 },
                 {
-                  text: 'Bonus formula prompt AI-nya daging banget! Saya coba copas ke Midjourney ternyata langsung keluar gambar estetik yang pas buat katalog produk baru.',
+                  text: 'Formula prompt AI-nya daging banget! Saya coba copas ke Midjourney ternyata langsung keluar gambar estetik yang pas buat katalog produk baru.',
                   name: 'Kevin Wijaya',
                   role: 'Admin Thrift & Distro, Jakarta',
                   initial: 'KW',

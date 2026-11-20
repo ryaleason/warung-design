@@ -145,7 +145,7 @@ export default function RiwayatPesananPage() {
                 Riwayat Pembelian Saya
               </h1>
               <p className="text-[13.5px] text-[#757575] mt-1">
-                Semua template bundle yang pernah Anda beli dan tautan download file digital.
+                Semua paket formula prompt yang pernah Anda beli dan tautan unduh file digital.
               </p>
             </div>
 

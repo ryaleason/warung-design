@@ -296,11 +296,11 @@ export default function AdminClient() {
     const randomCode = createRandomCode();
     const newBundle: Bundle = {
       id: newId,
-      name: 'Paket Template Baru',
+      name: 'Paket Prompt Baru',
       slug: `paket-baru-${randomCode}`,
       category: 'Promo & Event',
       badge: 'Baru',
-      description: 'Deskripsi lengkap mengenai isi paket template, format file, dan keunggulannya.',
+      description: 'Deskripsi lengkap mengenai isi paket formula prompt AI, tools yang didukung, dan keunggulannya.',
       price: 49000,
       preview_images: [
         'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1000&q=80',
@@ -308,8 +308,8 @@ export default function AdminClient() {
       file_url: 'bundles/paket-baru.zip',
       is_active: true,
       features: [
-        '20+ Template Desain Siap Pakai',
-        'Format PNG Transparan & File Canva',
+        '20+ Formula Prompt AI Siap Pakai',
+        'Kompatibel ChatGPT, DALL-E 3 & Midjourney',
         'Bebas Lisensi Komersial untuk UMKM',
       ],
     };
@@ -1453,7 +1453,7 @@ export default function AdminClient() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <span className="inline-block text-[11px] font-semibold text-[#0075de] uppercase tracking-wider">
-                      {broadcastBundle.category || 'Paket Template'}
+                      {broadcastBundle.category || 'Paket Prompt'}
                     </span>
                     <h4 className="line-clamp-1 text-[13.5px] font-semibold text-black">
                       {broadcastBundle.name}

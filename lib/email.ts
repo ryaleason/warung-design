@@ -24,17 +24,17 @@ export async function sendOrderDeliveryEmail(
   const baseUrl = getBaseUrl();
   const downloadUrl = `${baseUrl}/api/download/${downloadToken}`;
   const orderUrl = `${baseUrl}/checkout/${order.id}`;
-  const emailSubject = `Pesanan #${order.order_code}: Akses File Desain Anda - Warung Design`;
+  const emailSubject = `Pesanan #${order.order_code}: Akses Dokumen Formula Prompt AI - Warung Design`;
 
   const plainTextContent = `Halo, ${order.buyer_name}!
 
-Pembayaran kamu untuk pesanan ${order.order_code} telah berhasil diverifikasi oleh tim Warung Design. File bundle desain kamu sudah siap diunduh!
+Pembayaran kamu untuk pesanan ${order.order_code} telah berhasil diverifikasi oleh tim Warung Design. Dokumen formula prompt AI pesananmu sudah siap diunduh!
 
 Detail Pesanan:
 - Produk: ${bundle.name}
 - Total: Rp ${order.total_amount.toLocaleString('id-ID')}
 
-Tautan Unduh File Desain:
+Tautan Unduh Formula Prompt AI:
 ${downloadUrl}
 
 Halaman Status Pesanan:
@@ -42,7 +42,7 @@ ${orderUrl}
 
 Catatan:
 - Tautan aktif selama 48 jam. Silakan simpan file di HP atau komputer Anda.
-- Isi paket mencakup: folder gambar format PNG & JPG resolusi tinggi, template prompt AI, dan panduan edit Canva.
+- Isi paket mencakup: file dokumen kumpulan formula prompt AI siap pakai dan panduan generate gambar.
 
 Ada kendala? Hubungi admin via WhatsApp di:
 https://wa.me/6285182510575 (085182510575)
@@ -56,7 +56,7 @@ Warung Design
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Akses Desain - Warung Design</title>
+  <title>Akses Formula Prompt AI - Warung Design</title>
 </head>
 <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f6f5f4; margin: 0; padding: 24px; color: #111111;">
   <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
@@ -80,7 +80,7 @@ Warung Design
       <!-- Tombol Download Langsung -->
       <div style="text-align: center; margin: 28px 0 16px 0;">
         <a href="${downloadUrl}" style="background-color: #0075de; color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 16px; display: inline-block;">
-          Buka &amp; Unduh File Desain
+          Buka &amp; Unduh Formula Prompt
         </a>
       </div>
 
@@ -100,11 +100,11 @@ Warung Design
       </div>
 
       <div style="border-top: 1px solid rgba(0, 0, 0, 0.08); padding-top: 20px; font-size: 14px; color: #615d59;">
-        <p style="margin: 0 0 8px; font-weight: 600; color: #111111;">Isi di dalam paket desain:</p>
+        <p style="margin: 0 0 8px; font-weight: 600; color: #111111;">Isi di dalam paket prompt:</p>
         <ul style="margin: 0; padding-left: 20px; line-height: 1.6;">
-          <li>Folder gambar desain format PNG transparan &amp; JPG resolusi tinggi.</li>
-          <li>Panduan ringkas &amp; template prompt AI siap pakai.</li>
-          <li>Panduan cara kustomisasi desain menggunakan Canva.</li>
+          <li>Kumpulan formula prompt AI siap salin untuk ChatGPT (DALL-E 3) &amp; Midjourney.</li>
+          <li>Panduan langkah demi langkah cara generate gambar AI untuk pemula.</li>
+          <li>Tips kustomisasi kata kunci sesuai nama produk dan menu toko Anda.</li>
         </ul>
       </div>
     </div>
@@ -212,11 +212,11 @@ export async function sendNewBundleBroadcastEmail(params: {
 
   const plainTextContent = `Halo, ${recipientName}!
 
-Koleksi desain baru telah tersedia di Warung Design untuk materi promosi tokomu:
+Koleksi formula prompt AI baru telah tersedia di Warung Design untuk materi promosi tokomu:
 
 Paket: ${bundle.name}
 Harga: Rp ${bundle.price.toLocaleString('id-ID')}
-Kategori: ${bundle.category || 'Desain UMKM'}
+Kategori: ${bundle.category || 'Formula Prompt AI'}
 
 Deskripsi:
 ${bundle.description}
@@ -250,9 +250,9 @@ Warung Design
 
     <!-- Body -->
     <div style="padding: 30px;">
-      <h2 style="margin-top: 0; color: #111111; font-size: 20px; font-weight: 700;">Halo, ${recipientName}! 👋</h2>
+      <h2 style="margin-top: 0; color: #111111; font-size: 20px; font-weight: 700;">Halo, ${recipientName}!</h2>
       <p style="color: #615d59; font-size: 15px; line-height: 1.6; margin-bottom: 22px;">
-        Koleksi template visual baru baru saja dirilis di Warung Design. Dirancang khusus untuk memikat calon pembeli di feed Instagram dan WhatsApp Story tokomu.
+        Koleksi formula prompt AI baru baru saja dirilis di Warung Design. Dirancang khusus untuk memikat calon pembeli di feed Instagram dan WhatsApp Story tokomu.
       </p>
 
       ${
@@ -275,7 +275,7 @@ Warung Design
         <div style="padding: 20px;">
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
             <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #0075de; letter-spacing: 0.05em;">
-              ${bundle.category || 'Paket Template'} ${bundle.badge ? `• ${bundle.badge}` : ''}
+              ${bundle.category || 'Paket Prompt'} ${bundle.badge ? `• ${bundle.badge}` : ''}
             </span>
             <span style="font-size: 17px; font-weight: 700; color: #111111;">
               Rp ${bundle.price.toLocaleString('id-ID')}
@@ -302,7 +302,7 @@ Warung Design
       <!-- Tombol CTA -->
       <div style="text-align: center; margin: 26px 0;">
         <a href="${bundleUrl}" style="background-color: #0075de; color: #ffffff; text-decoration: none; padding: 13px 30px; border-radius: 8px; font-weight: 600; font-size: 15px; display: inline-block;">
-          Lihat Paket &amp; Pratinjau Desain
+          Lihat Paket &amp; Pratinjau Prompt
         </a>
       </div>
 

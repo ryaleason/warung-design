@@ -28,15 +28,15 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.warungdesign.web.id'),
-  title: 'Warung Design: Bundle Template & Desain Promosi Siap Pakai untuk UMKM',
+  title: 'Warung Design: Formula Prompt AI Visual Promosi Siap Pakai untuk UMKM',
   description:
-    'Platform bundle visual promosi siap pakai (feed & story) untuk pemilik toko dan admin UMKM Indonesia. Tanpa perlu keahlian desain rumit, tinggal pasang teks di Canva dan langsung posting.',
+    'Platform formula prompt AI visual promosi untuk pemilik toko dan admin UMKM Indonesia. Tinggal salin teks prompt ke ChatGPT atau Midjourney untuk menghasilkan visual promosi berkualitas tinggi seketika.',
   keywords: [
-    'desain promosi umkm',
-    'template feed instagram',
-    'poster diskon olshop',
+    'prompt ai promosi umkm',
+    'formula prompt midjourney',
+    'prompt chatgpt poster jualan',
     'warung design',
-    'konten promosi toko',
+    'prompt ai produk toko',
   ],
   authors: [{ name: 'Warung Design Team' }],
   icons: {

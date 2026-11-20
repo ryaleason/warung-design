@@ -11,12 +11,19 @@ const WAVE_PATH_D =
   'C 3341.0 194.0, 3409.0 194.0, 3500 130';
 
 export default function WaveTextBanner() {
+  const containerRef = useRef<HTMLElement>(null);
   const textPathRef = useRef<SVGTextPathElement>(null);
   const patternRef = useRef<SVGTSpanElement>(null);
   const offsetRef = useRef<number>(0);
   const patternLengthRef = useRef<number>(1850);
 
   useEffect(() => {
+    // Check user preference for reduced motion
+    const prefersReducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
     // Measure dynamic length of one pattern unit
     const measureLength = () => {
       if (patternRef.current) {
@@ -37,22 +44,54 @@ export default function WaveTextBanner() {
       document.fonts.ready.then(measureLength);
     }
 
-    let animationId: number;
-    const speed = 0.85; // Silky smooth 60fps marquee velocity
+    let animationId: number = 0;
+    let isVisible = false;
+    let lastTimestamp: number = performance.now();
+    const speedPixelsPerSecond = 50; // Smooth, lightweight constant speed
 
-    const loop = () => {
-      offsetRef.current -= speed;
-      if (offsetRef.current <= -patternLengthRef.current) {
-        offsetRef.current += patternLengthRef.current;
+    const loop = (currentTimestamp: number) => {
+      if (!isVisible) return;
+
+      const delta = (currentTimestamp - lastTimestamp) / 1000;
+      lastTimestamp = currentTimestamp;
+
+      // Filter out huge deltas if user switches tabs
+      if (delta > 0 && delta < 0.15) {
+        offsetRef.current -= speedPixelsPerSecond * delta;
+        if (offsetRef.current <= -patternLengthRef.current) {
+          offsetRef.current += patternLengthRef.current;
+        }
+        if (textPathRef.current) {
+          textPathRef.current.setAttribute('startOffset', `${offsetRef.current.toFixed(1)}px`);
+        }
       }
-      if (textPathRef.current) {
-        textPathRef.current.setAttribute('startOffset', `${offsetRef.current}px`);
-      }
+
       animationId = requestAnimationFrame(loop);
     };
 
-    animationId = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(animationId);
+    // IntersectionObserver: Only animate when visible in or near the viewport
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          lastTimestamp = performance.now();
+          cancelAnimationFrame(animationId);
+          animationId = requestAnimationFrame(loop);
+        } else {
+          cancelAnimationFrame(animationId);
+        }
+      },
+      { threshold: 0.01, rootMargin: '120px 0px' }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(animationId);
+    };
   }, []);
 
   const renderPatternUnit = (isFirst = false) => (
@@ -68,14 +107,14 @@ export default function WaveTextBanner() {
         className="font-sans font-bold uppercase tracking-wider text-white"
         style={{ fontFamily: 'var(--font-plus-jakarta-sans)' }}
       >
-        Template Promosi UMKM
+        Formula Prompt AI UMKM
       </tspan>
       <tspan className="fill-white/60 text-[14px]"> ✦ </tspan>
       <tspan
         className="font-serif italic text-white"
         style={{ fontFamily: 'var(--font-serif)' }}
       >
-        Buka Langsung di Canva HP
+        Siap Copas ke ChatGPT &amp; Midjourney
       </tspan>
       <tspan className="fill-white/60 text-[14px]"> ✦ </tspan>
       <tspan
@@ -96,7 +135,7 @@ export default function WaveTextBanner() {
         className="font-sans font-bold uppercase tracking-wider text-white"
         style={{ fontFamily: 'var(--font-plus-jakarta-sans)' }}
       >
-        Format PNG &amp; JPG HD
+        Teruji Selera Pasar Lokal
       </tspan>
       <tspan className="fill-white/60 text-[14px]"> ✦ </tspan>
       <tspan
@@ -110,19 +149,22 @@ export default function WaveTextBanner() {
         className="font-sans font-bold uppercase tracking-wider text-white"
         style={{ fontFamily: 'var(--font-plus-jakarta-sans)' }}
       >
-        Siap Posting Seketika
+        Visual Berkualitas Tinggi
       </tspan>
       <tspan className="fill-white/60 text-[14px]"> ✦ </tspan>
     </tspan>
   );
 
   return (
-    <section className="relative w-full overflow-hidden py-3 sm:py-6 select-none bg-transparent">
+    <section
+      ref={containerRef}
+      className="relative w-full overflow-hidden py-2 sm:py-4 select-none bg-transparent [contain:paint_layout] transform-gpu"
+    >
       <div className="relative w-full">
         <svg
-          viewBox="0 0 1600 260"
+          viewBox="0 0 2000 260"
           preserveAspectRatio="xMidYMid slice"
-          className="w-full h-44 sm:h-52 md:h-60 pointer-events-none drop-shadow-[0_10px_24px_rgba(0,117,222,0.22)]"
+          className="w-full h-48 sm:h-56 md:h-64 lg:h-72 pointer-events-none transform-gpu"
         >
           <defs>
             <path id="wave-center-path" d={WAVE_PATH_D} fill="none" />
@@ -133,24 +175,43 @@ export default function WaveTextBanner() {
             </linearGradient>
           </defs>
 
+          {/* Hardware-accelerated soft blue underlay glow (vector strokes with zero Gaussian blur filter overhead) */}
+          <path
+            d={WAVE_PATH_D}
+            fill="none"
+            stroke="#0075de"
+            strokeWidth="96"
+            strokeOpacity="0.10"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d={WAVE_PATH_D}
+            fill="none"
+            stroke="#0075de"
+            strokeWidth="88"
+            strokeOpacity="0.20"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+
           {/* Wavy Blue Ribbon Band - follows the wave curvature */}
           <path
             d={WAVE_PATH_D}
             fill="none"
             stroke="url(#wave-ribbon-blue)"
-            strokeWidth="84"
+            strokeWidth="80"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
 
-          {/* Flowing White Text along the Wave Path */}
+          {/* Flowing White Text along the Wave Path (Crisp, High Contrast, 0 Filter Lag) */}
           <text
             fill="#ffffff"
             fontSize="18.5"
             letterSpacing="0.03em"
             dominantBaseline="central"
             alignmentBaseline="middle"
-            className="drop-shadow-[0_1px_2px_rgba(0,0,0,0.18)]"
           >
             <textPath
               ref={textPathRef}
@@ -160,7 +221,6 @@ export default function WaveTextBanner() {
               spacing="auto"
             >
               {renderPatternUnit(true)}
-              {renderPatternUnit(false)}
               {renderPatternUnit(false)}
               {renderPatternUnit(false)}
             </textPath>
